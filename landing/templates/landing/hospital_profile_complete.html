@@ -1,0 +1,58 @@
+{% extends 'landing/base.html' %}
+{% block title %}
+    Complete Hospital Profile
+{% endblock %}
+{% block body %}
+    <div class="uk-container uk-margin-medium-top">
+        <form class="uk-table-responsive uk-align-center uk-border-rounded uk-width-1-2@m uk-box-shadow-large uk-padding-small" action="#" method="post">
+            <h2 class="uk-text-success uk-text-center">Complete your Hospital Profile</h2>
+            <hr>
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 {% if message.tags %}
+                        {% if message.tags == "error" %}
+                            class="uk-text-danger uk-text-center"
+                        {% else %}
+                            class="uk-text-{{ message.tags }}"
+                        {% endif %}
+                    {% endif %}>{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
+
+            {% csrf_token %}
+            <table class="uk-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="uk-text-bold">{{ form.name.label }}</td>
+                        <td>{{ form.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-text-bold">{{ form.address.label }}</td>
+                        <td>{{ form.address }}</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-text-bold">{{ form.slug.label }}</td>
+                        <td>{{ form.slug }}</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-text-bold">{{ form.phone_number.label }}</td>
+                        <td>{{ form.phone_number }}</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-text-bold">{{ form.specialisation.label }}</td>
+                        <td>{{ form.specialisation }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="uk-align-center uk-text-center">
+                <input class="uk-button uk-button-primary uk-border-rounded" type="submit" value="Submit" />
+                <input class="uk-button uk-button-danger uk-margin-left uk-border-rounded" type="reset" value="Clear all changes"/>
+            </p>
+        </form>
+    </div>
+{% endblock %}
+

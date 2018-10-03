@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'pwa',
-    
+    'landing',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +141,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('G_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('G_SKEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ['iiitv.ac.in', 'iiitvadodara.ac.in']
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']

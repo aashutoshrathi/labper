@@ -4,3 +4,4 @@ staticfiles
 .env
 *.sqlite3
 .vscode
+.idea

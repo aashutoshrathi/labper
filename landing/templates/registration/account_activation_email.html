@@ -1,0 +1,14 @@
+{% autoescape off %}
+    Hi {{ user.first_name }}!,
+
+    Please click on the link below to confirm your registration:
+
+    http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+    After activation, login through your credentials:
+    Username: {{ user.username }}
+
+    Regards,
+    Team MedTour
+    India
+{% endautoescape %}

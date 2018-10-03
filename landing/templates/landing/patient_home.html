@@ -1,0 +1,122 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+{% block title %}
+    Dashboard | {{ user.first_name }}
+{% endblock %}
+{% block body %}
+    <div class="uk-container">
+    <h2 class="uk-padding-small uk-text-center uk-text-bold">Dashboard</h2>
+        <hr>
+        <div class="uk-width-1-1 uk-child-width-1-1@m uk-margin-remove" uk-grid>
+            <div class="uk-card uk-card-hover uk-margin-small-top uk-card-default uk-card-body">
+                <h3 class="uk-card-title uk-button-text uk-text-bold">Current Appointments</h3>
+                <table class="uk-table uk-table-responsive uk-table-hover uk-table-divider">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Patient</th>
+                            <th>Remark</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for happ in papps %}
+                        <tr>
+                            <td>
+                                <img class="uk-border-circle" width="30" height="30" src="{{ happ.doctor.user.profile.avatar_small }}">
+                                <span> </span>
+                                <a href="{{ happ.doctor.get_url }}" class="uk-text-bold uk-button uk-button-text">{{ happ.doctor.name }}</a>
+                            </td>
+                            <td>
+                                {% if happ.patient.user.profile.avatar %}
+                                    <img src="{{ happ.patient.user.profile.avatar_small }}" class="uk-border-circle" width="30" height="30">
+                                {% else %}
+                                    {% if happ.patient.user.profile.gender == 'f' %}
+                                        <img src="{% static 'images/female.png' %}" class="uk-border-circle" width="30" height="30">
+                                    {% else %}
+                                        <img src="{% static 'images/anon.png' %}" class="uk-border-circle" width="30" height="30">
+                                    {% endif %}
+                                {% endif %}
+                                <span> </span>
+                                <a class="uk-text-bold uk-button uk-button-text">{{ happ.patient.user.first_name }}</a>
+                            </td>
+                            <td>{{ happ.patients_remarks }}</td>
+                            <td>
+                                {% if happ.start_date or happ.end_date %}
+                                    {{ happ.start_date }} to {{ happ.end_date }}
+                                {% else %}
+                                    Not Available
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not happ.approved %}
+                                    <span class="uk-badge uk-label-warning uk-padding-small">Pending</span>
+                                {% else %}
+                                    <span class="uk-badge uk-label-success uk-padding-small">Approved</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="uk-card uk-card-hover uk-margin-small-top uk-card-default uk-card-body">
+                <h3 class="uk-card-title uk-button-text uk-text-bold">Past Appointments</h3>
+                <table class="uk-table uk-table-responsive uk-table-hover uk-table-divider">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Patient</th>
+                            <th>Remark</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for happ in papps %}
+                            {% if happ.approved %}
+                            <tr>
+                                <td>
+                                    <img class="uk-border-circle" width="30" height="30" src="{{ happ.doctor.user.profile.avatar_small }}">
+                                    <span> </span>
+                                    <a href="{{ happ.doctor.get_url }}" class="uk-text-bold uk-button uk-button-text">{{ happ.doctor.name }}</a>
+                                </td>
+                                <td>
+                                    {% if happ.patient.user.profile.avatar %}
+                                        <img src="{{ happ.patient.user.profile.avatar_small }}" class="uk-border-circle" width="30" height="30">
+                                    {% else %}
+                                        {% if happ.patient.user.profile.gender == 'f' %}
+                                            <img src="{% static 'images/female.png' %}" class="uk-border-circle" width="30" height="30">
+                                        {% else %}
+                                            <img src="{% static 'images/anon.png' %}" class="uk-border-circle" width="30" height="30">
+                                        {% endif %}
+                                    {% endif %}
+                                    <span> </span>
+                                    <a class="uk-text-bold uk-button-text">{{ happ.patient.user.first_name }}</a>
+                                </td>
+                                <td>{{ happ.patients_remarks }}</td>
+                                <td>
+                                    {% if happ.start_date or happ.end_date %}
+                                        {{ happ.start_date }} to {{ happ.end_date }}
+                                    {% else %}
+                                        Not Available
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not happ.approved %}
+                                        <span class="uk-badge uk-label-warning uk-padding-small">Pending</span>
+                                    {% else %}
+                                        <span class="uk-badge uk-label-success uk-padding-small">Approved</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

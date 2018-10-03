@@ -1,0 +1,41 @@
+{% extends 'landing/base.html' %}
+
+{% block title %}
+    MedTour | Login
+{% endblock %}
+
+{% block body %}
+    <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+        <h2 class="uk-text-center uk-text-bold">Login</h2>
+
+        <form class="uk-align-center uk-text-center" method="post">
+            {% csrf_token %}
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <label for="id_username" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></label>
+                    <input class="uk-input" type="text" name="username" maxlength="254" autofocus="" id="id_username" required="">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <label for="id_password" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></label>
+                    <input class="uk-input" type="password" name="password" required="" id="id_password">
+                </div>
+            </div>
+
+            {% if form.errors.items %}
+                <div class="uk-text-center uk-text-danger uk-text-bold uk-margin-small-bottom">Please enter a correct username and password.</div>
+            {% endif %}
+
+            <button class="uk-button uk-button-secondary uk-border-rounded uk-text-bold" type="submit">Login</button>
+        </form>
+
+        <div class="uk-align-center uk-text-center">
+            <p class="uk-text-bold uk-text-capitalize"> Or login with </p>
+            <a href="{% url 'social:begin' 'twitter' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="twitter"></a>
+            <a href="{% url 'social:begin' 'facebook' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="facebook"></a>
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="google"></a>
+        </div>
+    </div>
+{% endblock %}

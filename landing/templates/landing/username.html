@@ -1,0 +1,63 @@
+{% extends 'landing/base.html' %}
+{% block title %}
+    Username Settings
+{% endblock %}
+{% block body %}
+  <h2 class="uk-text-bold uk-text-center uk-padding-small">Change Username</h2>
+    <div class="uk-card uk-card-default uk-width-1-2@m uk-text-center uk-card-body uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+        <h4 class="uk-text-success">Your current username: <span class="uk-text-bold">{{ user.username }}</span></h4>
+            <form method="post" class="uk-form-stacked">
+                {% csrf_token %}
+                    {% for field in form %}
+                        <div class="uk-margin">
+                            <div class="uk-inline">
+                                <label class="uk-form-icon" uk-icon="icon: user"></label>
+                                <input class="uk-input" type="text" name="username" required="" id="id_username" placeholder="New Username" autofocus="">
+                            </div>
+                        </div>
+                    {% endfor %}
+                <button class="uk-button uk-button-primary uk-align-center uk-border-rounded" type="submit">Change Username</button>
+            </form>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 {% if message.tags %}
+                        {% if message.tags == "error" %}
+                            class="uk-text-danger"
+                        {% else %}
+                            class="uk-text-{{ message.tags }}"
+                        {% endif %}
+                    {% endif %}>{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
+
+            <hr>
+            <span class="uk-text-bold">Need help</span>
+            <a class="uk-icon-button uk-button-link" href="#help-username" uk-toggle uk-icon="question"></a>
+
+            <div id="help-username" uk-modal>
+                <div class="uk-modal-dialog">
+
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Need help choosing a username?</h2>
+                    </div>
+
+                    <div class="uk-modal-body" uk-overflow-auto>
+                        {% for field in form %}
+                            <div class="uk-text-bold uk-margin-small-bottom">
+                                {% if field.help_text %}
+                                    <p>{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-secondary uk-modal-close uk-border-rounded" type="button">Got it!</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+{% endblock %}

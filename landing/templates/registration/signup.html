@@ -1,0 +1,37 @@
+{% extends 'landing/base.html' %}
+
+{% block title %}
+    MedTour | Signup
+{% endblock %}
+
+{% block body %}
+    <div class="uk-card-hover uk-border-rounded uk-card-default uk-card-body uk-width-1-2@m uk-margin-top uk-align-center">
+        <h2 class="uk-modal-title uk-margin-small-top">Hospital Sign Up Form</h2>
+        <form enctype="multipart/form-data" id="signUp" class="uk-table-responsive uk-align-center" action="#" method="post">
+            {% csrf_token %}
+            <table class="uk-table">
+                    <thead>
+                        <tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for field in form %}
+                        <tr>
+                            <td class="uk-text-bold">{{ field.label }}</td>
+                            <td>
+                                {{ field }}
+                                {% if field.help_text %}
+                                  <p class="uk-text-warning">{{ field.help_text }}</p>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                  <p class="uk-text-danger">{{ error }}</p>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            <input class="uk-width-1-1 uk-button uk-button-primary uk-width-auto uk-align-center uk-border-rounded" type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}
