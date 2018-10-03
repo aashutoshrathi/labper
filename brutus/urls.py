@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^settings/password/$', login_required(landing.views.PasswordChangeView.as_view()), name='password'),
     url(r'^settings/username/$', login_required(landing.views.ChangeUsername.as_view()), name='username'),
     path('admin/', admin.site.urls),
-    url(r'^login/$', auth_views.LoginView.as_view(template_name="landing/login.html"), name='login'),
+    url(r'^login/$', auth_views.LoginView.as_view(template_name="registration/login.html"), name='login'),
     url(r'^logout/$',auth_views.LogoutView.as_view(template_name="landing/home.html"), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^account_activation_sent/$', landing.views.account_activation_sent, name='account_activation_sent'),
