@@ -6,6 +6,8 @@ Lab Management system
 
 To use this project, follow these steps:
 
+- Make a `.env` file having same structure as `.env.sample`
+
 ## Deployment to Heroku
 
     $ git init
