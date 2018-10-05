@@ -8,7 +8,7 @@ def home(request):
 
 
 def land(request):
-    return render(request, 'landing/base.html')
+    return render(request, 'registration/login.html')
 
 
 # only4 testing
