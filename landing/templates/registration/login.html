@@ -1,7 +1,7 @@
 {% extends 'landing/base.html' %}
 
 {% block title %}
-    MedTour | Login
+    Labper | Login
 {% endblock %}
 
 {% block body %}
@@ -33,8 +33,6 @@
 
         <div class="uk-align-center uk-text-center">
             <p class="uk-text-bold uk-text-capitalize"> Or login with </p>
-            <a href="{% url 'social:begin' 'twitter' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="twitter"></a>
-            <a href="{% url 'social:begin' 'facebook' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="facebook"></a>
             <a href="{% url 'social:begin' 'google-oauth2' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="google"></a>
         </div>
     </div>

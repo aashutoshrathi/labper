@@ -19,7 +19,7 @@
                 Labper
             {% endblock %}
         </title>
-        <link rel="icon" type="image/png" href="{% static 'icons/icon.png' %}">
+        <link rel="icon" type="image/png" href="{% static 'icons/lab.png' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/uikit.min.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
@@ -32,114 +32,18 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <body>
-        <div id="spinner"></div>
         <header>
             <div uk-sticky="show-on-up: true; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar; animation: uk-animation-slide-top;">
                 <nav class="uk-navbar-container uk-box-shadow-medium" uk-navbar style="position: relative;">
                     <div class="uk-navbar-left">
                         <a class="uk-text-bold uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
-                            <img src="{% static 'icons/bone.png' %}" width="50px" style="margin-right: 10px;">
-                            MedTour
+                            <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-right: 10px;">
+                            Labper
                         </a>
-                        <div class="uk-navbar-item hidden-on-small-display">
-                            <form class="uk-search uk-search-navbar uk-flex" id="search-form">
-                                <span uk-icon="icon: location; ratio: 1.5"></span>
-                                <input class="uk-search-input" id="search-box-large" type="search" placeholder="Enter your Location.." data-suggest-url="{% url 'ajax_autocomplete' %}">
-                            </form>
-                        </div>
                     </div>
-
-                    <div class="uk-navbar-right hidden-on-small-display uk-text-bold uk-text-large uk-margin-right">
-                        <ul class="uk-navbar-nav">
-                            <li class="uk-active"><a href="{% url 'home' %}">Home</a></li>
-                            <li class="uk-active"><a href="{% url 'hospital:list-hospitals' %}" class="uk-text-danger"><span class="uk-margin-small-right uk-text-danger" uk-icon="icon: lifesaver;"></span>Hospitals</a></li>
-                            {% if user.is_superuser %}
-                                <li class="uk-active"><a href="/admin">Admin</a></li>
-                            {% endif %}
-                            {% if not user.is_authenticated %}
-                                <li><a href="{% url 'signup' %}"><span class="uk-margin-small-right" uk-icon="icon: plus-circle;"></span>Hospital Sign Up</a></li>
-                            {% endif %}
-                            {% if user.is_authenticated %}
-                            {% if user.hospital %}
-                                <li class="uk-active"><a href="{% url 'hospital:appointment-list' %}">Appointments</a></li>
-                                <li class="uk-active"><a href="{% url 'complete_hospital_profile' %}">Edit Profile</a></li>
-                            {% endif %}
-                                <li class="uk-active">
-                                    <a href="#">
-                                        {% if user.profile.avatar %}
-                                            <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="40" height="40">
-                                        {% else %}
-                                            {% if user.profile.gender == 'f' %}
-                                                <img src="{% static 'images/female.png' %}" class="uk-border-circle" width="40" height="40">
-                                            {% else %}
-                                                <img src="{% static 'images/anon.png' %}" class="uk-border-circle" width="40" height="40">
-                                            {% endif %}
-                                        {% endif %}
-                                    </span><span uk-icon="icon: triangle-down;"></span></a>
-                                    <div class="uk-navbar-dropdown uk-padding-small" uk-dropdown="animation: uk-animation-slide-top-small; duration: 300">
-                                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                                            <li class="uk-text-bold uk-text-center uk-margin-remove-bottom">{{ user.first_name }}</li>
-                                            <hr>
-                                            <li><a href="{% url 'overview' %}"><span uk-icon="icon: happy;"></span> Profile</a></li>
-                                            <li><a href="{% url 'password' %}"><span uk-icon="icon: pencil;"></span> Change Password</a></li>
-                                            <li><a href="{% url 'username' %}"><span uk-icon="icon: pencil;"></span> Change Username</a></li>
-                                            <li><a href="{% url 'logout' %}"><span uk-icon="icon: sign-out;"></span> Logout</a></li>
-                                        </ul>
-                                    </div>
-                                 </li>
-                            {% endif %}
-                            {% if not user.is_authenticated %}
-                                <li><a href="{% url 'login' %}">Login <span uk-icon="icon: sign-in;"></span></a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    <button class="hidden-on-large-display uk-active uk-icon-button uk-button-default uk-margin-small-top uk-margin-right" style="margin-left: auto;" type="button" uk-toggle="target: #hamburger" uk-icon="menu"></button>
-
-                </nav>
             </div>
         </header>
-        <div class="uk-offcanvas-content uk-padding-remove">
-            <div id="hamburger" uk-offcanvas="mode: push; overlay: false; flip: false; esc-close: true;">
-                <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-                    <ul class="uk-nav uk-nav-primary uk-nav-center uk-text-left uk-margin-auto-vertical">
-                    {% if user.is_authenticated %}
-                        {% if user.profile.avatar %}
-                            <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{{ user.profile.avatar_small }}">
-                        {% else %}
-                            {% if user.profile.gender == 'f' %}
-                                <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{% static 'images/female.png' %}">
-                            {% else %}
-                                <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{% static 'images/anon.png' %}">
-                            {% endif %}
-                        {% endif %}
-                        <span class="uk-text-lead uk-text-middle">{{ user.first_name }}</span>
-                        <hr>
-                    {% endif %}
-                        <div class="uk-navbar-item uk-nav">
-                            <form class="uk-search uk-search-navbar">
-                                <span uk-search-icon></span>
-                                <input class="uk-search-input" type="search" placeholder="Search...">
-                            </form>
-                        </div>
-                        <li><a href="{% url 'home' %}"><span class="uk-margin-small-right" uk-icon="icon: home;"></span> Home</a></li>
-                        <li><a href="{% url 'hospital:list-hospitals' %}" class=""><span class="uk-margin-small-right  uk-text-danger" uk-icon="icon: lifesaver;"></span>Hospitals</a></li>
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'hospital:appointment-list' %}"><span class="uk-margin-small-right" uk-icon="icon: home;"></span> Appointments</a></li>
-                            <li><a href="{% url 'overview' %}"><span class="uk-margin-small-right" uk-icon="icon: happy;"></span> Profile</a></li>
-                            <li><a href="{% url 'password' %}"><span class="uk-margin-small-right" uk-icon="icon: pencil;"></span> Change Password</a></li>
-                            <li><a href="{% url 'username' %}"><span class="uk-margin-small-right" uk-icon="icon: pencil;"></span> Change Username</a></li>
-                            <li><a href="{% url 'logout' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-out;"></span> Logout</a></li>
-                        {% else %}
-                            <li class="uk-active"><a href="{% url 'login' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-in;"></span> Login</a></li>
-                        {% endif %}
-                        {% if not user.is_authenticated %}
-                            <li><a href="{% url 'signup' %}"><span class="uk-margin-small-right" uk-icon="icon: plus-circle;"> Hospital Sign Up</span></a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        {#uk-scrollspy="cls:  uk-animation-slide-bottom-small; target: > div, div > .uk-card; delay: 200; repeat: false"#}
+
         <div class="site-content" style="display: none">
             {% block body %}
 
@@ -151,47 +55,10 @@
                 <div class="uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-padding-small uk-padding-remove-left uk-padding-remove-right">
                     <span class="uk-text-bold uk-text-small">
                         <hr>
-                        <span uk-icon="icon: code;"></span> by 2AM Developers
+                        <span uk-icon="icon: code;"></span> by Team 5
                     </span>
                 </div>
             </div>
         </footer>
     </body>
-    <script>
-        var spinner = document.getElementById("spinner");
-        var footer = document.getElementsByTagName("footer")[0];
-        var site_content = document.getElementsByClassName("site-content")[0];
-        footer.style.display = "none";
-        site_content.style.display = "none";
-
-        document.onreadystatechange = () => {
-          if (document.readyState === 'complete') {
-            // document ready
-            spinner.style.display = "none";
-            footer.style.display = "block";
-            site_content.style.display = "block";
-          }
-        };
-    </script>
-    <script>
-        $("#search-box-large").on('keyup', function(){
-            let value = $(this).val();
-            let url = $("#search-box-large").attr("data-suggest-url");
-            $.ajax({
-                url: url,
-                data: {
-                  'search': value
-                },
-                dataType: 'json',
-                success: function (data) {
-                    var list = data.list;
-                    $("#search-box-large").autocomplete({
-                        autoFocus: true,
-                        source: list,
-                        minLength: 1
-                    });
-                }
-            });
-        });
-    </script>
 </html>

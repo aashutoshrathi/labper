@@ -1,0 +1,95 @@
+* {
+    font-family: 'Sunflower', sans-serif !important;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.site-content {
+    flex: 1;
+}
+
+.closer p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+         transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+
+#spinner {
+    // The height here is just for demo purposes
+    height: 100vh;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: opacity linear 0.02s;
+}
+#spinner::before {
+    animation: 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite spinner;
+    border: solid 3px #eee;
+    border-bottom-color: #ef4662;
+    border-radius: 50%;
+    content: "";
+    height: 40px;
+    left: 50%;
+    opacity: inherit;
+    position: absolute;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    transform-origin: center;
+    width: 40px;
+    will-change: transform;
+}
+
+.hover-shadow-card {
+    box-shadow: 0 0 3px rgb(88, 88, 88);
+}
+
+.hover-shadow-card:hover {
+    box-shadow: 0 0 15px rgb(88, 88, 88);
+    transform: scale(1.03, 1.03);
+    transition: all 0.3s ease-in-out;
+}
+
+.hidden-on-large-display {
+    display: none !important;
+}
+
+.uk-offcanvas-bar {
+    background: linear-gradient(to right, rgb(59, 57, 59) 0%, rgba(13, 19, 13, 0.66) 100%) !important;
+    box-shadow: 0 0 15px gray;
+}
+
+.hospital-cover {
+    object-fit: cover;
+    width: 100%;
+}
+
+@media only screen and (max-width: 960px) {
+    .hidden-on-large-display {
+        display: block !important;
+    }
+
+    nav {
+        height: 60px;
+    }
+
+    .hidden-on-small-display {
+        display: none !important;
+    }
+}
+
