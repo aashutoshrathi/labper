@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'landing/base.html' %}
 
-{% block content %}
-  <h2>Homepage</h2>
-  <p>Hello {{ user.username }}!</p>
+{% block body %}
+    <br>
+    <p>Hello {{ user.username }}!</p>
+    <img src="{{ user.profile.avatar }}" width="100">
 {% endblock %}

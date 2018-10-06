@@ -5,3 +5,4 @@ staticfiles
 *.sqlite3
 .vscode
 .idea
+migrations

@@ -41,6 +41,20 @@
                             Labper
                         </a>
                     </div>
+                    <div class="uk-navbar-right uk-text-bold uk-text-large uk-margin-right">
+                        <ul class="uk-navbar-nav">
+                            {% if user.is_authenticated %}
+                                <li class="uk-active"><a>{{ user.username }}</a></li>
+                                <li class="uk-active"><a href="{% url 'logout' %}">Logout</a></li>
+                                <li class="uk-active">
+                                    <a href="#">
+                                        <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="50">
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
             </div>
         </header>
 
@@ -50,12 +64,12 @@
             {% endblock %}
         </div>
 
-        <footer style="display: none">
+        <footer>
             <div align="center" class="footer-wrapper uk-box-shadow-small uk-box-shadow-hover-xlarge">
                 <div class="uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-padding-small uk-padding-remove-left uk-padding-remove-right">
                     <span class="uk-text-bold uk-text-small">
                         <hr>
-                        <span uk-icon="icon: code;"></span> by Team 5
+                        <span uk-icon="icon: code;"></span> by Team Labper
                     </span>
                 </div>
             </div>
