@@ -1,4 +1,5 @@
 {% extends 'landing/base.html' %}
+{% load static %}
 
 {% block title %}
     Labper | Login
@@ -6,10 +7,12 @@
 
 {% block body %}
     <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
-        <h4 class="uk-text-center uk-text-bold">Login with you Institute's account</h4>
+        <h4 class="uk-text-center uk-text-bold">Login with your Institute's account</h4>
 
         <div class="uk-align-center uk-text-center">
-            <a href="{% url 'social:begin' 'google-oauth2' %}" class="uk-icon-button uk-button-default uk-margin-small-right" uk-icon="google"></a>
+            <a href="{% url 'social:begin' 'google-oauth2' %}">
+                <img src="{% static 'images/btn_google_signin_light_normal_web@2x.png' %}" width="200">
+            </a>
         </div>
     </div>
 {% endblock %}

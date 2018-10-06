@@ -1,7 +1,10 @@
 {% extends 'landing/base.html' %}
 
+{% block title %}
+    Labper | Dashboard
+{% endblock %}
+
 {% block body %}
     <br>
-    <p>Hello {{ user.username }}!</p>
-    <img src="{{ user.profile.avatar }}" width="100">
+    <p class="uk-text-center">Hello {{ user.username }}!</p>
 {% endblock %}
