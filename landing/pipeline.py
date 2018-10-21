@@ -9,11 +9,6 @@ def get_profile(backend, user, response, details, *args, **kwargs):
         if response['image'].get('url'):
             small_url = response['image'].get('url')
             url = small_url.replace("sz=50", "sz=160")
-        if not profile.gender:
-            if response.get('gender'):
-                profile.gender = response.get('gender')[0]
-            else:
-                profile.gender = 'n'
     profile.avatar_small = small_url
     profile.avatar = url
     profile.save()

@@ -1,6 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'landing/base.html' %}
 
-{% block content %}
-  <h2>Homepage</h2>
-  <p>Hello {{ user.username }}!</p>
+{% block title %}
+    Labper | Dashboard
+{% endblock %}
+
+{% block body %}
+    <br>
+    <p class="uk-text-center">Hello {{ user.username }}!</p>
 {% endblock %}
