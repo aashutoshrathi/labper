@@ -49,52 +49,27 @@
                                 <li class="uk-active">
                                     <a>{{ user.username }}</a>
                                 </li>
+                            {% if upgd and not user.profile.teacher%}
+                                <li class="uk-active">
+                                    <a href="{% url 'upgrade' %}">Upgrade to Teacher</a>
+                                </li>
+                            {% endif %} 
                                 <li class="uk-active">
                                     <a href="{% url 'logout' %}">Logout</a>
                                 </li>
                                 <li class="uk-active">
                                     <a href="#">
-                                        <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="50">
+                                        {% if user.profile.avatar_small %}
+                                            <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="50">
+                                        {% else %}
+                                            <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="50"> 
+                                        {% endif %}
                                     </a>
                                 </li>
                             {% endif %}
                         </ul>
                     </div>
                 </nav>
-{#                <nav class="navbar is-dark" role="navigation" aria-label="main navigation">#}
-{#                  <div class="navbar-brand">#}
-{#                    <a class="navbar-item" href="/">#}
-{#                      <img src="{% static 'icons/lab.png' %}" width="30">#}
-{#                    </a>#}
-{##}
-{#                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">#}
-{#                      <span aria-hidden="true"></span>#}
-{#                      <span aria-hidden="true"></span>#}
-{#                      <span aria-hidden="true"></span>#}
-{#                    </a>#}
-{#                  </div>#}
-{##}
-{#                  <div id="navbarBasicExample" class="navbar-menu">#}
-{#                    <div class="navbar-start">#}
-{#                      <a class="navbar-item">#}
-{#                        Home#}
-{#                      </a>#}
-{#                      </div>#}
-{#                    </div>#}
-{##}
-{#                    <div class="navbar-end">#}
-{#                      <div class="navbar-item">#}
-{#                        <div class="buttons">#}
-{#                            {% if user.is_authenticated %}#}
-{#                              <a class="button is-danger" href="{% url 'logout' %}">#}
-{#                                <span>Logout</span>#}
-{#                              </a>#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                      </div>#}
-{#                    </div>#}
-{#                  </div>#}
-{#                </nav>#}
             </div>
         </header>
 

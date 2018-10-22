@@ -20,7 +20,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.URLField(null=True, blank=True, help_text='Profile picture URL')
     avatar_small = models.URLField(null=True, blank=True, help_text='Profile picture smaller URL')
-    email_confirmed = models.BooleanField(default=False)
+    teacher = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.first_name
