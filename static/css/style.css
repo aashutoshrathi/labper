@@ -17,6 +17,32 @@ body {
     padding: 0 !important;
 }
 
+#big-box{
+    margin-top: 120px;
+}
+
+#bg-teal{
+    background-color: #005555;
+}
+
+.text-teal{
+    color:#008080;
+}
+
+#head-labper{
+    color: #eeeeee;
+    font-size: 92.2%;
+}
+
+footer{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.footer-wrapper{
+    margin-bottom: 2px !important;
+}
+
 @keyframes spinner {
     0% {
         transform: translate3d(-50%, -50%, 0) rotate(0deg);

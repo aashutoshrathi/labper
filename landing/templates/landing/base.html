@@ -35,11 +35,11 @@
     <body>
         <header>
             <div uk-sticky="show-on-up: true; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar; animation: uk-animation-slide-top;">
-                <nav class="uk-navbar-container uk-box-shadow-medium" uk-navbar style="position: relative;">
+                <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium" uk-navbar style="position: relative;">
                     <div class="uk-navbar-left">
                         <a class="uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
                             <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-right: 10px;">
-                            Labper
+                            <b id="head-labper">Labper
                         </a>
                     </div>
                     <div class="uk-navbar-right uk-text-large uk-margin-right">
@@ -81,7 +81,7 @@
         <footer>
             <div align="center" class="footer-wrapper uk-box-shadow-small uk-box-shadow-hover-xlarge">
                 <div class="uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-padding-small uk-padding-remove-left uk-padding-remove-right">
-                    <span class="uk-text-small">
+                    <span class="uk-text-small text-teal">
                         <hr>
                         <span uk-icon="icon: code;"></span> by Team Labper
                     </span>
