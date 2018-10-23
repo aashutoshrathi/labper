@@ -20,7 +20,7 @@ body {
 
 #bg-teal{
     background-color: #005555;
-}
+} 
 
 .text-teal{
     color:#008080;
@@ -42,6 +42,10 @@ body {
     font-size: 92.2%;
 }
 
+.headid{
+    float: right;
+    margin-left: 900px;
+}
 
 @keyframes spinner {
     0% {

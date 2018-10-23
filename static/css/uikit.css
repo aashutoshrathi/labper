@@ -3915,11 +3915,11 @@ ul.uk-nav-sub {
 }
 /* OnClick */
 .uk-navbar-nav > li > a:active {
-  color: #333;
+  color:white;
 }
 /* Active */
 .uk-navbar-nav > li.uk-active > a {
-  color: #333;
+  color: white;
 }
 /* Item
  ========================================================================== */
