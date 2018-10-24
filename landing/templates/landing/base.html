@@ -39,10 +39,10 @@
                     <div class="uk-navbar-left">
                         <a class="uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
                             <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-right: 10px;">
-                            <b id="head-labper">Labper
+                            <b id="head-labper" class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">Labper
                         </a>
                     </div>
-                    <div class="uk-text-large uk-margin-right headid">
+                    <div class="uk-navbar-right uk-text-large">
                         <ul class="uk-navbar-nav">
                             {% if user.is_authenticated %}
                                 <li class="uk-active">

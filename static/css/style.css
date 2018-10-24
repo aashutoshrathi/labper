@@ -42,10 +42,6 @@ body {
     font-size: 92.2%;
 }
 
-.headid{
-    float: right;
-}
-
 .hover-shadow-card {
     box-shadow: 0 0 3px rgb(88, 88, 88);
 }
