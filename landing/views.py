@@ -40,6 +40,8 @@ def downgrade(request):
 
 
 def land(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     return render(request, 'registration/login.html')
 
 

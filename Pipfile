@@ -15,4 +15,4 @@ social-auth-app-django = '*'
 python-decouple = '*'
 
 [dev-packages]
-pylint = "*"
+pylint = "<2.0.0"
