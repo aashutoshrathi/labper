@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import Profile
+from .models import Profile, Teacher
 from django.http import JsonResponse
 
 
@@ -16,26 +16,16 @@ def home(request):
 
 @login_required
 def upgrade(request):
-    x = request.user
-    target = Profile.objects.get(user=x)
+    current = request.user
+    target = Profile.objects.get(user=current)
     if not target.user.username.isdigit():
-        target.teacher = True
-        target.save()
+        make_teacher, create = Teacher.objects.get_or_create(profile=target)
     else:
         data = {
             'error': "Forbidden",
             'description': "Not for you Nigga!"
         }
         return JsonResponse(data)
-    return redirect('home')
-
-
-@login_required
-def downgrade(request):
-    x = request.user
-    target = Profile.objects.get(user=x)
-    target.teacher = False
-    target.save()
     return redirect('home')
 
 

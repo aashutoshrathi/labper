@@ -1,5 +1,5 @@
 * {
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Niramit', sans-serif !important;
 }
 
 body {
@@ -22,13 +22,15 @@ body {
     background-color: #005555;
 } 
 
-.text-teal{
+.text-teal {
     color:#008080;
 }
 
-.text-white{
+.text-white {
     color:#ffffff;
 }
+
+
 
 .margin-foot{
     position:absolute;
@@ -37,8 +39,8 @@ body {
     height:80px; 
 }
 
-#head-labper{
-    color: #eeeeee;
+#head-labper {
+    color: white;
     font-size: 92.2%;
 }
 

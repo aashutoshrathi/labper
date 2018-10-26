@@ -5,7 +5,90 @@
 {% endblock %}
 
 {% block body %}
-    <br>
-    <p class="uk-text-center text-teal">Hello {{ user.username }}!</p>
-    <p class="uk-text-center text-teal">Teacher Status: {{ user.profile.teacher }}</p>
+    {% if user.profile.teacher_profile %}
+        <div class="uk-text-center" uk-grid>
+            <div class="uk-width-1-3">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <h3 class="uk-card-title">Summary</h3>
+                    <hr>
+                </div>
+            </div>
+            <div class="uk-width-1-3">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <h3 class="uk-card-title">My Courses</h3>
+                    <hr>
+                    <table class="uk-table uk-table-striped">
+                        <thead>
+                            <tr>
+                                <th class="uk-text-center">Code</th>
+                                <th class="uk-text-center">Batch</th>
+                                <th class="uk-text-center">Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CS305</td>
+                                <td>2020</td>
+                                <td>Automata Theory</td>
+                            </tr>
+                        </tbody>
+                    </table>               
+                </div>
+            </div>
+            <div class="uk-width-1-3">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <h3 class="uk-card-title">Actions</h3>
+                    <hr>
+                    <a class="uk-text-center uk-margin text-white uk-border-pill uk-width-auto uk-button uk-button-primary">Add TA</a>
+                    <br>
+                    <a class="uk-text-center uk-margin text-white uk-border-pill uk-width-auto uk-button uk-button-primary">Add Students</a>
+                    <br>
+                    <a class="uk-text-center text-white uk-border-pill uk-button uk-button-secondary">Choose Courses</a>
+                </div>
+            </div>
+        </div>
+    
+    {% elif user.profile.assistant_profile %}
+
+    {% else %}
+    <div class="uk-text-center" uk-grid>
+        <div class="uk-width-1-3">
+            <div class="uk-card uk-card-default uk-card-body">
+                <h3 class="uk-card-title">Summary</h3>
+                <hr>
+            </div>
+        </div>
+        <div class="uk-width-1-3">
+            <div class="uk-card uk-card-default uk-card-body">
+                <h3 class="uk-card-title">My Courses</h3>
+                <hr>
+                <table class="uk-table uk-table-striped">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-center">Code</th>
+                            <th class="uk-text-center">Batch</th>
+                            <th class="uk-text-center">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CS305</td>
+                            <td>2020</td>
+                            <td>Automata Theory</td>
+                        </tr>
+                    </tbody>
+                </table>               
+            </div>
+        </div>
+        <div class="uk-width-1-3">
+            <div class="uk-card uk-card-default uk-card-body">
+                <h3 class="uk-card-title">Actions</h3>
+                <hr>
+                <a class="uk-text-center uk-margin text-white uk-border-pill uk-width-auto uk-button uk-button-primary">Submit Assignments</a>
+                <br>
+                <a class="uk-text-center text-white uk-border-pill uk-button uk-button-secondary">Previous Submissions</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

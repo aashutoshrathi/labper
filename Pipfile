@@ -16,4 +16,5 @@ python-decouple = '*'
 dj_database_url = '*'
 
 [dev-packages]
-pylint = "<2.0.0"
+pylint = '*'
+pylint-django = '*'
