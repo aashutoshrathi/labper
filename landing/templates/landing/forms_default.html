@@ -1,0 +1,17 @@
+{% extends 'landing/base.html' %}
+
+{% block title %}
+    Labper | Dashboard
+{% endblock %}
+
+{% block body %}
+<div class="uk-card-hover uk-border-rounded uk-card-default uk-card-body uk-width-1-2@m uk-margin-top uk-align-center">
+    <h2 class="uk-modal-title uk-margin-small-top">Add Course</h2>
+    <form enctype="multipart/form-data" id="signUp" class="uk-table-responsive uk-align-center" action="#" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="uk-width-1-1 uk-button uk-button-primary uk-width-auto uk-align-center uk-border-pill" type="submit" value="Submit" />
+    </form>
+</div>
+
+{% endblock %}

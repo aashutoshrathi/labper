@@ -21,6 +21,10 @@ class Profile(models.Model):
     def get_fullname(self):
         full_name = '%s %s' % (self.user.first_name, self.user.last_name)
         return full_name.strip()
+    
+    @property
+    def roll_no(self):
+        return self.user.email.split('@')[0]
 
 
 @receiver(post_save, sender=User)

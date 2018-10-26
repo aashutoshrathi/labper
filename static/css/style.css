@@ -30,8 +30,6 @@ body {
     color:#ffffff;
 }
 
-
-
 .margin-foot{
     position:absolute;
     bottom:0;
@@ -41,31 +39,6 @@ body {
 
 #head-labper {
     color: white;
-    font-size: 92.2%;
-}
-
-.hover-shadow-card {
-    box-shadow: 0 0 3px rgb(88, 88, 88);
-}
-
-.hover-shadow-card:hover {
-    box-shadow: 0 0 15px rgb(88, 88, 88);
-    transform: scale(1.03, 1.03);
-    transition: all 0.3s ease-in-out;
-}
-
-.hidden-on-large-display {
-    display: none !important;
-}
-
-.uk-offcanvas-bar {
-    background: linear-gradient(to right, rgb(59, 57, 59) 0%, rgba(13, 19, 13, 0.66) 100%) !important;
-    box-shadow: 0 0 15px gray;
-}
-
-.hospital-cover {
-    object-fit: cover;
-    width: 100%;
 }
 
 @media only screen and (max-width: 960px) {

@@ -74,6 +74,17 @@
         </header>
 
         <div class="site-content">
+                {% if messages %}
+                    {% for message in messages %}
+                        <h5 {% if message.tags %}
+                            {% if message.tags == "error" %}
+                                class="uk-text-danger uk-text-center"
+                            {% else %}
+                                class="uk-text-{{ message.tags }}"
+                            {% endif %}
+                        {% endif %}>{{ message }}</h5>
+                    {% endfor %}
+                {% endif %}
             {% block body %}
 
             {% endblock %}

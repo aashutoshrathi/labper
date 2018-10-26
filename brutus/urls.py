@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^$', views.land, name='land'),
     url(r'^home/$', views.home, name='home'),
     url(r'^upgrade/', views.upgrade, name='upgrade'),
+    url(r'^add_course/', views.AddCourse.as_view(), name='add_course'),
     path('admin/', admin.site.urls),
     # url(r'^login/$', auth_views.LoginView.as_view(template_name="registration/login.html"), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="registration/login.html"), name='logout'),
