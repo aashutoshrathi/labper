@@ -22,8 +22,8 @@
         <link rel="icon" type="image/png" href="{% static 'icons/lab.png' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/uikit.min.css' %}">
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/uikit-rtl.min.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Niramit" rel="stylesheet">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
@@ -36,65 +36,40 @@
     <body>
         <header>
             <div uk-sticky="show-on-up: true; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar; animation: uk-animation-slide-top;">
-                <nav class="uk-navbar-container uk-box-shadow-medium" uk-navbar style="position: relative;">
+                <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium" uk-navbar style="position: relative;">
                     <div class="uk-navbar-left">
                         <a class="uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
-                            <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-right: 10px;">
-                            Labper
+                            <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-left: 5px;">
+                            <b id="head-labper" class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">Labper
                         </a>
                     </div>
-                    <div class="uk-navbar-right uk-text-large uk-margin-right">
+                    <div class="uk-navbar-right uk-text-large">
                         <ul class="uk-navbar-nav">
                             {% if user.is_authenticated %}
                                 <li class="uk-active">
-                                    <a>{{ user.username }}</a>
+                                    <a class="text-white">{{ user.username }}</a>
                                 </li>
+                            {% if upgd and not user.profile.teacher_profile %}
                                 <li class="uk-active">
-                                    <a href="{% url 'logout' %}">Logout</a>
+                                    <a class="text-white" href="{% url 'upgrade' %}">Upgrade to Teacher</a>
+                                </li>
+                            {% endif %}
+                                <li class="uk-active">
+                                    <a class="text-white" href="{% url 'logout' %}">Logout</a>
                                 </li>
                                 <li class="uk-active">
                                     <a href="#">
-                                        <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="50">
+                                        {% if user.profile.avatar_small %}
+                                            <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="50">
+                                        {% else %}
+                                            <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="50"> 
+                                        {% endif %}
                                     </a>
                                 </li>
                             {% endif %}
                         </ul>
                     </div>
                 </nav>
-{#                <nav class="navbar is-dark" role="navigation" aria-label="main navigation">#}
-{#                  <div class="navbar-brand">#}
-{#                    <a class="navbar-item" href="/">#}
-{#                      <img src="{% static 'icons/lab.png' %}" width="30">#}
-{#                    </a>#}
-{##}
-{#                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">#}
-{#                      <span aria-hidden="true"></span>#}
-{#                      <span aria-hidden="true"></span>#}
-{#                      <span aria-hidden="true"></span>#}
-{#                    </a>#}
-{#                  </div>#}
-{##}
-{#                  <div id="navbarBasicExample" class="navbar-menu">#}
-{#                    <div class="navbar-start">#}
-{#                      <a class="navbar-item">#}
-{#                        Home#}
-{#                      </a>#}
-{#                      </div>#}
-{#                    </div>#}
-{##}
-{#                    <div class="navbar-end">#}
-{#                      <div class="navbar-item">#}
-{#                        <div class="buttons">#}
-{#                            {% if user.is_authenticated %}#}
-{#                              <a class="button is-danger" href="{% url 'logout' %}">#}
-{#                                <span>Logout</span>#}
-{#                              </a>#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                      </div>#}
-{#                    </div>#}
-{#                  </div>#}
-{#                </nav>#}
             </div>
         </header>
 
@@ -106,8 +81,8 @@
 
         <footer>
             <div align="center" class="footer-wrapper uk-box-shadow-small uk-box-shadow-hover-xlarge">
-                <div class="uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-padding-small uk-padding-remove-left uk-padding-remove-right">
-                    <span class="uk-text-small">
+                <div class="uk-margin-small-left uk-margin-small-right margin-foot uk-padding-small uk-padding-remove-left uk-padding-remove-right">
+                    <span class="uk-text-small text-teal">
                         <hr>
                         <span uk-icon="icon: code;"></span> by Team Labper
                     </span>

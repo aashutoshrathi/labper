@@ -1,11 +1,12 @@
 * {
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Niramit', sans-serif !important;
 }
 
 body {
     display: flex;
-    min-height: 100vh;
+    min-height: 100%;
     flex-direction: column;
+    height: 100%;
 }
 
 .site-content {
@@ -17,42 +18,30 @@ body {
     padding: 0 !important;
 }
 
-@keyframes spinner {
-    0% {
-        transform: translate3d(-50%, -50%, 0) rotate(0deg);
-    }
-    100% {
-         transform: translate3d(-50%, -50%, 0) rotate(360deg);
-    }
+#bg-teal{
+    background-color: #005555;
+} 
+
+.text-teal {
+    color:#008080;
 }
 
-#spinner {
-    // The height here is just for demo purposes
-    height: 100vh;
-    opacity: 1;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    transition: opacity linear 0.02s;
+.text-white {
+    color:#ffffff;
 }
-#spinner::before {
-    animation: 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite spinner;
-    border: solid 3px #eee;
-    border-bottom-color: #ef4662;
-    border-radius: 50%;
-    content: "";
-    height: 40px;
-    left: 50%;
-    opacity: inherit;
-    position: absolute;
-    top: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    transform-origin: center;
-    width: 40px;
-    will-change: transform;
+
+
+
+.margin-foot{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:80px; 
+}
+
+#head-labper {
+    color: white;
+    font-size: 92.2%;
 }
 
 .hover-shadow-card {
