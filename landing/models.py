@@ -10,13 +10,6 @@ class Profile(models.Model):
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'
 
-    GENDER_CHOICES = (
-        ('m', 'Male'),
-        ('f', 'Female'),
-        ('o', 'Other'),
-        ('n', 'Not Specified')
-    )
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.URLField(null=True, blank=True, help_text='Profile picture URL')
     avatar_small = models.URLField(null=True, blank=True, help_text='Profile picture smaller URL')
