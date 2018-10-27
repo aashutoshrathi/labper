@@ -38,18 +38,38 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+class Session(models.Model):
+    class Meta:
+        ordering = ('type',)
+        verbose_name = 'Session'
+        verbose_name_plural = 'Session'
+
+    SESSION_CHOICES = (
+        ('a', 'Autumn'),
+        ('w', 'Winter'),
+    )
+
+    type = models.CharField(max_length=20, choices=SESSION_CHOICES)
+    start_date = models.DateField()
+
+    def __str__(self):
+        sessions = {'a': 'Autumn', 'w':'Winter'}
+        return sessions[self.type] + "-" + self.start_date.strftime('%Y')
+
+
 class Course(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name = 'Course'
         verbose_name_plural = 'Courses'
 
-    name = models.CharField(max_length=20)
-    code = models.CharField(max_length=10, primary_key=True)
-    session = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
+    code = models.CharField(max_length=10, primary_key=True, help_text="Unique Course Code")
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, help_text="Session when this course is to be taught")
+    target_batch = models.IntegerField(help_text="Year when target batch will graduate", default=2020)
 
     def __str__(self):
-        return self.session + self.name
+        return str(self.session) + " " + self.name
 
 class Teacher(models.Model):
     class Meta:

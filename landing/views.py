@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import Profile, Teacher
+from django.contrib import messages
+from .models import Profile, Teacher, Course
 from django.http import JsonResponse
 from django.views import View
-from .forms import AddCourse
+from .forms import AddCourseForm
 
 @login_required
 def home(request):
@@ -30,25 +31,36 @@ def upgrade(request):
     return redirect('home')
 
 
-class AddCourse(View):
+class ListCourseView(View):
     def get(self, request):
-        if request.user.profile.teacher_profile:
-            form = AddCourse()
-            return render(request, 'landing/forms_default.html', {'form': form})
-        else:
-            messages.error(request, 'Not for you nigga!')
-            return render(request, 'landing/home', {'form': form})
+        courses = Course.objects.all()
+        return render(request, 'landing/course_list.html', {'courses':courses})
+
+
+class AddCourseView(View):
+    def get(self, request):
+        try:
+            if request.user.profile.teacher_profile:
+                form = AddCourseForm()
+                title = "Add Course"
+                return render(request, 'landing/forms_default.html', {'form': form, 
+                                                                      'form_title': title})
+        except:
+            messages.error(request, 'Permission Denied!')
+            return render(request, 'landing/home.html')
 
     def post(self, request):
-        form = AddCourse(request.POST, request.user)
+        form = AddCourseForm(request.POST, request.user)
+        title = "Add Course"
         if form.is_valid():
-            form = AddCourse(request.POST)
+            form = AddCourseForm(request.POST)
             form.save()
-            messages.success(request, 'Your course was successfully updated!')
+            messages.success(request, 'Your course was added successfully!')
             return redirect('home')
         else:
             messages.error(request, 'Course Code already in use.')
-        return render(request, 'landing/forms_default.html', {'form': form})
+        return render(request, 'landing/forms_default.html', {'form': form, 
+                                                              'form_title': title})
 
 
 def land(request):
