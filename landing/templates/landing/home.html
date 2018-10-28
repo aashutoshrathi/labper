@@ -17,6 +17,7 @@
                 <div class="uk-card uk-card-default uk-card-body">
                     <h3 class="uk-card-title">My Courses</h3>
                     <hr>
+                    {% if courses %}
                     <table class="uk-table uk-table-striped">
                         <thead>
                             <tr>
@@ -26,13 +27,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for course in courses %}
                             <tr>
-                                <td>CS305</td>
-                                <td>2020</td>
-                                <td>Automata Theory</td>
+                                <td>{{ course.code }}</td>
+                                <td>{{ course.target_batch }}</td>
+                                <td>{{ course.name }}</td>
                             </tr>
+                            {% endfor %}
                         </tbody>
-                    </table>               
+                    </table>
+                    {% else %}
+                        <p class="uk-text-center"> You have no courses :(  </p>
+                    {% endif %}           
                 </div>
             </div>
             <div class="uk-width-1-3">

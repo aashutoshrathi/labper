@@ -1,19 +1,30 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Profile, Teacher, Course
-from django.http import JsonResponse
-from django.views import View
+import profile
+
 from .forms import AddCourseForm
+from .models import Course, Profile, Teacher
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+from django.views import View
+
 
 @login_required
 def home(request):
     x = request.user
     target = Profile.objects.get(user=x)
-    upgradable = False
     if not target.user.username.isdigit():
-        upgradable = True
-    return render(request, 'landing/home.html', {'upgd': upgradable})
+        teacher = Teacher.objects.get(profile=target)
+        courses = teacher.course.all()
+        context = {
+            'upgd': True,
+            'courses': courses,
+        }
+    else:
+        context = {
+            'upgd': False
+        }
+    return render(request, 'landing/home.html', context=context)
 
 
 @login_required
@@ -33,8 +44,8 @@ def upgrade(request):
 
 class ListCourseView(View):
     def get(self, request):
-        courses = Course.objects.all()
-        return render(request, 'landing/course_list.html', {'courses':courses})
+        t_courses = Teacher.objects.get(profile=request.user.profile).course.all()
+        return render(request, 'landing/course_list.html', {'courses':t_courses})
 
 
 class AddCourseView(View):
@@ -61,6 +72,22 @@ class AddCourseView(View):
             messages.error(request, 'Course Code already in use.')
         return render(request, 'landing/forms_default.html', {'form': form, 
                                                               'form_title': title})
+
+
+@login_required
+def teach_course(request, course, teacher):
+    if request.user.profile.teacher_profile:
+        current = Teacher.objects.get(id=teacher)
+        course_current = Course.objects.get(code=course)
+        current.course.add(course_current)
+    else:
+        data = {
+            'error': "Forbidden",
+            'description': "Not for you Nigga!"
+        }
+        return JsonResponse(data)
+    messages.success(request, 'Your course was added successfully!')
+    return redirect('ListCourseView')
 
 
 def land(request):

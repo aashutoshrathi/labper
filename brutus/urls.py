@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^add_course/', views.AddCourseView.as_view(), name='add_course'),
     url(r'^list_course/', views.ListCourseView.as_view(), name='list_course'),
     path('admin/', admin.site.urls),
-    # url(r'^login/$', auth_views.LoginView.as_view(template_name="registration/login.html"), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="registration/login.html"), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^teach/(?P<teacher>[\w\-]+)/(?P<course>[\w\-]+)/$', views.teach_course, name='teach')
 ]

@@ -26,7 +26,7 @@
                 <td class="uk-text-center">{{ course.target_batch }}</td>
                 <td class="uk-text-center">{{ course.name }}</td>
                 <td>  
-                    <a class="uk-width-1-1 uk-button text-white uk-button-secondary uk-width-auto uk-align-center uk-border-pill">
+                    <a href="{% url 'teach' teacher=user.profile.teacher_profile.id course=course.code %}" class="uk-width-1-1 uk-button text-white uk-button-secondary uk-width-auto uk-align-center uk-border-pill">
                         Teach
                     </a>
                 </td>
