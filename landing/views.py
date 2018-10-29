@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from urllib3 import request
 
 
 @login_required
@@ -45,13 +46,19 @@ def upgrade(request):
 class ListCourseView(View):
     def get(self, request):
         t_courses = Teacher.objects.get(profile=request.user.profile).course.all()
-        return render(request, 'landing/course_list.html', {'courses':t_courses})
+        other = Course.objects.all()
+        other_course = []
+        for c in other:
+            if c not in t_courses:
+                other_course.append(c)
+        return render(request, 'landing/course_list.html', {'courses': t_courses,
+                                                            'other_courses': other_course})
 
 
 class AddCourseView(View):
     def get(self, request):
         try:
-            if request.user.profile.teacher_profile:
+            if request.user.profile.teacher_profile or request.user.is_superuser:
                 form = AddCourseForm()
                 title = "Add Course"
                 return render(request, 'landing/forms_default.html', {'form': form, 
@@ -87,7 +94,23 @@ def teach_course(request, course, teacher):
         }
         return JsonResponse(data)
     messages.success(request, 'Your course was added successfully!')
-    return redirect('ListCourseView')
+    return redirect('list_course')
+
+
+@login_required
+def leave_course(request, course, teacher):
+    if request.user.profile.teacher_profile:
+        current = Teacher.objects.get(id=teacher)
+        course_current = Course.objects.get(code=course)
+        current.course.remove(course_current)
+    else:
+        data = {
+            'error': "Forbidden",
+            'description': "Not for you Nigga!"
+        }
+        return JsonResponse(data)
+    messages.success(request, 'Your have left the course successfully!')
+    return redirect('list_course')
 
 
 def land(request):

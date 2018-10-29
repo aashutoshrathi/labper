@@ -15,5 +15,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="registration/login.html"), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^teach/(?P<teacher>[\w\-]+)/(?P<course>[\w\-]+)/$', views.teach_course, name='teach')
+    url(r'^teach/(?P<teacher>[\w\-]+)/(?P<course>[\w\-]+)/$', views.teach_course, name='teach'),
+    url(r'^leave/(?P<teacher>[\w\-]+)/(?P<course>[\w\-]+)/$', views.leave_course, name='leave'),
 ]

@@ -14,6 +14,7 @@ django-progressive-web-app = "*"
 social-auth-app-django = '*'
 python-decouple = '*'
 dj_database_url = '*'
+django-extensions = "*"
 
 [dev-packages]
 pylint = '*'

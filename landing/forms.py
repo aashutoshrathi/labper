@@ -27,8 +27,6 @@ class AddCourseForm(forms.ModelForm):
         })
 
 
-
-
     class Meta:
         model = Course
         fields = ('name', 'code', 'session', 'target_batch')

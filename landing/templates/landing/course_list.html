@@ -10,14 +10,12 @@
     <hr>
     <table class="uk-table uk-table-striped">
         <thead>
-            {% for course in courses %}
             <tr>
                 <th class="uk-text-center">Course Code</th>
                 <th class="uk-text-center">Batch</th>
                 <th class="uk-text-center">Name</th>
                 <th class="uk-text-center">Action</th>
             </tr>
-            {% endfor %}
         </thead>
         <tbody>
             {% for course in courses %}
@@ -26,12 +24,26 @@
                 <td class="uk-text-center">{{ course.target_batch }}</td>
                 <td class="uk-text-center">{{ course.name }}</td>
                 <td>  
-                    <a href="{% url 'teach' teacher=user.profile.teacher_profile.id course=course.code %}" class="uk-width-1-1 uk-button text-white uk-button-secondary uk-width-auto uk-align-center uk-border-pill">
+                    <a href="{% url 'leave' teacher=user.profile.teacher_profile.id course=course.code %}" class="uk-width-1-1 uk-button text-white uk-button-danger uk-width-auto uk-align-center uk-border-pill">
+                        Leave
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            
+            {% for c in other_courses %}
+            <tr>
+                <td class="uk-text-center">{{ c.code }}</td>
+                <td class="uk-text-center">{{ c.target_batch }}</td>
+                <td class="uk-text-center">{{ c.name }}</td>
+                <td>  
+                    <a href="{% url 'teach' teacher=user.profile.teacher_profile.id course=c.code %}" class="uk-width-1-1 uk-button text-white uk-button-primary uk-width-auto uk-align-center uk-border-pill">
                         Teach
                     </a>
                 </td>
             </tr>
             {% endfor %}
+
         </tbody>
     </table>     
 </div>

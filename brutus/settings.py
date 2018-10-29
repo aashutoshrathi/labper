@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landing.apps.LandingConfig',
     'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
