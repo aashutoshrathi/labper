@@ -21,6 +21,10 @@ class AddCourseForm(forms.ModelForm):
             'placeholder': 'CSX0X or ITX0X'
         })
 
+        self.fields['target_batch'].widget.attrs.update({
+            'class': 'uk-input uk-width-auto',
+        })
+
         self.fields['session'].widget.attrs.update({
             'class': 'uk-select uk-width-auto',
             'placeholder': '20XX-XY'

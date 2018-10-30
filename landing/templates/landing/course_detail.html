@@ -1,0 +1,85 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block title %}
+    Labper | {{ page_title }}
+{% endblock %}
+
+{% block body %}
+<div class="uk-card-hover uk-button uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@l uk-margin-top uk-align-center ">
+    <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p>
+    {% if user.profile.teacher_profile %}
+        <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Add Assistant</a>   
+    {% endif %}
+    <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
+    {% if user.profile.teacher_profile %}    
+        <a class="uk-text-center uk-margin-small uk-margin-remove-bottom uk-button uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Add Studnets</a>           
+    {% endif %}
+    <p><span class="uk-text-bold">Instructor:</span>
+        {{ teachers.all | join:", " }}
+    </p>
+</div>
+<div class="uk-card-hover uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@m uk-margin-top uk-align-center ">
+    <ul class="uk-tab-bottom" uk-tab uk-switcher>
+        <li class="uk-active"><a href="#">Summary</a></li>
+        <li><a href="#">Students</a></li>
+        <li><a href="#">Instructors</a></li>
+    </ul>
+    <ul class="uk-switcher uk-margin">
+        <li>
+            <p class="uk-text-meta">Course events will be added here</p>
+            <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
+                <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Submit</a>   
+                <h3 class="uk-card-title">Example Lab</h3>
+                <hr>
+                <p class="uk-float-right">Deadline: 11:59 PM, 1st Nov 2018</p>
+                <p>Example Description for the lab</p>
+            </div>
+        </li>
+        <li>
+            <p class="uk-text-meta">List of students who are part of course is here.</p>
+            <table class="uk-table uk-table-striped">
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>
+                            <a href="#">
+                                {% if student.profile.avatar_small %}
+                                    <img src="{{ student.profile.avatar_small }}" class="uk-border-circle uk-margin-left" width="40">
+                                {% else %}
+                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="40"> 
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="uk-text-middle">{{ student.profile }}</td>
+                        <td class="uk-text-middle">{{ student.profile.user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </li>
+        <li>
+            <table class="uk-table uk-table-striped">
+                <tbody>
+                    {% for teacher in teachers %}
+                    <tr>
+                        <td>
+                            <a href="#">
+                                {% if teacher.profile.avatar_small %}
+                                    <img src="{{ teacher.profile.avatar_small }}" class="uk-border-circle uk-margin-left" width="40">
+                                {% else %}
+                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="40"> 
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="uk-text-middle">{{ teacher.profile }}</td>
+                        <td class="uk-text-middle">Course Instructor</td>
+                        <td class="uk-text-middle">{{ teacher.profile.user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </li>
+    </ul>
+</div>
+{% endblock %}

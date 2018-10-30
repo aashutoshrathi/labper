@@ -1,51 +1,55 @@
-import profile
+import datetime
+from builtins import object
 
 from .forms import AddCourseForm
-from .models import Course, Profile, Teacher, Student
+from .models import Course, Profile, Student, Teacher
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.views import View
 from urllib3 import request
+
+from brutus import settings
+from landing.models import Assistant, Session
 
 
 @login_required
 def home(request):
     x = request.user
+    month = datetime.date.today().month
+    year = datetime.date.today().year
+    s_type = 'w'
+    if month>6:
+        s_type = 'a'
+    session, create = Session.objects.get_or_create(year=year, type=s_type)
     target = Profile.objects.get(user=x)
     if not target.user.username.isdigit():
-        teacher = Teacher.objects.get(profile=target)
+        teacher, create = Teacher.objects.get_or_create(profile=target)
         courses = teacher.course.all()
         context = {
             'upgd': True,
             'courses': courses,
+            'session': session,
         }
     else:
         batch = int(target.roll_no[:4]) + 4
         branch = target.roll_no[4:6]
-        # print(branch)
         student, create = Student.objects.get_or_create(profile=target, batch=batch, branch=branch)
+        xcourses = Course.objects.filter(target_batch=batch)
+        for c in xcourses:
+            student.course.add(c)
+        courses = student.course.all()
         context = {
             'student': student,
-            'upgd': False
+            'courses': courses,
+            'upgd': False,
+            'session': session,
         }
     return render(request, 'landing/home.html', context=context)
-
-
-@login_required
-def upgrade(request):
-    current = request.user
-    target = Profile.objects.get(user=current)
-    if not target.user.username.isdigit():
-        make_teacher, create = Teacher.objects.get_or_create(profile=target)
-    else:
-        data = {
-            'error': "Forbidden",
-            'description': "Not for you Nigga!"
-        }
-        return JsonResponse(data)
-    return redirect('home')
 
 
 class ListCourseView(View):
@@ -77,8 +81,24 @@ class AddCourseView(View):
         title = "Add Course"
         if form.is_valid():
             form = AddCourseForm(request.POST)
-            form.save()
-            messages.success(request, 'Your course was added successfully!')
+            tform = form.save(commit=False)
+            tform.save()
+            current_site = get_current_site(request)
+            code = tform.code
+            subject = 'Invitation to ' + str(tform.name) + ' by ' + str(request.user.profile)
+            org_email = settings.EMAIL_HOST_USER
+            students = Student.objects.filter(batch=tform.target_batch)
+            instructor = request.user.profile
+            for student in students:
+                message = render_to_string('registration/account_activation_email.html', {
+                    'student': student,
+                    'course': tform.name,
+                    'domain': current_site,
+                    'teacher': instructor
+                })
+                student.profile.user.email_user(subject, message)
+                send_mail(subject, message, org_email, [student.profile.user.email], fail_silently=True)
+            messages.success(request, 'Your course was added successfully and email has been sent.')
             return redirect('home')
         else:
             messages.error(request, 'Course Code already in use.')
@@ -87,10 +107,10 @@ class AddCourseView(View):
 
 
 @login_required
-def teach_course(request, course, teacher):
+def teach_course(request, course, teacher, session):
     if request.user.profile.teacher_profile:
         current = Teacher.objects.get(id=teacher)
-        course_current = Course.objects.get(code=course)
+        course_current = Course.objects.get(code=course, session__id=session)
         current.course.add(course_current)
     else:
         data = {
@@ -99,14 +119,14 @@ def teach_course(request, course, teacher):
         }
         return JsonResponse(data)
     messages.success(request, 'Your course was added successfully!')
-    return redirect('list_course')
+    return redirect('course_detail', course, session)
 
 
 @login_required
-def leave_course(request, course, teacher):
+def leave_course(request, course, session, teacher):
     if request.user.profile.teacher_profile:
         current = Teacher.objects.get(id=teacher)
-        course_current = Course.objects.get(code=course)
+        course_current = Course.objects.get(code=course, session__id=session)
         current.course.remove(course_current)
     else:
         data = {
@@ -116,6 +136,24 @@ def leave_course(request, course, teacher):
         return JsonResponse(data)
     messages.success(request, 'Your have left the course successfully!')
     return redirect('list_course')
+
+
+@login_required
+def course_detail(request, course, session):
+    if request.user.profile:
+        course = Course.objects.get(code=course, session__id=session)
+        teachers = Teacher.objects.filter(course=course)
+        students = Student.objects.filter(batch=course.target_batch)
+        assistants = Assistant.objects.filter()
+        context = {
+            'course': course,
+            'page_title': course.code,
+            'teachers': teachers,
+            'students': students,
+        }
+        return render(request, 'landing/course_detail.html', context=context)
+    messages.error(request, 'Sorry, your sourcery do not work here :)')
+    return redirect('home')
 
 
 def land(request):

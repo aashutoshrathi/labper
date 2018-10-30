@@ -1,0 +1,12 @@
+{% autoescape off %}
+    Hi {{ student.profile.user.first_name }}!,
+
+    We have sent you this email to inform you that you have been invited for {{ course }} by {{ teacher }}.
+    Please check the in My Courses by clicking the URL below:
+    
+    http://{{ domain }}
+    
+    Regards,
+    Team Labper
+    IIIT Vadodara
+{% endautoescape %}

@@ -1,5 +1,7 @@
+import datetime
 import uuid
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -16,11 +18,7 @@ class Profile(models.Model):
     avatar_small = models.URLField(null=True, blank=True, help_text='Profile picture smaller URL')
 
     def __str__(self):
-        return self.user.first_name
-
-    def get_fullname(self):
-        full_name = '%s %s' % (self.user.first_name, self.user.last_name)
-        return full_name.strip()
+        return '%s %s' % (self.user.first_name, self.user.last_name)
     
     @property
     def roll_no(self):
@@ -38,12 +36,16 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+def current_year():
+    return datetime.date.today().year
+
+
 class Session(models.Model):
     class Meta:
         ordering = ('type',)
         verbose_name = 'Session'
         verbose_name_plural = 'Session'
-        unique_together = ("type", "start_date")
+        unique_together = ("type", "year")
 
     SESSION_CHOICES = (
         ('a', 'Autumn'),
@@ -51,11 +53,14 @@ class Session(models.Model):
     )
 
     type = models.CharField(max_length=20, choices=SESSION_CHOICES)
-    start_date = models.DateField()
+    year = models.IntegerField(default=current_year, validators=[
+            MinValueValidator(current_year()),
+            MaxValueValidator(2100)
+        ])
 
     def __str__(self):
         sessions = {'a': 'Autumn', 'w':'Winter'}
-        return sessions[self.type] + "-" + self.start_date.strftime('%Y')
+        return sessions[self.type] + "-" + str(self.year)
 
 
 class Course(models.Model):
@@ -66,9 +71,11 @@ class Course(models.Model):
         unique_together = ("code", "session")
 
     name = models.CharField(max_length=50)
-    code = models.CharField(max_length=10, primary_key=True, help_text="Unique Course Code")
+    code = models.CharField(max_length=10, help_text="Unique Course Code")
     session = models.ForeignKey(Session, on_delete=models.CASCADE, help_text="Session when this course is to be taught")
-    target_batch = models.IntegerField(help_text="Year when target batch will graduate", default=2020)
+    target_batch = models.IntegerField(help_text="Year when target batch will graduate", default=2020, validators=[
+            MinValueValidator(2019),
+            MaxValueValidator(2104)])
 
     def __str__(self):
         return str(self.session) + " " + self.name
@@ -82,7 +89,7 @@ class Student(models.Model):
     
     BRANCH_CHOICES = (
         ('51', 'B.Tech CSE'),
-        ('52'   , 'B.Tech IT'),
+        ('52', 'B.Tech IT'),
         ('61', 'M.Tech CSE'),
         ('62', 'M.Tech IT'),
         ('71', 'Ph.D.'),        
@@ -111,7 +118,7 @@ class Teacher(models.Model):
     course = models.ManyToManyField(Course, related_name='teacher_course')
 
     def __str__(self):
-        return self.profile.user.first_name
+        return str(self.profile)
 
 
 class Assistant(models.Model):
