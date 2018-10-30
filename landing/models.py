@@ -43,6 +43,7 @@ class Session(models.Model):
         ordering = ('type',)
         verbose_name = 'Session'
         verbose_name_plural = 'Session'
+        unique_together = ("type", "start_date")
 
     SESSION_CHOICES = (
         ('a', 'Autumn'),
@@ -62,6 +63,7 @@ class Course(models.Model):
         ordering = ('name',)
         verbose_name = 'Course'
         verbose_name_plural = 'Courses'
+        unique_together = ("code", "session")
 
     name = models.CharField(max_length=50)
     code = models.CharField(max_length=10, primary_key=True, help_text="Unique Course Code")
@@ -70,6 +72,34 @@ class Course(models.Model):
 
     def __str__(self):
         return str(self.session) + " " + self.name
+
+
+class Student(models.Model):
+    class Meta:
+        ordering = ('profile',)
+        verbose_name = 'Student'
+        verbose_name_plural = 'Students'
+    
+    BRANCH_CHOICES = (
+        ('51', 'B.Tech CSE'),
+        ('52'   , 'B.Tech IT'),
+        ('61', 'M.Tech CSE'),
+        ('62', 'M.Tech IT'),
+        ('71', 'Ph.D.'),        
+    )
+
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='student_profile')
+    batch = models.IntegerField()
+    branch = models.CharField(max_length=50, choices=BRANCH_CHOICES)
+    course = models.ManyToManyField(Course, related_name='student_course')
+
+    def __str__(self):
+        return self.profile.user.first_name
+    
+    @property
+    def roll_no(self):
+        return self.profile.user.email.split('@')[0]
+
 
 class Teacher(models.Model):
     class Meta:

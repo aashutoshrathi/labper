@@ -61,12 +61,19 @@
         <div class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title">Summary</h3>
+                <p class="uk-text-meta">Recent Lab</p>
+                <hr>
+                <div class="closer">
+                    <p>Batch of <span class="uk-text-bold">{{ student.batch }}</span></p>
+                    <p class="uk-text-bold">{{ student.get_branch_display }}</p>                    
+                </div>
                 <hr>
             </div>
         </div>
         <div class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title">My Courses</h3>
+                <p class="uk-text-meta">Your enrolled courses</p>
                 <hr>
                 <table class="uk-table uk-table-striped">
                     <thead>
@@ -89,6 +96,7 @@
         <div class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title">Actions</h3>
+                <p class="uk-text-meta">Few actions to make your life easier</p>
                 <hr>
                 <a class="uk-text-center uk-margin text-white uk-border-pill uk-width-auto uk-button uk-button-primary">Submit Assignments</a>
                 <br>

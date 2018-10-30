@@ -33,29 +33,29 @@
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-    <body>
+    <body class="uk-overflow-hidden">
         <header>
             <div uk-sticky="show-on-up: true; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar; animation: uk-animation-slide-top;">
-                <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium" uk-navbar style="position: relative;">
+                <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium uk-light" uk-navbar style="position: relative;">
                     <div class="uk-navbar-left">
                         <a class="uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
                             <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-left: 5px;">
-                            <b id="head-labper" class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">Labper
+                            <b class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">Labper
                         </a>
                     </div>
                     <div class="uk-navbar-right uk-text-large">
                         <ul class="uk-navbar-nav">
                             {% if user.is_authenticated %}
                                 <li class="uk-active">
-                                    <a class="text-white">{{ user.username }}</a>
+                                    <a>{{ user.username }}</a>
                                 </li>
                             {% if upgd and not user.profile.teacher_profile %}
                                 <li class="uk-active">
-                                    <a class="text-white" href="{% url 'upgrade' %}">Upgrade to Teacher</a>
+                                    <a href="{% url 'upgrade' %}">Upgrade to Teacher</a>
                                 </li>
                             {% endif %}
                                 <li class="uk-active">
-                                    <a class="text-white" href="{% url 'logout' %}">Logout</a>
+                                    <a href="{% url 'logout' %}">Logout</a>
                                 </li>
                                 <li class="uk-active">
                                     <a href="#">

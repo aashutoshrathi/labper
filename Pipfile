@@ -15,6 +15,7 @@ social-auth-app-django = '*'
 python-decouple = '*'
 dj_database_url = '*'
 django-extensions = "*"
+graphviz = "*"
 
 [dev-packages]
 pylint = '*'

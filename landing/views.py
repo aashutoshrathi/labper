@@ -1,7 +1,7 @@
 import profile
 
 from .forms import AddCourseForm
-from .models import Course, Profile, Teacher
+from .models import Course, Profile, Teacher, Student
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -22,7 +22,12 @@ def home(request):
             'courses': courses,
         }
     else:
+        batch = int(target.roll_no[:4]) + 4
+        branch = target.roll_no[4:6]
+        # print(branch)
+        student, create = Student.objects.get_or_create(profile=target, batch=batch, branch=branch)
         context = {
+            'student': student,
             'upgd': False
         }
     return render(request, 'landing/home.html', context=context)

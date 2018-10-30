@@ -1,6 +1,9 @@
+from .models import Assistant, Course, Lab, Profile, Session, Submission, \
+    Teacher
 from django.contrib import admin
 
-from .models import Profile, Teacher, Course, Assistant, Lab, Submission, Session
+from landing.models import Student
+
 
 admin.site.register(Profile)
 admin.site.register(Teacher)
@@ -9,3 +12,4 @@ admin.site.register(Assistant)
 admin.site.register(Lab)
 admin.site.register(Submission)
 admin.site.register(Session)
+admin.site.register(Student)

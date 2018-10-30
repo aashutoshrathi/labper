@@ -45,6 +45,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'landing.middleware.CustomSocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'brutus.urls'

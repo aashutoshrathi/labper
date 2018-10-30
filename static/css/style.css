@@ -7,7 +7,6 @@ body {
     min-height: 100%;
     flex-direction: column;
     height: 100%;
-    overflow: hidden; // prevents page from getting out of aukat
 }
 
 .site-content {
@@ -21,14 +20,6 @@ body {
 
 #bg-teal{
     background-color: #005555;
-} 
-
-.text-teal {
-    color:#008080;
-}
-
-.text-white {
-    color:#ffffff;
 }
 
 .margin-foot{
@@ -36,23 +27,5 @@ body {
     bottom:0;
     width:100%;
     height:80px; 
-}
-
-#head-labper {
-    color: white;
-}
-
-@media only screen and (max-width: 960px) {
-    .hidden-on-large-display {
-        display: block !important;
-    }
-
-    nav {
-        height: 60px;
-    }
-
-    .hidden-on-small-display {
-        display: none !important;
-    }
 }
 
