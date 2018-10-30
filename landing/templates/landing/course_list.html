@@ -1,0 +1,54 @@
+{% extends 'landing/base.html' %}
+
+{% block title %}
+    Labper | Courses List
+{% endblock %}
+
+{% block body %}
+<div class="uk-card-hover uk-border-rounded uk-card-default uk-card-body uk-width-1-2@m uk-margin-top uk-align-center ">
+    <h3 class="uk-card-title">Courses</h3>
+    <hr>
+    <table class="uk-table uk-table-striped">
+        <thead>
+            <tr>
+                <th class="uk-text-center">Course Code</th>
+                <th class="uk-text-center">Batch</th>
+                <th class="uk-text-center">Name</th>
+                <th class="uk-text-center">Session</th>
+                <th class="uk-text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td class="uk-text-center">{{ course.code }}</td>
+                <td class="uk-text-center">{{ course.target_batch }}</td>
+                <td class="uk-text-center">{{ course.name }}</td>
+                <td class="uk-text-center">{{ course.session }}</td>
+                <td>
+                    <a href="{% url 'leave' teacher=user.profile.teacher_profile.id course=course.code session=course.session.id %}" class="uk-width-1-1 uk-button text-white uk-button-danger uk-width-auto uk-align-center uk-border-pill">
+                        Leave
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            
+            {% for c in other_courses %}
+            <tr>
+                <td class="uk-text-center">{{ c.code }}</td>
+                <td class="uk-text-center">{{ c.target_batch }}</td>
+                <td class="uk-text-center">{{ c.name }}</td>
+                <td class="uk-text-center">{{ c.session }}</td>
+                <td>  
+                    <a href="{% url 'teach' teacher=user.profile.teacher_profile.id course=c.code session=c.session.id %}" class="uk-width-1-1 uk-button text-white uk-button-primary uk-width-auto uk-align-center uk-border-pill">
+                        Teach
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>     
+</div>
+
+{% endblock %}
