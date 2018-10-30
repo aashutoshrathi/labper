@@ -162,6 +162,10 @@ def land(request):
     return render(request, 'registration/login.html')
 
 
+def about(request):
+    return render(request, 'landing/about_us.html')
+
+
 # only4 testing
 def test_func():
     return True

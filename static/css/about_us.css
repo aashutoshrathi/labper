@@ -5,6 +5,10 @@ body {
     overflow-x: hidden;
 }
 
+#bg-teal{
+    background-color: #005555;
+}
+
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -377,10 +381,6 @@ header video {
     opacity: 1;
 }
 
-.member-thumb:hover .thumb-overlay:after {
-
-}
-
 .member-thumb .thumb-overlay:hover {
     opacity: 0;
 }
@@ -539,10 +539,6 @@ a.uk-icon-button {
 
 .split-section-header {
     font-size: 24px;
-}
-
-.plan ul{
-    list-style-image: url('../img/icons/bullet@3x.svg');
 }
 
 .cta.partner button.submit, .cta.partner input.submit {

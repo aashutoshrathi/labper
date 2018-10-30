@@ -1,0 +1,274 @@
+{% load static %}
+<head>
+        <meta charset="UTF-8">
+        <meta name="google-site-verification" content="X2aePlqF727JEAvz1NlxXZo4qmIVCfnyp4ORWwl-jOg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <!-- Android-->
+        <meta name="theme-color" content="#455A64" />
+        <!-- Windows Phone -->
+        <meta name="msapplication-navbutton-color" content="#455A64">
+        <!-- iOS Safari -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <title>
+            {% block title %}
+                Labper
+            {% endblock %}
+        </title>
+        <link rel="icon" type="image/png" href="{% static 'icons/lab.png' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/about_us.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/uikit.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/uikit-rtl.min.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Saira+Semi+Condensed:700" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/brands.css" integrity="sha384-VGCZwiSnlHXYDojsRqeMn3IVvdzTx5JEuHgqZ3bYLCLUBV8rvihHApoA1Aso2TZA" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/fontawesome.css" integrity="sha384-GVa9GOgVQgOk+TNYXu7S/InPTfSDTtBalSgkgqQ7sCik56N9ztlkoTr2f/T44oKV" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+    </head>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/uikit.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/uikit-icons.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <body>
+            <div uk-sticky="show-on-up: true; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar; animation: uk-animation-slide-top;">
+                <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium uk-light" uk-navbar style="position: relative;">
+                    <div class="uk-navbar-left">
+                        <a class="uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
+                            <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-left: 5px;">
+                            <b class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">Labper
+                        </a>
+                    </div>
+                    <div class="uk-navbar-right uk-text-large">
+                        <ul class="uk-navbar-nav">
+                            {% if user.is_authenticated %}
+                                <li class="uk-active">
+                                    <a>{{ user.username }}</a>
+                                </li>
+                                <li class="uk-active">
+                                    <a href="{% url 'logout' %}">Logout</a>
+                                </li>
+                                <li class="uk-active">
+                                    <a href="#">
+                                        {% if user.profile.avatar_small %}
+                                            <img src="{{ user.profile.avatar_small }}" class="uk-border-circle" width="50">
+                                        {% else %}
+                                            <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="50"> 
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+{% block body %}
+    <div class="wrapper">
+        <div class="uk-padding-medium"></div>
+            <div class="uk-container">
+                    <h3 class="title-deco uk-text-center title-text color-black-a54">
+                        <i class="fa fa-flask fa-lg" aria-hidden="true"></i>
+                        <span class="title-deco-text text-teal">About Labper</span>
+                        <i class="fa fa-flask fa-lg" aria-hidden="true"></i>
+                    </h3>
+            </div>
+
+        <div id="intro" class="intro uk-container uk-margin--medium-top">
+
+            <div class="uk-padding-medium"></div>
+            <div class="uk-grid">
+                <div class="uk-width-1-6@m"></div>
+                <div class="intro-wrapper uk-width-2-3@m color-black-a54">
+                    <p>
+                        <strong>Lab Performance Evaluator</strong>
+                    </p>
+                    <p>
+                        Labper will serve as a web portal that serves as a comprehensive tool to assist
+                        professors in conducting labs systematically and awarding grades unambiguously.
+                        The necessity for such a software arises from the various issues faced by students 
+                        and professors alike in their respective lab courses. The lack of basic resources
+                        is common to both students and professors. The resources they lack however differ. 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-padding-small"></div>
+
+        <!--Team Section-->
+        <div id="team" class="team uk-margin-large-top">
+            <div class="uk-container">
+                <h3 class="title-deco uk-text-center title-text color-black-a54">
+                    <i class="fa fa-group fa-lg" aria-hidden="true"></i>
+                    <span class="title-deco-text text-teal">TEAM</span>
+                    <i class="fa fa-group fa-lg" aria-hidden="true"></i>
+                </h3>
+
+                <div class="uk-grid uk-margin-large-top team-wrapper">
+
+                    <!--AashutoshRathi-->
+                    <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
+                        <div class="member-thumb">
+                            <img src="{% static "images/aashutosh.jpg" %}" alt="AashutoshRathi" class="">
+                            <div class="thumb-overlay"></div>
+                        </div>
+                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Aashutosh Rathi</h3>
+                    </div>
+
+                    <!--Abhishek-->
+                    <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
+                        <div class="member-thumb">
+                            <img src="{% static 'images/abhishek.jpg' %}" alt="AbhishekKumar" class="">
+                            <div class="thumb-overlay"></div>
+                        </div>
+                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Abhishek Kumar</h3>
+                    </div>
+
+                    <!--Pritha-->
+                    <div class="uk-margin-large-top uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center">
+                        <div class="member-thumb">
+                            <img src="{% static 'images/pritha.jpg' %}" alt="PrithaUpadhyay" class="">
+                            <div class="thumb-overlay"></div>
+                        </div>
+                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Pritha Upadhyay</h3>
+                    </div>
+
+                    <!--Aman-->
+                    <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
+                        <div class="member-thumb">
+                        <img src="{% static 'images/aman.jpg' %}" alt="AmanSingh" class="">
+                            <div class="thumb-overlay"></div>
+                        </div>
+                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Aman Singh</h3>
+                    </div>
+
+                    <!--Varun-->
+                    <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
+                        <div class="member-thumb">
+                            <img src="{% static 'images/varun.jpg' %}" alt="VarunBafna" class="">
+                            <div class="thumb-overlay"></div>
+                        </div>
+                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Varun Bafna</h3>
+                    </div>
+
+                    <!--Ayush-->
+                    <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
+                        <div class="member-thumb">
+                            <img src="{% static 'images/ayush.jpg' %}" alt="AyushMudgal" class="">
+                            <div class="thumb-overlay"></div>
+                        </div> 
+                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Ayush Mudgal</h3>
+                    </div>
+
+                    </div>
+                </div>
+                <div class="uk-padding-small"></div>
+            </div>
+        </div>
+
+        <div class="uk-padding-small"></div>
+        <div id="associates" class="associates uk-margin-top">
+
+            <div class="uk-container">
+                <h3 class="title-deco uk-text-center title-text color-black-a54">   
+                    <span class="title-deco-text text-teal">Associated with</span>
+                </h3>
+                <div class="uk-grid uk-margin-large-top associated-links-wrapper">
+                    <div class="uk-text-center uk-flex uk-flex-wrap">
+                        <div>
+                            <div class="pow-container uk-flex-wrap">
+                                <div class="pow-icon">
+                                    <a href="http://iiitvadodara.ac.in/" class="supp-logo-wrapper  uk-padding-remove remove-border" target="_blank">
+                                        <img class="logo full-width" src="{% static 'images/iiit.jpg' %}"
+                                                alt="IIIT Vadodara">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <br>
+        <br>
+        </body>
+    {% endblock body %}
+    <footer>
+        <div align="center" class="footer-wrapper uk-box-shadow-small uk-box-shadow-hover-xlarge">
+            <div class="uk-margin-small-left uk-margin-small-right margin-foot uk-padding-small uk-padding-remove-left uk-padding-remove-right">
+                <span class="uk-text-small text-teal">
+                    <hr>
+                    <span uk-icon="icon: code;"></span> by Team Labper | 
+                    <a class="uk-text-link" href="{% url 'about' %}">About Us</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+    </html>
+    <script>
+        //    Code Credit: https://codepen.io/rleve/pen/iCbgy
+        (function () {
+            'use strict';
+            // Feature Test
+            if ('querySelector' in document && 'addEventListener' in window && Array.prototype.forEach) {
+                // Function to animate the scroll
+                var smoothScroll = function (anchor, duration) {
+                    // Calculate how far and how fast to scroll
+                    var startLocation = window.pageYOffset;
+                    var endLocation = anchor.offsetTop;
+                    var distance = endLocation - startLocation;
+                    var increments = distance / (duration / 16);
+                    var stopAnimation;
+                    // Scroll the page by an increment, and check if it's time to stop
+                    var animateScroll = function () {
+                        window.scrollBy(0, increments);
+                        stopAnimation();
+                    };
+                    // If scrolling down
+                    if (increments >= 0) {
+                        // Stop animation when you reach the anchor OR the bottom of the page
+                        stopAnimation = function () {
+                            var travelled = window.pageYOffset;
+                            if ((travelled >= (endLocation - increments)) || ((window.innerHeight +
+                                    travelled) >= document.body.offsetHeight)) {
+                                clearInterval(runAnimation);
+                            }
+                        };
+                    }
+                    // If scrolling up
+                    else {
+                        // Stop animation when you reach the anchor OR the top of the page
+                        stopAnimation = function () {
+                            var travelled = window.pageYOffset;
+                            if (travelled <= (endLocation || 0)) {
+                                clearInterval(runAnimation);
+                            }
+                        };
+                    }
+                    // Loop the animation function
+                    var runAnimation = setInterval(animateScroll, 16);
+                };
+                // Define smooth scroll links
+                var scrollToggle = document.querySelectorAll('.scroll');
+                // For each smooth scroll link
+                [].forEach.call(scrollToggle, function (toggle) {
+                    // When the smooth scroll link is clicked
+                    toggle.addEventListener('click', function (e) {
+                        // Prevent the default link behavior
+                        e.preventDefault();
+                        // Get anchor link and calculate distance from the top
+                        var dataID = toggle.getAttribute('href');
+                        var dataTarget = document.querySelector(dataID);
+                        var dataSpeed = toggle.getAttribute('data-speed');
+                        // If the anchor exists
+                        if (dataTarget) {
+                            // Scroll to the anchor
+                            smoothScroll(dataTarget, dataSpeed || 500);
+                        }
+                    }, false);
+                });
+            }
+        })();
+    </script>

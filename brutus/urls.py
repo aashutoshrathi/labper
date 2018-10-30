@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^$', views.land, name='land'),
     url(r'^home/$', views.home, name='home'),
+    url(r'^about/$', views.about, name='about'),
     url(r'^add_course/', views.AddCourseView.as_view(), name='add_course'),
     url(r'^course/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$', views.course_detail, name='course_detail'),
     url(r'^list_course/', views.ListCourseView.as_view(), name='list_course'),
