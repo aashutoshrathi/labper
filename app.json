@@ -1,0 +1,43 @@
+{
+    "name": "Deploy Labper",
+    "description": "A lab evaluator for colleges",
+    "image": "heroku/python",
+    "repository": "http://github.com/aashutoshrathi/labper",
+    "keywords": ["python", "django" ],
+    "addons": [ "heroku-postgresql" ],
+    "env": {
+        "EMAIL_HOST_USER": {
+            "description": "Email which will be used to send notifications",
+            "value": "admin@example.com"
+        },
+        "EMAIL_HOST_PASSWORD": {
+            "description": "Password of your email, don't worry its all safe here",
+            "value": "yourPassword"
+        },
+        "EMAIL_HOST": "smtp.gmail.com",
+        "EMAIL_PORT": "465",
+        "DEBUG": "False",
+        "ALLOWED_HOSTS": ".localhost, .herokuapp.com",
+        "SKEY": {
+          "description": "Add your generated secret key here",
+          "value": ""
+        },
+          "G_KEY": {
+          "description": "Your Google OAuth Client ID",
+          "value": ""
+        },
+        "G_SKEY": {
+          "description": "Google OAuth Secret Key",
+          "value": ""
+        }
+    },
+    "environments": {
+      "test": {
+        "scripts": {
+          "test-setup": "python manage.py collectstatic --noinput",
+          "test": "python manage.py test"
+        }
+      }
+    }
+  }
+  
