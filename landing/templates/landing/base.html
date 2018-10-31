@@ -42,6 +42,9 @@
                     </div>
                     <div class="uk-navbar-right uk-text-large">
                         <ul class="uk-navbar-nav">
+                            <li class="uk-active">
+                                <a href="{% url 'ide' %}">IDE</a>
+                            </li>
                             {% if user.is_authenticated %}
                                 <li class="uk-active">
                                     <a>{{ user.username }}</a>

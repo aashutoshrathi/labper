@@ -166,6 +166,10 @@ def about(request):
     return render(request, 'landing/about_us.html')
 
 
+def ide(request):
+    return render(request, 'landing/ide.html')
+
+
 # only4 testing
 def test_func():
     return True
