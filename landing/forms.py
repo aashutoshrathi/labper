@@ -11,7 +11,7 @@ class AddCourseForm(forms.ModelForm):
         super(AddCourseForm, self).__init__(*args, **kwargs)
         self.fields['name'].label = 'Course Name'
         self.fields['code'].label = 'Course Code'
-        
+
         self.fields['name'].widget.attrs.update({
             'class': 'uk-input',
             'placeholder': 'Introduction to Example Technology'
@@ -29,7 +29,6 @@ class AddCourseForm(forms.ModelForm):
             'class': 'uk-select uk-width-auto',
             'placeholder': '20XX-XY'
         })
-
 
     class Meta:
         model = Course

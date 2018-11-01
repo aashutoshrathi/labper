@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "20ed4b58a44c37e678d96064334ba25703a161fd3f2577fef3b3d9c11c9146b5"
+            "sha256": "685077218df2fa4addf25051d0030c3b4108a359fd89b56ac8304791f51c9fc2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "autopep8": {
+            "hashes": [
+                "sha256:1b8d42ebba751a91090d3adb5c06840b1151d71ed43e1c7a9ed6911bfe8ebe6c"
+            ],
+            "index": "pypi",
+            "version": "==1.4.2"
+        },
         "certifi": {
             "hashes": [
                 "sha256:339dc09518b07e2fa7eda5450740925974815557727d6bd35d319c1524a04a4c",
@@ -178,6 +185,13 @@
             "index": "pypi",
             "version": "==2.7.5"
         },
+        "pycodestyle": {
+            "hashes": [
+                "sha256:cbc619d09254895b0d12c2c691e237b2e91e9b2ecf5e84c26b35400f93dcfb83",
+                "sha256:cbfca99bd594a10f674d0cd97a3d802a1fdef635d4361e1a2658de47ed261e3a"
+            ],
+            "version": "==2.4.0"
+        },
         "pyjwt": {
             "hashes": [
                 "sha256:30b1380ff43b55441283cc2b2676b755cca45693ae3097325dea01f3d110628c",
@@ -230,12 +244,12 @@
         },
         "social-auth-app-django": {
             "hashes": [
-                "sha256:36aeb09d0b80a49987d606ff57e7436e51ae48e10fbe0bfcf9ed75dda409b473",
-                "sha256:6afa7c7b91a3ca8edfb15ed6092c31ae96eed23d44768b2d99c7ebb5ffecd5db",
-                "sha256:7578b9f27841736ad395b49d230ec24d750dbad4ee3e4e96207a42094c314513"
+                "sha256:6d0dd18c2d9e71ca545097d57b44d26f59e624a12833078e8e52f91baf849778",
+                "sha256:9237e3d7b6f6f59494c3b02e0cce6efc69c9d33ad9d1a064e3b2318bcbe89ae3",
+                "sha256:f151396e5b16e2eee12cd2e211004257826ece24fc4ae97a147df386c1cd7082"
             ],
             "index": "pypi",
-            "version": "==3.0.0"
+            "version": "==3.1.0"
         },
         "social-auth-core": {
             "hashes": [

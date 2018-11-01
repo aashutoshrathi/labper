@@ -16,6 +16,7 @@ python-decouple = '*'
 dj_database_url = '*'
 django-extensions = "*"
 graphviz = "*"
+"autopep8" = "*"
 
 [dev-packages]
 pylint = '*'

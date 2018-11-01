@@ -23,7 +23,7 @@ def home(request):
     month = datetime.date.today().month
     year = datetime.date.today().year
     s_type = 'w'
-    if month>6:
+    if month > 6:
         s_type = 'a'
     session, create = Session.objects.get_or_create(year=year, type=s_type)
     target = Profile.objects.get(user=x)
@@ -38,7 +38,8 @@ def home(request):
     else:
         batch = int(target.roll_no[:4]) + 4
         branch = target.roll_no[4:6]
-        student, create = Student.objects.get_or_create(profile=target, batch=batch, branch=branch)
+        student, create = Student.objects.get_or_create(
+            profile=target, batch=batch, branch=branch)
         xcourses = Course.objects.filter(target_batch=batch)
         for c in xcourses:
             student.course.add(c)
@@ -54,7 +55,8 @@ def home(request):
 
 class ListCourseView(View):
     def get(self, request):
-        t_courses = Teacher.objects.get(profile=request.user.profile).course.all()
+        t_courses = Teacher.objects.get(
+            profile=request.user.profile).course.all()
         other = Course.objects.all()
         other_course = []
         for c in other:
@@ -70,7 +72,7 @@ class AddCourseView(View):
             if request.user.profile.teacher_profile or request.user.is_superuser:
                 form = AddCourseForm()
                 title = "Add Course"
-                return render(request, 'landing/forms_default.html', {'form': form, 
+                return render(request, 'landing/forms_default.html', {'form': form,
                                                                       'form_title': title})
         except:
             messages.error(request, 'Permission Denied!')
@@ -85,7 +87,8 @@ class AddCourseView(View):
             tform.save()
             current_site = get_current_site(request)
             code = tform.code
-            subject = 'Invitation to ' + str(tform.name) + ' by ' + str(request.user.profile)
+            subject = 'Invitation to ' + \
+                str(tform.name) + ' by ' + str(request.user.profile)
             org_email = settings.EMAIL_HOST_USER
             students = Student.objects.filter(batch=tform.target_batch)
             instructor = request.user.profile
@@ -97,12 +100,14 @@ class AddCourseView(View):
                     'teacher': instructor
                 })
                 student.profile.user.email_user(subject, message)
-                send_mail(subject, message, org_email, [student.profile.user.email], fail_silently=True)
-            messages.success(request, 'Your course was added successfully and email has been sent.')
+                send_mail(subject, message, org_email, [
+                          student.profile.user.email], fail_silently=True)
+            messages.success(
+                request, 'Your course was added successfully and email has been sent.')
             return redirect('home')
         else:
             messages.error(request, 'Course Code already in use.')
-        return render(request, 'landing/forms_default.html', {'form': form, 
+        return render(request, 'landing/forms_default.html', {'form': form,
                                                               'form_title': title})
 
 
