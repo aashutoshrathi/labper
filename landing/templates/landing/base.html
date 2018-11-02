@@ -69,28 +69,30 @@
         </header>
 
         <div class="site-content">
-                {% if messages %}
-                    {% for message in messages %}
-                        <h5 {% if message.tags %}
-                            {% if message.tags == "error" %}
-                                class="uk-text-danger uk-text-center"
-                            {% else %}
-                                class="uk-text-{{ message.tags }} uk-text-center"
-                            {% endif %}
-                        {% endif %}>{{ message }}</h5>
-                    {% endfor %}
-                {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 {% if message.tags %}
+                        {% if message.tags == "error" %}
+                            class="uk-text-danger uk-text-center"
+                        {% else %}
+                            class="uk-text-{{ message.tags }} uk-text-center"
+                        {% endif %}
+                    {% endif %}>{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
             {% block body %}
-
+            
             {% endblock %}
         </div>
 
+
         <footer>
-            <div align="center" class="uk-box-shadow-small uk-box-shadow-hover-xlarge uk-sticky">
-                <div class="uk-margin-small-left uk-margin-small-right uk-padding-small uk-padding-remove-left uk-padding-remove-right">
-                    <span class="uk-text-small text-teal">
+            <div align="center" class="footer-wrapper uk-box-shadow-small uk-box-shadow-hover-xlarge">
+                <div class="uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-padding-small uk-padding-remove-left uk-padding-remove-right">
+                    <span class="uk-text-bold uk-text-small">
                         <hr>
                         <span uk-icon="icon: code;"></span> by Team Labper
+                        | <a class="uk-text-emphasis" href="{% url 'about' %}">About Us</a>
                     </span>
                 </div>
             </div>
