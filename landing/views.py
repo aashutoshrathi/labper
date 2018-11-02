@@ -14,7 +14,7 @@ from django.views import View
 from urllib3 import request
 
 from brutus import settings
-from landing.forms import EditCourseForm
+from landing.forms import AddStudentForm, EditCourseForm
 from landing.models import Assistant, Session
 
 
@@ -132,7 +132,7 @@ class EditCourseView(View):
         title = "Edit Course"
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your course has been updated successfully!')
+            messages.success(request, 'Your course: ' +str(xcourse.name) + ' has been updated successfully!')
             return redirect('home')
         else:
             messages.error(request, 'Course Code already in use.')
@@ -179,8 +179,14 @@ def course_detail(request, course, session):
         teachers = Teacher.objects.filter(course=course)
         students = Student.objects.filter(batch=course.target_batch)
         assistants = Assistant.objects.filter(course=course)
+        s_form = AddStudentForm(request.POST)
+        if s_form.is_valid():
+            student = s_form(commit=False)
+            
+            messages.success("Added Student Successfully")
         context = {
             'course': course,
+            's_form': s_form,
             'page_title': course.code,
             'teachers': teachers,
             'students': students,

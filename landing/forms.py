@@ -1,5 +1,7 @@
+from .models import Course, Profile, Teacher
 from django import forms
-from .models import Profile, Course, Teacher
+
+from landing.models import Student
 
 
 class AddCourseForm(forms.ModelForm):
@@ -40,7 +42,7 @@ class EditCourseForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({
             'class': 'uk-input',
         })
-        
+
         self.fields['code'].widget.attrs.update({
             'class': 'uk-input uk-width-auto',
         })
@@ -56,3 +58,16 @@ class EditCourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = {'name', 'code', 'session', 'target_batch'}
+
+
+class AddStudentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AddStudentForm, self).__init__(*args, **kwargs)
+        self.fields['profile'].label = 'Student'
+        self.fields['profile'].widget.attrs.update({
+            'class': 'uk-select uk-width-auto',
+        })
+
+    class Meta:
+        model = Student
+        fields = {'profile'}
