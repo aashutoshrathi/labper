@@ -14,6 +14,7 @@ from django.views import View
 from urllib3 import request
 
 from brutus import settings
+from landing.forms import EditCourseForm
 from landing.models import Assistant, Session
 
 
@@ -111,6 +112,34 @@ class AddCourseView(View):
                                                               'form_title': title})
 
 
+class EditCourseView(View):
+    def get(self, request, course, session):
+        try:
+            if request.user.profile.teacher_profile or request.user.is_superuser:
+                xcourse = Course.objects.get(
+                    code=course, session__id=session)
+                form = EditCourseForm(instance=xcourse)
+                title = "Edit Course"
+                return render(request, 'landing/forms_default.html', {'form': form,
+                                                                      'form_title': title})
+        except:
+            messages.error(request, 'Permission Denied!')
+            return render(request, 'landing/home.html')
+
+    def post(self, request, course, session):
+        xcourse = Course.objects.get(code=course, session__id=session)
+        form = EditCourseForm(request.POST, instance=xcourse)        
+        title = "Edit Course"
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your course has been updated successfully!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Course Code already in use.')
+        return render(request, 'landing/forms_default.html', {'form': form,
+                                                              'form_title': title})
+
+
 @login_required
 def teach_course(request, course, teacher, session):
     if request.user.profile.teacher_profile:
@@ -149,7 +178,7 @@ def course_detail(request, course, session):
         course = Course.objects.get(code=course, session__id=session)
         teachers = Teacher.objects.filter(course=course)
         students = Student.objects.filter(batch=course.target_batch)
-        assistants = Assistant.objects.filter()
+        assistants = Assistant.objects.filter(course=course)
         context = {
             'course': course,
             'page_title': course.code,

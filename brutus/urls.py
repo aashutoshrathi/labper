@@ -1,8 +1,11 @@
 from django.conf.urls import include, url
-from django.urls import path
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from django.urls import path
+
 from landing import views
+
 
 admin.autodiscover()
 
@@ -11,9 +14,10 @@ urlpatterns = [
     url(r'^home/$', views.home, name='home'),
     url(r'^ide/$', views.ide, name='ide'),
     url(r'^about/$', views.about, name='about'),
-    url(r'^add_course/', views.AddCourseView.as_view(), name='add_course'),
+    url(r'^add_course/', login_required(views.AddCourseView.as_view()), name='add_course'),
+    url(r'^edit_course/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$', login_required(views.EditCourseView.as_view()), name='edit_course'),
     url(r'^course/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$', views.course_detail, name='course_detail'),
-    url(r'^list_course/', views.ListCourseView.as_view(), name='list_course'),
+    url(r'^list_course/', login_required(views.ListCourseView.as_view()), name='list_course'),
     path('admin/', admin.site.urls),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="registration/login.html"), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
