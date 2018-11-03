@@ -54,6 +54,11 @@
                         </td>
                         <td class="uk-text-middle">{{ student.profile }}</td>
                         <td class="uk-text-middle">{{ student.profile.user.email }}</td>
+                        {% if user.profile.teacher_profile %}
+                            <td class="uk-text-middle">
+                                <a href="{% url 'remove_student' student=student.id course=course.code session=course.session.id  %}" class="uk-icon-button  uk-margin-small-left" uk-icon="trash"></a>
+                            </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
