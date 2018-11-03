@@ -1,5 +1,6 @@
 from .models import Course, Profile, Teacher
 from django import forms
+from django_extensions.admin import QuerySet
 
 from landing.models import Student
 
@@ -9,7 +10,6 @@ class AddCourseForm(forms.ModelForm):
         super(AddCourseForm, self).__init__(*args, **kwargs)
         self.fields['name'].label = 'Course Name'
         self.fields['code'].label = 'Course Code'
-
         self.fields['name'].widget.attrs.update({
             'class': 'uk-input',
             'placeholder': 'Introduction to Example Technology'
@@ -63,6 +63,8 @@ class EditCourseForm(forms.ModelForm):
 class AddStudentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddStudentForm, self).__init__(*args, **kwargs)
+        self.fields['profile'].queryset = Student.objects.all().order_by(
+            'profile__user__email')
         self.fields['profile'].label = 'Student'
         self.fields['profile'].widget.attrs.update({
             'class': 'uk-select uk-width-auto',

@@ -105,7 +105,7 @@ class Student(models.Model):
     course = models.ManyToManyField(Course, related_name='student_course')
 
     def __str__(self):
-        return self.profile.user.first_name
+        return self.roll_no
 
     @property
     def roll_no(self):

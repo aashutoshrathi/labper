@@ -189,7 +189,9 @@ def course_detail(request, course, session):
         assistants = Assistant.objects.filter(course=course)
         s_form = AddStudentForm(request.POST)
         if s_form.is_valid():
-            student = s_form(commit=False)
+            student = s_form.save(commit=False)
+            print(student.profile)
+            student.course.add(course)
             messages.success("Added Student Successfully")
         context = {
             'course': course,
