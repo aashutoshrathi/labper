@@ -11,7 +11,7 @@ To use this project, follow these steps:
 - Add you client key to G_KEY and client secret key to G_SKEY.
 - Fill up the following entries in .env
 
-```sh
+```bash
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_HOST_USER=YourEmail

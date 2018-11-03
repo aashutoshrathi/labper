@@ -126,7 +126,8 @@ USE_TZ = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [
+                       s.strip() for s in v.split(',')])
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -168,7 +169,8 @@ django_heroku.settings(locals())
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('G_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('G_SKEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ['iiitv.ac.in', 'iiitvadodara.ac.in']
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = [
+    'iiitv.ac.in', 'iiitvadodara.ac.in']
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/home'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False

@@ -7,13 +7,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.views import View
 from urllib3 import request
 
 from brutus import settings
+from landing.forms import AddStudentForm, EditCourseForm
 from landing.models import Assistant, Session
 
 
@@ -72,7 +73,9 @@ class AddCourseView(View):
             if request.user.profile.teacher_profile or request.user.is_superuser:
                 form = AddCourseForm()
                 title = "Add Course"
+                button = "Submit Course"
                 return render(request, 'landing/forms_default.html', {'form': form,
+                                                                      'button': button,
                                                                       'form_title': title})
         except:
             messages.error(request, 'Permission Denied!')
@@ -81,6 +84,7 @@ class AddCourseView(View):
     def post(self, request):
         form = AddCourseForm(request.POST, request.user)
         title = "Add Course"
+        button = "Update Course"
         if form.is_valid():
             form = AddCourseForm(request.POST)
             tform = form.save(commit=False)
@@ -107,7 +111,40 @@ class AddCourseView(View):
             return redirect('home')
         else:
             messages.error(request, 'Course Code already in use.')
+        return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
+                                                              'form_title': title})
+
+
+class EditCourseView(View):
+    def get(self, request, course, session):
+        try:
+            if request.user.profile.teacher_profile or request.user.is_superuser:
+                xcourse = Course.objects.get(
+                    code=course, session__id=session)
+                form = EditCourseForm(instance=xcourse)
+                title = "Edit Course"
+                button = "Update Course"
+                return render(request, 'landing/forms_default.html', {'form': form,
+                                                                      'button': button,
+                                                                      'form_title': title})
+        except:
+            messages.error(request, 'Permission Denied!')
+            return render(request, 'landing/home.html')
+
+    def post(self, request, course, session):
+        xcourse = Course.objects.get(code=course, session__id=session)
+        form = EditCourseForm(request.POST, instance=xcourse)
+        title = "Edit Course"
+        button = "Update Course"
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your course: ' +
+                             str(xcourse.name) + ' has been updated successfully!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Course Code already in use.')
         return render(request, 'landing/forms_default.html', {'form': form,
+                                                              'button': button,
                                                               'form_title': title})
 
 
@@ -148,10 +185,15 @@ def course_detail(request, course, session):
     if request.user.profile:
         course = Course.objects.get(code=course, session__id=session)
         teachers = Teacher.objects.filter(course=course)
-        students = Student.objects.filter(batch=course.target_batch)
-        assistants = Assistant.objects.filter()
+        students = Student.objects.filter(course=course)
+        assistants = Assistant.objects.filter(course=course)
+        s_form = AddStudentForm(request.POST)
+        if s_form.is_valid():
+            student = s_form(commit=False)
+            messages.success("Added Student Successfully")
         context = {
             'course': course,
+            's_form': s_form,
             'page_title': course.code,
             'teachers': teachers,
             'students': students,
@@ -159,6 +201,14 @@ def course_detail(request, course, session):
         return render(request, 'landing/course_detail.html', context=context)
     messages.error(request, 'Sorry, your sourcery do not work here :)')
     return redirect('home')
+
+
+@login_required()
+def remove_student(request, course, student, session):
+    student = Student.objects.get(id=student)
+    course = Course.objects.get(code=course, session__id=session)
+    student.course.remove(course)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def land(request):
@@ -175,6 +225,5 @@ def ide(request):
     return render(request, 'landing/ide.html')
 
 
-# only4 testing
 def test_func():
     return True
