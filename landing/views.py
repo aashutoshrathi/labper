@@ -1,8 +1,8 @@
 import datetime
 from builtins import object
 
-from .forms import AddCourseForm
-from .models import Course, Profile, Student, Teacher
+from .forms import AddCourseForm, AddLabForm
+from .models import Course, Profile, Student, Teacher, Lab
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
@@ -153,8 +153,8 @@ class AddLabView(View):
         try:
             if request.user.profile.teacher_profile or request.user.is_superuser:
                 form = AddLabForm()
-                title = "Add Lab"
-                button = "Add Lab"
+                title = "Add Course"
+                button = "Submit Course"
                 return render(request, 'landing/forms_default.html', {'form': form,
                                                                       'button': button,
                                                                       'form_title': title})
@@ -163,11 +163,11 @@ class AddLabView(View):
             return render(request, 'landing/home.html')
 
     def post(self, request):
-        form = AddLabForm(request.POST, request.user)
-        title = "Add Lab"
-        button = "Add Lab"
+        form = AddCourseForm(request.POST, request.user)
+        title = "Add Course"
+        button = "Update Course"
         if form.is_valid():
-            form = AddLabForm(request.POST)
+            form = AddCourseForm(request.POST)
             tform = form.save(commit=False)
             tform.save()
             current_site = get_current_site(request)
@@ -194,6 +194,7 @@ class AddLabView(View):
             messages.error(request, 'Course Code already in use.')
         return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
                                                               'form_title': title})
+
 
 
 @login_required

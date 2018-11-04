@@ -84,10 +84,10 @@ class AddLabForm(forms.ModelForm):
 
         self.fields['id'].widget.attrs.update({
             'class': 'uk-input',
-            'placeholder': 'Write 2 for Lab 2'
+            'placeholder': 'Write 2 for Lab 2',
         })
         self.fields['date'].widget.attrs.update({
-            'class': 'uk-input'
+            'class': 'uk-input',
         })
         self.fields['start_time'].widget.attrs.update({
             'class': 'uk-input',
