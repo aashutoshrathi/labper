@@ -152,7 +152,7 @@ class AddLabView(View):
     def get(self, request,course,session):
         try:
             if request.user.profile.teacher_profile or request.user.is_superuser:
-                form = AddCourseForm()
+                form = AddLabForm()
                 title = "Add Lab"
                 button = "Add Lab"
                 return render(request, 'landing/forms_default.html', {'form': form,
@@ -163,11 +163,11 @@ class AddLabView(View):
             return render(request, 'landing/home.html')
 
     def post(self, request):
-        form = AddCourseForm(request.POST, request.user)
-        title = "Add Course"
-        button = "Update Course"
+        form = AddLabForm(request.POST, request.user)
+        title = "Add Lab"
+        button = "Add Lab"
         if form.is_valid():
-            form = AddCourseForm(request.POST)
+            form = AddLabForm(request.POST)
             tform = form.save(commit=False)
             tform.save()
             current_site = get_current_site(request)
