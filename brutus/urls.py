@@ -29,6 +29,8 @@ urlpatterns = [
         views.teach_course, name='teach'),
     url(r'^rm_std/(?P<student>[\w\-]+)/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
         views.remove_student, name='remove_student'),
+    url(r'^rm_ta/(?P<assistant>[\w\-]+)/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
+        views.remove_assistant, name='remove_ta'),
     url(r'^leave/(?P<teacher>[\w\-]+)/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
         views.leave_course, name='leave'),
 ]

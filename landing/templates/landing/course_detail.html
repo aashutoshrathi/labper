@@ -83,6 +83,27 @@
                         <td class="uk-text-middle">{{ teacher.profile.user.email }}</td>
                     </tr>
                     {% endfor %}
+                    {% for ta in assistants %}
+                    <tr>
+                        <td>
+                            <a href="#">
+                                {% if ta.profile.avatar_small %}
+                                    <img src="{{ ta.profile.avatar_small }}" class="uk-border-circle uk-margin-left" width="40">
+                                {% else %}
+                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="40"> 
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="uk-text-middle">{{ ta.profile }}</td>
+                        <td class="uk-text-middle">Course Assistant</td>
+                        <td class="uk-text-middle">{{ ta.profile.user.email }}</td>
+                        {% if user.profile.teacher_profile %}
+                            <td class="uk-text-middle">
+                                <a uk-tooltip="title: Remove Assistant; pos: left" href="{% url 'remove_ta' assistant=ta.id course=course.code session=course.session.id  %}" class="uk-icon-button  uk-margin-small-left" uk-icon="trash"></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </li>

@@ -214,14 +214,14 @@ def course_detail(request, course, session):
             for s in all_student:
                 if s.roll_no == rn:
                     student = s
-            ta = Assistant.objects.get_or_create(profile=student.profile)
+            ta, create = Assistant.objects.get_or_create(profile=student.profile)
             if course in ta.course.all():
                 messages.warning(
                     request, "Assistant already assigned for this course -_-")
             else:
                 ta.course.add(course)
                 messages.success(request, "Added " +
-                                 str(ta) + "as TA successfully!")
+                                 str(ta) + " as TA successfully!")
 
         context = {
             'course': course,
@@ -230,6 +230,7 @@ def course_detail(request, course, session):
             'page_title': course.code,
             'teachers': teachers,
             'students': students,
+            'assistants': assistants,
         }
         return render(request, 'landing/course_detail.html', context=context)
     messages.error(request, 'Sorry, your sourcery do not work here :)')
@@ -241,6 +242,14 @@ def remove_student(request, course, student, session):
     student = Student.objects.get(id=student)
     course = Course.objects.get(code=course, session__id=session)
     student.course.remove(course)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+@login_required()
+def remove_assistant(request, course, assistant, session):
+    assistant = Assistant.objects.get(id=assistant)
+    course = Course.objects.get(code=course, session__id=session)
+    assistant.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
