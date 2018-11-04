@@ -14,7 +14,7 @@ from django.views import View
 from urllib3 import request
 
 from brutus import settings
-from landing.forms import AddStudentForm, EditCourseForm
+from landing.forms import AddAssistantForm, AddStudentForm, EditCourseForm
 from landing.models import Assistant, Session
 
 
@@ -236,15 +236,49 @@ def course_detail(request, course, session):
         students = Student.objects.filter(course=course)
         assistants = Assistant.objects.filter(course=course)
         s_form = AddStudentForm(request.POST)
+        a_form = AddAssistantForm(request.POST)
         if s_form.is_valid():
-            student = s_form(commit=False)
-            messages.success("Added Student Successfully")
+            rn = s_form.cleaned_data['roll_no']
+            student = None
+            all_student = Student.objects.all()
+            for s in all_student:
+                if s.roll_no == rn:
+                    student = s
+            if student is None:
+                messages.error(request, "No such student exist in DB")
+            if course in student.course.all():
+                messages.warning(
+                    request, "User already enrolled for the course -_-")
+            else:
+                student.course.add(course)
+                messages.success(request, "Added " +
+                                 str(student) + " successfully!")
+
+        if a_form.is_valid():
+            rn = a_form.cleaned_data['roll_no']
+            ta = None
+            student = None
+            all_student = Student.objects.all()
+            for s in all_student:
+                if s.roll_no == rn:
+                    student = s
+            ta, create = Assistant.objects.get_or_create(profile=student.profile)
+            if course in ta.course.all():
+                messages.warning(
+                    request, "Assistant already assigned for this course -_-")
+            else:
+                ta.course.add(course)
+                messages.success(request, "Added " +
+                                 str(ta) + " as TA successfully!")
+
         context = {
             'course': course,
             's_form': s_form,
+            'a_form': a_form,
             'page_title': course.code,
             'teachers': teachers,
             'students': students,
+            'assistants': assistants,
         }
         return render(request, 'landing/course_detail.html', context=context)
     messages.error(request, 'Sorry, your sourcery do not work here :)')
@@ -256,6 +290,14 @@ def remove_student(request, course, student, session):
     student = Student.objects.get(id=student)
     course = Course.objects.get(code=course, session__id=session)
     student.course.remove(course)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+@login_required()
+def remove_assistant(request, course, assistant, session):
+    assistant = Assistant.objects.get(id=assistant)
+    course = Course.objects.get(code=course, session__id=session)
+    assistant.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 

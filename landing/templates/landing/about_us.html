@@ -14,7 +14,7 @@
 
         <title>
             {% block title %}
-                Labper
+                Labper | About
             {% endblock %}
         </title>
         <link rel="icon" type="image/png" href="{% static 'icons/lab.png' %}">
@@ -101,67 +101,77 @@
         <div id="team" class="team uk-margin-large-top">
             <div class="uk-container">
                 <h3 class="title-deco uk-text-center title-text color-black-a54">
-                    <i class="fa fa-group fa-lg" aria-hidden="true"></i>
-                    <span class="title-deco-text text-teal">TEAM</span>
-                    <i class="fa fa-group fa-lg" aria-hidden="true"></i>
+                    <a href="#" class="uk-icon-link uk-margin-small uk-text-emphasis" uk-icon="icon: users; ratio: 2"></a>
+                    <span class="title-deco-text text-teal uk-text-middle">TEAM</span>
+                    <a href="#" class="uk-icon-link uk-margin-small uk-text-emphasis" uk-icon="icon: users; ratio: 2"></a>                    
                 </h3>
 
-                <div class="uk-grid uk-margin-large-top team-wrapper">
-
+                <div class="uk-grid uk-margin-small-top team-wrapper">
                     <!--AashutoshRathi-->
                     <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
                         <div class="member-thumb">
-                            <img src="{% static "images/aashutosh.jpg" %}" alt="AashutoshRathi" class="">
+                            <img src="{% static 'images/aashutosh.jpg' %}" alt="AashutoshRathi" class="">
                             <div class="thumb-overlay"></div>
                         </div>
-                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Aashutosh Rathi</h3>
+                        <h3 class="member-name text-color-primary title-text uk-margin-top text-teal">Aashutosh Rathi</h3>
+                        <a href="https://twitter.com/AashutoshRathi" class="uk-icon-button text-teal uk-margin-small-right" uk-icon="twitter"></a>
+                        <a href="https://git.io/arathi" class="uk-icon-button" uk-icon="github"></a>
                     </div>
 
                     <!--Abhishek-->
                     <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
                         <div class="member-thumb">
-                            <img src="{% static 'images/abhishek.jpg' %}" alt="AbhishekKumar" class="">
+                            <img src="{% static 'images/abhishek.jpg' %}" alt="Abhishek Kumar" class="">
                             <div class="thumb-overlay"></div>
                         </div>
-                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Abhishek Kumar</h3>
+                        <h3 class="member-name text-color-primary title-text uk-margin-top text-teal">Abhishek Kumar</h3>
+                        <a href="https://twitter.com/AashutoshRathi" class="uk-icon-button text-teal uk-margin-small-right" uk-icon="twitter"></a>
+                        <a href="https://git.io/arathi" class="uk-icon-button" uk-icon="github"></a>
                     </div>
 
                     <!--Pritha-->
                     <div class="uk-margin-large-top uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center">
                         <div class="member-thumb">
-                            <img src="{% static 'images/pritha.jpg' %}" alt="PrithaUpadhyay" class="">
+                            <img src="{% static 'images/pritha.jpg' %}" alt="Pritha Upadhyay" class="">
                             <div class="thumb-overlay"></div>
                         </div>
-                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Pritha Upadhyay</h3>
+                        <h3 class="member-name text-color-primary title-text uk-margin-top text-teal">Pritha Upadhyay</h3>
+                        <a href="https://twitter.com/PrithaUpadhyay1" class="uk-icon-button text-teal uk-margin-small-right" uk-icon="twitter"></a>
+                        <a href="https://git.io/pritha" class="uk-icon-button" uk-icon="github"></a>                  
                     </div>
 
                     <!--Aman-->
                     <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
                         <div class="member-thumb">
-                        <img src="{% static 'images/aman.jpg' %}" alt="AmanSingh" class="">
+                        <img src="{% static 'images/aman.jpg' %}" alt="Aman Singh" class="">
                             <div class="thumb-overlay"></div>
                         </div>
-                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Aman Singh</h3>
+                        <h3 class="member-name text-color-primary title-text uk-margin-top text-teal">Aman Singh</h3>
+                        <a href="" class="uk-icon-button text-teal uk-margin-small-right" uk-icon="twitter"></a>
+                        <a href="https://git.io/shivaay" class="uk-icon-button" uk-icon="github"></a>
                     </div>
 
                     <!--Varun-->
                     <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
                         <div class="member-thumb">
-                            <img src="{% static 'images/varun.jpg' %}" alt="VarunBafna" class="">
+                            <img src="{% static 'images/varun.jpg' %}" alt="Varun Bafna" class="">
                             <div class="thumb-overlay"></div>
                         </div>
-                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Varun Bafna</h3>
+                        <h3 class="member-name text-color-primary title-text uk-margin-top text-teal">Varun Bafna</h3>
+                        <a href="" class="uk-icon-button text-teal uk-margin-small-right" uk-icon="twitter"></a>
+                        <a href="" class="uk-icon-button" uk-icon="github"></a>
                     </div>
 
                     <!--Ayush-->
                     <div class="uk-width-1-4@l uk-width-1-3@m uk-width-1-2@s uk-text-center uk-margin-large-top">
                         <div class="member-thumb">
-                            <img src="{% static 'images/ayush.jpg' %}" alt="AyushMudgal" class="">
+                            <img src="{% static 'images/ayush.jpg' %}" alt="Ayush Mudgal" class="">
                             <div class="thumb-overlay"></div>
                         </div> 
-                        <h3 class="member-name text-color-primary title-text uk-margin-remove-bottom text-teal">Ayush Mudgal</h3>
+                        <h3 class="member-name text-color-primary title-text uk-margin-top text-teal">Ayush Mudgal</h3>
+                        <a href="" class="uk-icon-button text-teal uk-margin-small-right" uk-icon="twitter"></a>
+                        <a href="" class="uk-icon-button" uk-icon="github"></a>
                     </div>
-
                     </div>
                 </div>
                 <div class="uk-padding-small"></div>
@@ -181,8 +191,7 @@
                             <div class="pow-container uk-flex-wrap">
                                 <div class="pow-icon">
                                     <a href="http://iiitvadodara.ac.in/" class="supp-logo-wrapper  uk-padding-remove remove-border" target="_blank">
-                                        <img class="logo full-width" src="{% static 'images/iiit.jpg' %}"
-                                                alt="IIIT Vadodara">
+                                        <img src="{% static 'images/iiit.jpg' %}" alt="IIIT Vadodara">
                                     </a>
                                 </div>
                             </div>

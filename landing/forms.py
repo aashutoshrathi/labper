@@ -60,17 +60,18 @@ class EditCourseForm(forms.ModelForm):
         fields = {'name', 'code', 'session', 'target_batch'}
 
 
-class AddStudentForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(AddStudentForm, self).__init__(*args, **kwargs)
-        self.fields['profile'].label = 'Student'
-        self.fields['profile'].widget.attrs.update({
-            'class': 'uk-select uk-width-auto',
-        })
+class AddStudentForm(forms.Form):
+    roll_no = forms.CharField(max_length=9)
 
     class Meta:
-        model = Student
-        fields = {'profile'}
+        fields = {'roll_no'}
+
+
+class AddAssistantForm(forms.Form):
+    roll_no = forms.CharField(max_length=9)
+
+    class Meta:
+        fields = {'roll_no'}
 
 
 class AddLabForm(forms.ModelForm):
