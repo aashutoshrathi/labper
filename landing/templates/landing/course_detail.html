@@ -8,8 +8,8 @@
 {% block body %}
 <div class="uk-card-hover uk-button uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@l uk-margin-top uk-align-center ">
     <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p>
-    <a uk-tooltip="title: Edit Course details; pos: right" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-margin-left uk-icon-button uk-float-left uk-dark uk-margin-small-right" uk-icon="pencil"></a>
     {% if user.profile.teacher_profile %}
+        <a uk-tooltip="title: Edit Course details; pos: right" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-margin-left uk-icon-button uk-float-left uk-dark uk-margin-small-right" uk-icon="pencil"></a>
         <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-assistant-form" uk-toggle>Add Assistant</a>   
     {% endif %}
     <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
