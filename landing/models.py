@@ -139,6 +139,10 @@ class Assistant(models.Model):
     def __str__(self):
         return self.profile.user.first_name
 
+    @property
+    def roll_no(self):
+        return self.profile.user.email.split('@')[0]
+
 
 class Lab(models.Model):
     class Meta:
