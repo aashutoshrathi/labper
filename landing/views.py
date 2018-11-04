@@ -148,6 +148,54 @@ class EditCourseView(View):
                                                               'form_title': title})
 
 
+class AddLabView(View):
+    def get(self, request,course,session):
+        try:
+            if request.user.profile.teacher_profile or request.user.is_superuser:
+                form = AddLabForm()
+                title = "Add Lab"
+                button = "Add Lab"
+                return render(request, 'landing/forms_default.html', {'form': form,
+                                                                      'button': button,
+                                                                      'form_title': title})
+        except:
+            messages.error(request, 'Permission Denied!')
+            return render(request, 'landing/home.html')
+
+    def post(self, request):
+        form = AddLabForm(request.POST, request.user)
+        title = "Add Lab"
+        button = "Add Lab"
+        if form.is_valid():
+            form = AddLabForm(request.POST)
+            tform = form.save(commit=False)
+            tform.save()
+            current_site = get_current_site(request)
+            code = tform.code
+            subject = 'Invitation to ' + \
+                str(tform.name) + ' by ' + str(request.user.profile)
+            org_email = settings.EMAIL_HOST_USER
+            students = Student.objects.filter(batch=tform.target_batch)
+            instructor = request.user.profile
+            for student in students:
+                message = render_to_string('registration/account_activation_email.html', {
+                    'student': student,
+                    'course': tform.name,
+                    'domain': current_site,
+                    'teacher': instructor
+                })
+                student.profile.user.email_user(subject, message)
+                send_mail(subject, message, org_email, [
+                          student.profile.user.email], fail_silently=True)
+            messages.success(
+                request, 'Your course was added successfully and email has been sent.')
+            return redirect('home')
+        else:
+            messages.error(request, 'Course Code already in use.')
+        return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
+                                                              'form_title': title})
+
+
 @login_required
 def teach_course(request, course, teacher, session):
     if request.user.profile.teacher_profile:

@@ -1,4 +1,4 @@
-from .models import Course, Profile, Teacher
+from .models import Course, Profile, Teacher, Lab
 from django import forms
 
 from landing.models import Student
@@ -72,3 +72,30 @@ class AddAssistantForm(forms.Form):
 
     class Meta:
         fields = {'roll_no'}
+
+
+class AddLabForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AddLabForm, self).__init__(*args, **kwargs)
+        self.fields['id'].label = 'Lab ID'
+        self.field['date'].label='Date'
+        self.field['start_time'].label="Start Time"
+        self.field['end_time'].label="End Time"
+
+        self.fields['id'].widget.attrs.update({
+            'class': 'uk-input',
+            'placeholder': 'Write 2 for Lab 2'
+        })
+        self.fields['date'].widget.attrs.update({
+            'class': 'uk-input'
+        })
+        self.fields['start_time'].widget.attrs.update({
+            'class': 'uk-input',
+        })
+        self.fields['end_time'].widget.attrs.update({
+            'class': 'uk-input',
+        })
+    class Meta:
+        model = Lab
+        fields = ('id', 'date', 'start_time', 'end_time')
+
