@@ -1,8 +1,8 @@
 import datetime
 from builtins import object
 
-from .forms import AddCourseForm
-from .models import Course, Profile, Student, Teacher
+from .forms import AddCourseForm, AddLabForm
+from .models import Course, Profile, Student, Teacher, Lab
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
@@ -146,6 +146,55 @@ class EditCourseView(View):
         return render(request, 'landing/forms_default.html', {'form': form,
                                                               'button': button,
                                                               'form_title': title})
+
+
+class AddLabView(View):
+    def get(self, request,course,session):
+        try:
+            if request.user.profile.teacher_profile or request.user.is_superuser:
+                form = AddLabForm()
+                title = "Add Course"
+                button = "Submit Course"
+                return render(request, 'landing/forms_default.html', {'form': form,
+                                                                      'button': button,
+                                                                      'form_title': title})
+        except:
+            messages.error(request, 'Permission Denied!')
+            return render(request, 'landing/home.html')
+
+    def post(self, request):
+        form = AddCourseForm(request.POST, request.user)
+        title = "Add Course"
+        button = "Update Course"
+        if form.is_valid():
+            form = AddCourseForm(request.POST)
+            tform = form.save(commit=False)
+            tform.save()
+            current_site = get_current_site(request)
+            code = tform.code
+            subject = 'Invitation to ' + \
+                str(tform.name) + ' by ' + str(request.user.profile)
+            org_email = settings.EMAIL_HOST_USER
+            students = Student.objects.filter(batch=tform.target_batch)
+            instructor = request.user.profile
+            for student in students:
+                message = render_to_string('registration/account_activation_email.html', {
+                    'student': student,
+                    'course': tform.name,
+                    'domain': current_site,
+                    'teacher': instructor
+                })
+                student.profile.user.email_user(subject, message)
+                send_mail(subject, message, org_email, [
+                          student.profile.user.email], fail_silently=True)
+            messages.success(
+                request, 'Your course was added successfully and email has been sent.')
+            return redirect('home')
+        else:
+            messages.error(request, 'Course Code already in use.')
+        return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
+                                                              'form_title': title})
+
 
 
 @login_required

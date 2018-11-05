@@ -31,6 +31,9 @@
             <p class="uk-text-meta">Course events will be added here</p>
             <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
                 <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Submit</a>   
+                {% if user.profile.teacher_profile %}
+                <a href="{% url 'add_lab' course=course.code session=course.session.id %}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Add Lab</a>   
+                {% endif %}
                 <h3 class="uk-card-title">Example Lab</h3>
                 <hr>
                 <p class="uk-float-right">Deadline: 11:59 PM, 1st Nov 2018</p>
