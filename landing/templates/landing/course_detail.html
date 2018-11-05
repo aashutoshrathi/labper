@@ -12,14 +12,14 @@
         <a href="{% url 'add_lab' course=course.code session=course.session.id %}" class="uk-text-center uk-float-left uk-border-pill uk-width-auto uk-button uk-button-primary">Add Lab</a>   
     {% endif %}
     {% if user.profile.teacher_profile %}
-        <a uk-tooltip="title: Edit Course details; pos: right" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-margin-left uk-icon-button uk-float-left uk-dark uk-margin-small-right" uk-icon="pencil"></a>
-        <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-assistant-form" uk-toggle>Add Assistant</a>   
+    <a uk-tooltip="title: Edit Course details; pos: right" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-margin-left uk-icon-button uk-float-left uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
+    <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-assistant-form" uk-toggle>Add Assistant</a>   
     {% endif %}
     <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
     {% if user.profile.teacher_profile %}    
-        <a class="uk-text-center uk-margin-small uk-margin-remove-bottom uk-button uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-student-form" uk-toggle>Add Students</a>           
+        <a class="uk-text-center uk-margin-small uk-margin-remove-bottom uk-button uk-float-right uk-border-pill uk-margin-top-small uk-width-auto uk-button uk-button-primary" href="#add-student-form" uk-toggle>Add Students</a>           
     {% endif %}
-    <p><span class="uk-text-bold">Instructor:</span>
+    <p><span class="uk-text-center uk-text-bold">Instructor:</span>
         {{ teachers.all | join:", " }}
     </p>
 </div>
