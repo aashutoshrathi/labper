@@ -69,6 +69,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_DIRS = [
+    os.path.join(PROJECT_ROOT, '../landing/templates'),
+]
+
 WSGI_APPLICATION = 'brutus.wsgi.application'
 
 

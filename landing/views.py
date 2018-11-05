@@ -21,6 +21,8 @@ from landing.models import Assistant, Session
 @login_required
 def home(request):
     x = request.user
+    # print(x.last_login)
+    # print(x.date_joined)
     month = datetime.date.today().month
     year = datetime.date.today().year
     s_type = 'w'
@@ -244,7 +246,7 @@ def course_detail(request, course, session):
                 if s.roll_no == rn:
                     student = s
             ta, create = Assistant.objects.get_or_create(
-                profile=student.profile)
+                profile = student.profile)
             if course in ta.course.all():
                 messages.warning(
                     request, "Assistant already assigned for this course -_-")
