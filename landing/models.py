@@ -157,6 +157,8 @@ class Lab(models.Model):
     date = models.DateField(help_text='Enter Date of Lab')
     start_time = models.TimeField()
     end_time = models.TimeField()
+    description = models.CharField(
+        max_length=256, help_text='Add brief Lab description', blank=True)
 
     def __str__(self):
         return self.course.name

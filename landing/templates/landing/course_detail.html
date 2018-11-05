@@ -38,7 +38,7 @@
                     <h3 class="uk-card-title">Lab {{ lab.id }}</h3>
                     <hr>
                     <p class="uk-float-right">Deadline: {{lab.end_time}}, {{lab.date}}</p>
-                    <p>Example Description for the lab</p>
+                    <p> {{ lab.description }} </p>
                 </div>
             {% endfor %}
         </li>

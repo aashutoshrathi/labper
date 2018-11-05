@@ -15,7 +15,7 @@ class DateInput(forms.DateInput):
 class AddCourseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddCourseForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['code', 'name', 'target_batch', 'session']
+        fields_keyOrder = ['code', 'name', 'target_batch', ]
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
@@ -97,7 +97,7 @@ class AddAssistantForm(forms.Form):
 class AddLabForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddLabForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['id', 'date', 'start_time', 'end_time']
+        fields_keyOrder = ['id', 'date', 'start_time', 'end_time', 'description']
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
@@ -108,10 +108,15 @@ class AddLabForm(forms.ModelForm):
         self.fields['date'].label = 'Date'
         self.fields['start_time'].label = "Start Time"
         self.fields['end_time'].label = "End Time"
+        self.fields['description'].label = "Description"
 
         self.fields['id'].widget.attrs.update({
             'class': 'uk-input uk-width-auto',
             'placeholder': 'Eg: 2',
+        })
+        self.fields['description'].widget.attrs.update({
+            'class': 'uk-textarea uk-input',
+            'placeholder': 'Add description here',
         })
         self.fields['date'].widget.attrs.update({
             'class': 'uk-select uk-width-auto',
@@ -128,7 +133,7 @@ class AddLabForm(forms.ModelForm):
 
     class Meta:
         model = Lab
-        fields = {'id', 'date', 'start_time', 'end_time'}
+        fields = {'id', 'date', 'start_time', 'end_time', 'description'}
         widgets = {
             'date': SelectDateWidget(),
         }
