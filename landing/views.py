@@ -108,7 +108,7 @@ class AddCourseView(View):
                           student.profile.user.email], fail_silently=True)
             messages.success(
                 request, 'Your course was added successfully and email has been sent.')
-            return redirect('home')
+            return redirect('list_course')
         else:
             messages.error(request, 'Course Code already in use.')
         return render(request, 'landing/forms_default.html', {'form': form, 'button': button,

@@ -15,7 +15,7 @@ class DateInput(forms.DateInput):
 class AddCourseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddCourseForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['code', 'name', 'target_batch', ]
+        fields_keyOrder = ['code', 'name', 'target_batch', 'session']
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
@@ -44,7 +44,7 @@ class AddCourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = ('name', 'code', 'session', 'target_batch')
+        fields = {'name', 'code', 'session', 'target_batch'}
 
 
 class EditCourseForm(forms.ModelForm):
