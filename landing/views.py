@@ -149,52 +149,31 @@ class EditCourseView(View):
 
 
 class AddLabView(View):
-    def get(self, request,course,session):
-        try:
-            if request.user.profile.teacher_profile or request.user.is_superuser:
-                form = AddLabForm()
-                title = "Add Course"
-                button = "Submit Course"
-                return render(request, 'landing/forms_default.html', {'form': form,
-                                                                      'button': button,
-                                                                      'form_title': title})
-        except:
-            messages.error(request, 'Permission Denied!')
-            return render(request, 'landing/home.html')
+    def get(self, request, course, session):
+        if request.user.profile.teacher_profile or request.user.is_superuser:
+            form = AddLabForm(request.POST)
+            title = "Add Lab"
+            button = "Submit Lab"
+            return render(request, 'landing/forms_default.html', {'form': form,
+                                                                  'button': button,
+                                                                  'form_title': title})
 
-    def post(self, request):
-        form = AddCourseForm(request.POST, request.user)
-        title = "Add Course"
-        button = "Update Course"
+    def post(self, request, course, session):
+        form = AddLabForm(request.POST, request.user)
+        title = "Add Lab"
+        button = "Update Lab"
         if form.is_valid():
-            form = AddCourseForm(request.POST)
+            form = AddLabForm(request.POST)
             tform = form.save(commit=False)
+            tform.course = Course.objects.get(code=course, session_id=session)
             tform.save()
-            current_site = get_current_site(request)
-            code = tform.code
-            subject = 'Invitation to ' + \
-                str(tform.name) + ' by ' + str(request.user.profile)
-            org_email = settings.EMAIL_HOST_USER
-            students = Student.objects.filter(batch=tform.target_batch)
-            instructor = request.user.profile
-            for student in students:
-                message = render_to_string('registration/account_activation_email.html', {
-                    'student': student,
-                    'course': tform.name,
-                    'domain': current_site,
-                    'teacher': instructor
-                })
-                student.profile.user.email_user(subject, message)
-                send_mail(subject, message, org_email, [
-                          student.profile.user.email], fail_silently=True)
             messages.success(
-                request, 'Your course was added successfully and email has been sent.')
+                request, 'Your lab was added successfully!')
             return redirect('home')
         else:
-            messages.error(request, 'Course Code already in use.')
+            messages.error(request, 'Lab Code already in use.')
         return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
                                                               'form_title': title})
-
 
 
 @login_required
@@ -236,6 +215,7 @@ def course_detail(request, course, session):
         teachers = Teacher.objects.filter(course=course)
         students = Student.objects.filter(course=course)
         assistants = Assistant.objects.filter(course=course)
+        labs = Lab.objects.filter(course=course)
         s_form = AddStudentForm(request.POST)
         a_form = AddAssistantForm(request.POST)
         if s_form.is_valid():
@@ -263,7 +243,8 @@ def course_detail(request, course, session):
             for s in all_student:
                 if s.roll_no == rn:
                     student = s
-            ta, create = Assistant.objects.get_or_create(profile=student.profile)
+            ta, create = Assistant.objects.get_or_create(
+                profile=student.profile)
             if course in ta.course.all():
                 messages.warning(
                     request, "Assistant already assigned for this course -_-")
@@ -275,6 +256,7 @@ def course_detail(request, course, session):
         context = {
             'course': course,
             's_form': s_form,
+            'labs': labs,
             'a_form': a_form,
             'page_title': course.code,
             'teachers': teachers,

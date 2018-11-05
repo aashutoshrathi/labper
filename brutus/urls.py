@@ -33,5 +33,6 @@ urlpatterns = [
         views.remove_assistant, name='remove_ta'),
     url(r'^leave/(?P<teacher>[\w\-]+)/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
         views.leave_course, name='leave'),
-    url(r'^add_lab/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',login_required(views.AddLabView.as_view()), name='add_lab'),
+    url(r'^add_lab/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
+        login_required(views.AddLabView.as_view()), name='add_lab'),
 ]

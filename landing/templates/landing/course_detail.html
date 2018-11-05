@@ -7,7 +7,10 @@
 
 {% block body %}
 <div class="uk-card-hover uk-button uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@l uk-margin-top uk-align-center ">
-    <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p>
+    {% comment %} <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p> {% endcomment %}
+    {% if user.profile.teacher_profile %}
+        <a href="{% url 'add_lab' course=course.code session=course.session.id %}" class="uk-text-center uk-float-left uk-border-pill uk-width-auto uk-button uk-button-primary">Add Lab</a>   
+    {% endif %}
     {% if user.profile.teacher_profile %}
         <a uk-tooltip="title: Edit Course details; pos: right" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-margin-left uk-icon-button uk-float-left uk-dark uk-margin-small-right" uk-icon="pencil"></a>
         <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-assistant-form" uk-toggle>Add Assistant</a>   
@@ -29,16 +32,15 @@
     <ul class="uk-switcher uk-margin">
         <li>
             <p class="uk-text-meta">Course events will be added here</p>
-            <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
-                <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Submit</a>   
-                {% if user.profile.teacher_profile %}
-                <a href="{% url 'add_lab' course=course.code session=course.session.id %}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Add Lab</a>   
-                {% endif %}
-                <h3 class="uk-card-title">Example Lab</h3>
-                <hr>
-                <p class="uk-float-right">Deadline: 11:59 PM, 1st Nov 2018</p>
-                <p>Example Description for the lab</p>
-            </div>
+            {% for lab in labs %}
+                <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
+                    <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Submit</a>   
+                    <h3 class="uk-card-title">Lab {{ lab.id }}</h3>
+                    <hr>
+                    <p class="uk-float-right">Deadline: {{lab.end_time}}, {{lab.date}}</p>
+                    <p>Example Description for the lab</p>
+                </div>
+            {% endfor %}
         </li>
         <li>
             <p class="uk-text-meta">List of students who are part of course is here.</p>
