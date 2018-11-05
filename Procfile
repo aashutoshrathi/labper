@@ -1,1 +1,2 @@
-web: gunicorn brutus.wsgi
+release: ./release-tasks.sh
+web: gunicorn brutus.wsgi --log-file -
