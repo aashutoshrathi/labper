@@ -29,3 +29,7 @@ body {
     height:80px; 
 }
 
+.big {
+    font-size: 20rem;
+    color: #256363;
+}

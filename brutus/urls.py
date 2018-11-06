@@ -12,6 +12,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^$', views.land, name='land'),
     url(r'^home/$', views.home, name='home'),
+    url(r'^404/$', views.test_404, name='test_404'),
     url(r'^ide/$', views.ide, name='ide'),
     url(r'^about/$', views.about, name='about'),
     url(r'^add_course/', login_required(views.AddCourseView.as_view()), name='add_course'),

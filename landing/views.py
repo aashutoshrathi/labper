@@ -2,7 +2,7 @@ import datetime
 from builtins import object
 
 from .forms import AddCourseForm, AddLabForm
-from .models import Course, Profile, Student, Teacher, Lab
+from .models import Course, Lab, Profile, Student, Teacher
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
@@ -246,7 +246,7 @@ def course_detail(request, course, session):
                 if s.roll_no == rn:
                     student = s
             ta, create = Assistant.objects.get_or_create(
-                profile = student.profile)
+                profile=student.profile)
             if course in ta.course.all():
                 messages.warning(
                     request, "Assistant already assigned for this course -_-")
@@ -302,3 +302,7 @@ def ide(request):
 
 def test_func():
     return True
+
+
+def test_404(request):
+    return render(request, '404.html')
