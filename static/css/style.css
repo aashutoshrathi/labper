@@ -33,3 +33,18 @@ body {
     font-size: 20rem;
     color: #256363;
 }
+
+
+@media only screen and (max-width: 960px) {
+    .hidden-on-large-display {
+        display: block !important;
+    }
+
+    nav {
+        height: 60px;
+    }
+
+    .hidden-on-small-display {
+        display: none !important;
+    }
+}
