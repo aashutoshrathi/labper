@@ -1,0 +1,27 @@
+
+body{
+    background-image: url("../images/back1.jpg");
+    align-content: center;
+    height: 100%;
+    overflow: auto;
+    margin-top: 0px;
+}
+
+#oops{
+    font-family: 'Spicy Rice', cursive;
+    text-align: center;
+    color: rgb(199, 9, 9);
+    padding: 0%;
+    }
+
+#lets{
+    font-family: 'Spicy Rice', cursive;
+    text-align: center;
+    color: rgb(199, 9, 9);
+    padding: 0%;
+}
+
+#hom{
+    color: rgb(87, 4, 4);
+    text-decoration:none;
+}

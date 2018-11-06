@@ -1,2 +1,21 @@
-<h1>I think we are lost.</h1>
-<h2>Let's go back to <a href="{% url 'home' %}">home</a></h2>
+<html>
+    <head>
+        <link rel="icon" type="image/png" href="{% static 'icons/lab.png' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/404.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/uikit.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/uikit-rtl.min.css' %}">
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.20/css/uikit.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
+        <!-- UIkit JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.20/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.20/js/uikit-icons.min.js"></script>
+        <title>404</title>
+        <link rel="icon" type="image/png" href="lab.png">
+    </head>
+    <body>
+        <img class="uk-align-center" id="four" src="{% static 'images/final.png' %}">
+        <h1 id="oops">Oops...I think we are lost</h1>
+        <h2 id="lets">Let's go back to <a id="hom" href="{% url 'home' %}">Home</a></h2>
+    </body>
+</html>
