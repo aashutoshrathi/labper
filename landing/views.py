@@ -1,5 +1,6 @@
 import datetime
 from builtins import object
+from os.path import exists
 
 from .forms import AddCourseForm, AddLabForm
 from .models import Course, Lab, Profile, Student, Teacher
@@ -8,13 +9,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.views import View
 from urllib3 import request
 
 from brutus import settings
-from landing.forms import AddAssistantForm, AddStudentForm, EditCourseForm
+from landing.forms import AddAssistantForm, AddProblemForm, AddStudentForm, \
+    EditCourseForm
 from landing.models import Assistant, Session
 
 
@@ -152,7 +154,7 @@ class EditCourseView(View):
 
 class AddLabView(View):
     def get(self, request, course, session):
-        if request.user.profile.teacher_profile or request.user.is_superuser:
+        if request.user.profile.teacher_profile or request.user.is_superuser or request.user.profile.assistant_profile:
             form = AddLabForm(request.POST)
             title = "Add Lab"
             button = "Submit Lab"
@@ -174,6 +176,34 @@ class AddLabView(View):
             return redirect('home')
         else:
             messages.error(request, 'Lab Code already in use.')
+        return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
+                                                              'form_title': title})
+
+
+class AddProblemView(View):
+    def get(self, request, course, session, lab):
+        if request.user.profile.teacher_profile or request.user.is_superuser:
+            form = AddProblemForm(request.POST)
+            title = "Add Problem"
+            button = "Submit Problem"
+            return render(request, 'landing/forms_default.html', {'form': form,
+                                                                  'button': button,
+                                                                  'form_title': title})
+
+    def post(self, request, course, session, lab):
+        form = AddProblemForm(request.POST, request.user)
+        title = "Add Lab"
+        button = "Update Lab"
+        if form.is_valid():
+            form = AddProblemForm(request.POST)
+            tform = form.save(commit=False)
+            tform.lab = Lab.objects.get(id=lab)
+            tform.save()
+            messages.success(
+                request, 'Your problem was added successfully!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Problem Code already in use.')
         return render(request, 'landing/forms_default.html', {'form': form, 'button': button,
                                                               'form_title': title})
 
@@ -220,6 +250,16 @@ def course_detail(request, course, session):
         labs = Lab.objects.filter(course=course)
         s_form = AddStudentForm(request.POST)
         a_form = AddAssistantForm(request.POST)
+        is_teacher = False
+        is_ta = False
+
+        if request.user.profile.teacher_profile:
+            if course in Teacher.objects.get(profile=request.user.profile).course.all():
+                is_teacher = True
+        elif request.user.profile.assistant_profile:
+            if course in Assistant.objects.get(profile=request.user.profile).course.all():
+                is_ta = True
+
         if s_form.is_valid():
             rn = s_form.cleaned_data['roll_no']
             student = None
@@ -264,6 +304,8 @@ def course_detail(request, course, session):
             'teachers': teachers,
             'students': students,
             'assistants': assistants,
+            'is_teacher': is_teacher,
+            'is_ta': is_ta,
         }
         return render(request, 'landing/course_detail.html', context=context)
     messages.error(request, 'Sorry, your sourcery do not work here :)')

@@ -36,4 +36,6 @@ urlpatterns = [
         views.leave_course, name='leave'),
     url(r'^add_lab/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
         login_required(views.AddLabView.as_view()), name='add_lab'),
+    url(r'^add_problem/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/(?P<lab>[\w\-]+)/$',
+        login_required(views.AddProblemView.as_view()), name='add_problem'),
 ]

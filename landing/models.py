@@ -164,6 +164,21 @@ class Lab(models.Model):
         return self.course.name
 
 
+class Problem(models.Model):
+    class Meta:
+        ordering = ('id',)
+        verbose_name = 'Problems'
+        verbose_name_plural = 'Problems'
+
+    id = models.IntegerField(unique=True, default=uuid.uuid4, primary_key=True)
+    lab = models.ForeignKey(Lab, related_name='lab', on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    content = models.CharField(max_length=1024, blank=True)
+
+    def __str__(self):
+        return self.lab.name + self.title
+
+
 class Submission(models.Model):
     class Meta:
         ordering = ('student',)
@@ -171,7 +186,8 @@ class Submission(models.Model):
         verbose_name_plural = 'Submissions'
 
     id = models.IntegerField(unique=True, default=uuid.uuid4, primary_key=True)
-    lab = models.ForeignKey(Lab, related_name='lab', on_delete=models.CASCADE)
+    problem = models.ForeignKey(
+        Problem, related_name='problem', on_delete=models.CASCADE)
     student = models.ForeignKey(
         Profile, related_name='student', on_delete=models.CASCADE)
 

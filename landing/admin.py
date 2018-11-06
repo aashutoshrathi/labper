@@ -2,7 +2,7 @@ from .models import Assistant, Course, Lab, Profile, Session, Submission, \
     Teacher
 from django.contrib import admin
 
-from landing.models import Student
+from landing.models import Problem, Student
 
 
 admin.site.register(Profile)
@@ -13,3 +13,4 @@ admin.site.register(Lab)
 admin.site.register(Submission)
 admin.site.register(Session)
 admin.site.register(Student)
+admin.site.register(Problem)

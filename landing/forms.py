@@ -5,7 +5,7 @@ from django import forms
 from django.forms.fields import DateTimeField
 from django.forms.widgets import SelectDateWidget, TimeInput
 
-from landing.models import Student
+from landing.models import Student, Problem
 
 
 class DateInput(forms.DateInput):
@@ -137,3 +137,30 @@ class AddLabForm(forms.ModelForm):
         widgets = {
             'date': SelectDateWidget(),
         }
+
+
+class AddProblemForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AddProblemForm, self).__init__(*args, **kwargs)
+        fields_keyOrder = ['title', 'content']
+        if 'keyOrder' in self.fields:
+            self.fields.keyOrder = fields_keyOrder
+        else:
+            self.fields = OrderedDict(
+                (k, self.fields[k]) for k in fields_keyOrder)
+        self.fields['title'].label = 'Problem Title'
+        self.fields['content'].label = 'Problem Content'
+
+        self.fields['title'].widget.attrs.update({
+            'class': 'uk-input',
+            'placeholder': 'Problem - 1: Fibbonaci'
+        })
+
+        self.fields['content'].widget.attrs.update({
+            'class': 'uk-input uk-textarea',
+            'placeholder': 'You have ....'
+        })
+
+    class Meta:
+        model = Problem
+        fields = {'title', 'content'}
