@@ -253,10 +253,10 @@ def course_detail(request, course, session):
         is_teacher = False
         is_ta = False
 
-        if request.user.profile.teacher_profile:
+        if Teacher.objects.filter(profile=request.user.profile).exists():
             if course in Teacher.objects.get(profile=request.user.profile).course.all():
                 is_teacher = True
-        elif request.user.profile.assistant_profile:
+        elif Assistant.objects.filter(profile=request.user.profile).exists():
             if course in Assistant.objects.get(profile=request.user.profile).course.all():
                 is_ta = True
 
