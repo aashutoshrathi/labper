@@ -174,6 +174,7 @@ class Problem(models.Model):
     lab = models.ForeignKey(Lab, related_name='lab', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=1024, blank=True)
+    similar = models.IntegerField(default=0)
 
     def __str__(self):
         return self.lab.name + self.title
