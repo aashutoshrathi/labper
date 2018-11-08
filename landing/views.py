@@ -165,7 +165,7 @@ class AddLabView(View):
     def post(self, request, course, session):
         form = AddLabForm(request.POST, request.user)
         title = "Add Lab"
-        button = "Update Lab"
+        button = "Submit Lab"
         if form.is_valid():
             form = AddLabForm(request.POST)
             tform = form.save(commit=False)
@@ -192,8 +192,8 @@ class AddProblemView(View):
 
     def post(self, request, course, session, lab):
         form = AddProblemForm(request.POST, request.user)
-        title = "Add Lab"
-        button = "Update Lab"
+        title = "Add Problem"
+        button = "Submit Problem"
         if form.is_valid():
             form = AddProblemForm(request.POST)
             tform = form.save(commit=False)

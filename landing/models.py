@@ -170,7 +170,7 @@ class Problem(models.Model):
         verbose_name = 'Problems'
         verbose_name_plural = 'Problems'
 
-    id = models.IntegerField(unique=True, default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True)
     lab = models.ForeignKey(Lab, related_name='lab', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=1024, blank=True)
@@ -185,7 +185,7 @@ class Submission(models.Model):
         verbose_name = 'Submission'
         verbose_name_plural = 'Submissions'
 
-    id = models.IntegerField(unique=True, default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True)
     problem = models.ForeignKey(
         Problem, related_name='problem', on_delete=models.CASCADE)
     student = models.ForeignKey(
