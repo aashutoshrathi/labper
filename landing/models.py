@@ -175,6 +175,7 @@ class Problem(models.Model):
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=1024, blank=True)
     similar = models.IntegerField(default=0)
+    correctcode = models.CharField(default = 'a',max_length=1024, blank=False)
 
     def __str__(self):
         return self.lab.name + self.title
