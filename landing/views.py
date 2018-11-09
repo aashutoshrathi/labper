@@ -355,7 +355,7 @@ def lab_detail(request, course, session, lab):
             'is_teacher': is_teacher,
             'is_ta': is_ta,
             'problems': problems,
-            'is_dead': dealine_crossed,
+            # 'is_dead': dealine_crossed,
         }
         return render(request, 'landing/lab_detail.html', context=context)
     messages.error(request, 'Sorry, your sourcery do not work here :)')
