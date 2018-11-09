@@ -142,7 +142,7 @@ class AddLabForm(forms.ModelForm):
 class AddProblemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddProblemForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['title', 'content']
+        fields_keyOrder = ['title', 'content','similar', 'correctcode']
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
@@ -150,6 +150,8 @@ class AddProblemForm(forms.ModelForm):
                 (k, self.fields[k]) for k in fields_keyOrder)
         self.fields['title'].label = 'Problem Title'
         self.fields['content'].label = 'Problem Content'
+        self.fields['similar'].label = 'Similarity Percentage'
+        self.fields['correctcode'].label = 'Correct Code'
 
         self.fields['title'].widget.attrs.update({
             'class': 'uk-input',
@@ -161,6 +163,16 @@ class AddProblemForm(forms.ModelForm):
             'placeholder': 'You have ....'
         })
 
+        self.fields['similar'].widget.attrs.update({
+            'class': 'uk-input uk-textarea',
+            'placeholder': 'Percentage Similarity Allowed'
+        })
+
+        self.fields['correctcode'].widget.attrs.update({
+            'class': 'uk-input uk-textarea',
+            'placeholder': 'Enter the correct code for the problem'
+        })
+
     class Meta:
         model = Problem
-        fields = {'title', 'content'}
+        fields = {'title', 'content', 'similar', 'correctcode'}
