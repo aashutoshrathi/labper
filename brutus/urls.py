@@ -20,6 +20,8 @@ urlpatterns = [
         login_required(views.EditCourseView.as_view()), name='edit_course'),
     url(r'^course/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/$',
         views.course_detail, name='course_detail'),
+    url(r'^lab/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/(?P<lab>[\w\-]+)/$',
+        views.lab_detail, name='lab_detail'),
     url(r'^list_course/', login_required(views.ListCourseView.as_view()),
         name='list_course'),
     path('admin/', admin.site.urls),
@@ -38,4 +40,6 @@ urlpatterns = [
         login_required(views.AddLabView.as_view()), name='add_lab'),
     url(r'^add_problem/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/(?P<lab>[\w\-]+)/$',
         login_required(views.AddProblemView.as_view()), name='add_problem'),
+    url(r'^solve/(?P<problem>[\w\-]+)/$',
+        views.solve, name='solve'),
 ]

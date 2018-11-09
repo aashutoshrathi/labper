@@ -170,15 +170,18 @@ class Problem(models.Model):
         verbose_name = 'Problems'
         verbose_name_plural = 'Problems'
 
-    id = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(unique=True, default=uuid.uuid4,
+                          primary_key=True, editable=False)
     lab = models.ForeignKey(Lab, related_name='lab', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    content = models.CharField(max_length=1024, blank=True)
-    similar = models.IntegerField(default=0)
-    correctcode = models.CharField(default = 'a',max_length=1024, blank=False)
+    content = models.TextField(blank=True)
+    similar = models.FloatField(default=30)
+    points = models.FloatField(default=10.0)
+    correctcode = models.TextField(
+        default='print("Hello World!")', blank=False)
 
     def __str__(self):
-        return self.lab.name + self.title
+        return "Lab " + str(self.lab.id) + "-" + self.title
 
 
 class Submission(models.Model):
@@ -194,4 +197,4 @@ class Submission(models.Model):
         Profile, related_name='student', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.lab.name + self.student.user.first_name
+        return self.lab.id + self.student.user.first_name

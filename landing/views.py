@@ -17,7 +17,7 @@ from urllib3 import request
 from brutus import settings
 from landing.forms import AddAssistantForm, AddProblemForm, AddStudentForm, \
     EditCourseForm
-from landing.models import Assistant, Session
+from landing.models import Assistant, Session, Problem
 
 
 @login_required
@@ -326,6 +326,48 @@ def remove_assistant(request, course, assistant, session):
     course = Course.objects.get(code=course, session__id=session)
     assistant.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+@login_required
+def lab_detail(request, course, session, lab):
+    if request.user.profile:
+        course = Course.objects.get(code=course, session__id=session)
+        teachers = Teacher.objects.filter(course=course)
+        assistants = Assistant.objects.filter(course=course)
+        lab = Lab.objects.get(id=lab)
+        problems = Problem.objects.filter(lab=lab)
+        is_teacher = False
+        is_ta = False
+        # dealine_crossed = lab.end_time < datetime.datetime.now()
+        if Teacher.objects.filter(profile=request.user.profile).exists():
+            if course in Teacher.objects.get(profile=request.user.profile).course.all():
+                is_teacher = True
+        elif Assistant.objects.filter(profile=request.user.profile).exists():
+            if course in Assistant.objects.get(profile=request.user.profile).course.all():
+                is_ta = True
+
+        context = {
+            'course': course,
+            'lab': lab,
+            'page_title': "Lab " + str(lab.id),
+            'teachers': teachers,
+            'assistants': assistants,
+            'is_teacher': is_teacher,
+            'is_ta': is_ta,
+            'problems': problems,
+            'is_dead': dealine_crossed,
+        }
+        return render(request, 'landing/lab_detail.html', context=context)
+    messages.error(request, 'Sorry, your sourcery do not work here :)')
+    return redirect('home')
+
+
+def solve(request, problem):
+    problem = Problem.objects.get(id=problem)
+    context = {
+        'problem': problem,
+    }
+    return render(request, 'landing/solve.html', context=context)
 
 
 def land(request):

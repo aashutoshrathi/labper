@@ -189,3 +189,4 @@ EMAIL_PORT = config('EMAIL_PORT')
 LOGIN_URL = 'land'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
+TIME_ZONE =  'Asia/Kolkata'

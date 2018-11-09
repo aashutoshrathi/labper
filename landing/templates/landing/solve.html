@@ -1,0 +1,34 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block title %}
+    Solve | {{ problem.title }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+        <p uk-tooltip="title: Maximum points" class="uk-text-center uk-float-right uk-margin-remove">M.P.: {{ problem.points }} </p>
+        <p uk-tooltip="title: Allowed Similarity Index" class="uk-text-center uk-float-left uk-margin-remove">SI: {{ problem.similar }}% </p>
+        <p class="uk-text-center uk-margin-remove-bottom uk-text-lead uk-card-title">{{ problem.title }}</p>
+        <p class="uk-text-center uk-margin-remove-top">Lab: {{ problem.lab.id }} </p>
+        <hr>
+        <p class="uk-text-center uk-text-justify"> {{ problem.content }} </p>
+        <div class="uk-align-center uk-text-center">
+        </div>
+    </div>
+
+    <p class="uk-text-center uk-text-lead uk-margin-large-top uk-link-text">Code, Compile and Run</p>
+    <div class="sec-widget" data-widget="7af3d5ca718dc464390066d05ec6d837"></div>
+    <script>
+        SEC_HTTPS = true;
+        SEC_BASE = "compilers.widgets.sphere-engine.com"; 
+        (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; 
+            js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);   
+        }(document, "script", "sphere-engine-compilers-jssdk"));
+    </script>
+
+{% endblock %}
