@@ -10,3 +10,4 @@ django-extensions
 graphviz
 pylint
 pylint-django
+django-datetime-widget

@@ -154,9 +154,8 @@ class Lab(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     course = models.ForeignKey(
         Course, related_name='course', on_delete=models.CASCADE)
-    date = models.DateField(help_text='Enter Date of Lab')
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.DateTimeField(blank=True)
+    end_time = models.DateTimeField(blank=True)
     description = models.CharField(
         max_length=256, help_text='Add brief Lab description', blank=True)
 

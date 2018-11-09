@@ -17,6 +17,8 @@ dj_database_url = '*'
 django-extensions = "*"
 graphviz = "*"
 "autopep8" = "*"
+django-datetime-widget = "*"
+django = "==2.0.8"
 
 [dev-packages]
 pylint = '*'

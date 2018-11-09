@@ -10,6 +10,7 @@
     {% comment %} <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p> {% endcomment %}
     <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
     <h4 class="uk-card-title">Lab {{lab.id}}</h3>
+    <p class="uk-text-danger uk-margin-remove">Deadline: {{lab.end_time}}</p>
     <p>
         <span class="uk-text-center uk-text-bold">Instructor:</span>
         {{ teachers.all | join:", " }}
@@ -25,12 +26,16 @@
             <p class="uk-text-meta">Problems from Lab {{ lab.id }}</p>
             {% for problem in problems %}
                 <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
-                    <a href="{% url 'solve' problem=problem.id %}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Solve</a> 
+                    {% if not is_dead %}
+                        <a href="{% url 'solve' problem=problem.id %}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Solve</a> 
+                    {% else %}
+                        <a uk-tooltip="title: You can't submit after deadline; pos:left" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-disabled uk-button-primary">Solve</a> 
+                    {% endif %}
                     <h3 class="uk-card-title">{{ problem.title }}</h3>
                     <a class="uk-text-center uk-text-small">Allowed Similarity: {{ problem.similar }}%</a>
                     <a class="uk-text-center uk-float-right uk-margin-auto uk-margin-small-top uk-text-small">Points: {{ problem.points }}pts</a> 
                     <hr>
-                    <p class="uk-float-right">Deadline: {{lab.end_time}}, {{lab.date}}</p>
+                    <!-- <p class="uk-float-right">Deadline: {{lab.end_time}}, {{lab.date}}</p> -->
                     <p> {{ problem.content | truncatechars:100 }} </p>
                 </div>
             {% endfor %}

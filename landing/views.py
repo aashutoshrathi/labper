@@ -1,6 +1,7 @@
 import datetime
 from builtins import object
 from os.path import exists
+from django.utils import timezone
 
 from .forms import AddCourseForm, AddLabForm
 from .models import Course, Lab, Profile, Student, Teacher
@@ -17,7 +18,7 @@ from urllib3 import request
 from brutus import settings
 from landing.forms import AddAssistantForm, AddProblemForm, AddStudentForm, \
     EditCourseForm
-from landing.models import Assistant, Session, Problem
+from landing.models import Assistant, Problem, Session
 
 
 @login_required
@@ -312,19 +313,21 @@ def course_detail(request, course, session):
     return redirect('home')
 
 
-@login_required()
+@login_required
 def remove_student(request, course, student, session):
     student = Student.objects.get(id=student)
     course = Course.objects.get(code=course, session__id=session)
-    student.course.remove(course)
+    if request.user.teacher_profile or reques.user.is_admin or request.user.assistant_profile:
+        student.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
-@login_required()
+@login_required
 def remove_assistant(request, course, assistant, session):
     assistant = Assistant.objects.get(id=assistant)
     course = Course.objects.get(code=course, session__id=session)
-    assistant.course.remove(course)
+    if request.user.teacher_profile or reques.user.is_admin:
+        assistant.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
@@ -338,7 +341,7 @@ def lab_detail(request, course, session, lab):
         problems = Problem.objects.filter(lab=lab)
         is_teacher = False
         is_ta = False
-        # dealine_crossed = lab.end_time < datetime.datetime.now()
+        dealine_crossed = lab.end_time < timezone.now()
         if Teacher.objects.filter(profile=request.user.profile).exists():
             if course in Teacher.objects.get(profile=request.user.profile).course.all():
                 is_teacher = True
@@ -355,7 +358,7 @@ def lab_detail(request, course, session, lab):
             'is_teacher': is_teacher,
             'is_ta': is_ta,
             'problems': problems,
-            # 'is_dead': dealine_crossed,
+            'is_dead': dealine_crossed,
         }
         return render(request, 'landing/lab_detail.html', context=context)
     messages.error(request, 'Sorry, your sourcery do not work here :)')

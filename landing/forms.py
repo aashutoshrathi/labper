@@ -1,11 +1,12 @@
+import datetime
 from collections import OrderedDict
 
 from .models import Course, Lab, Profile, Teacher
 from django import forms
-from django.forms.fields import DateTimeField
+from datetimewidget.widgets import DateTimeWidget
 from django.forms.widgets import SelectDateWidget, TimeInput
 
-from landing.models import Student, Problem
+from landing.models import Problem, Student
 
 
 class DateInput(forms.DateInput):
@@ -97,7 +98,7 @@ class AddAssistantForm(forms.Form):
 class AddLabForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddLabForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['id', 'date', 'start_time', 'end_time', 'description']
+        fields_keyOrder = ['id', 'start_time', 'end_time', 'description']
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
@@ -105,7 +106,6 @@ class AddLabForm(forms.ModelForm):
                 (k, self.fields[k]) for k in fields_keyOrder)
 
         self.fields['id'].label = 'Lab ID'
-        self.fields['date'].label = 'Date'
         self.fields['start_time'].label = "Start Time"
         self.fields['end_time'].label = "End Time"
         self.fields['description'].label = "Description"
@@ -118,24 +118,25 @@ class AddLabForm(forms.ModelForm):
             'class': 'uk-textarea uk-input',
             'placeholder': 'Add description here',
         })
-        self.fields['date'].widget.attrs.update({
-            'class': 'uk-select uk-width-auto',
-            'type': 'date'
-        })
         self.fields['start_time'].widget.attrs.update({
-            'class': 'uk-select uk-width-auto',
-            'type': 'time'
+            'class': 'uk-input uk-width-auto',
         })
         self.fields['end_time'].widget.attrs.update({
-            'class': 'uk-select uk-width-auto',
-            'type': 'time'
+            'class': 'uk-input uk-width-auto',
         })
 
     class Meta:
         model = Lab
-        fields = {'id', 'date', 'start_time', 'end_time', 'description'}
+        fields = {'id', 'start_time', 'end_time', 'description'}
+        dateTimeOptions = {
+            'autoclose': True,
+            'startDate': str(datetime.datetime.today().date()),
+            'endDate': str(datetime.datetime.today().date() + datetime.timedelta(7)),
+            'format': 'mm/dd/yyyy hh:ii',
+        }
         widgets = {
-            'date': SelectDateWidget(),
+            'start_time': DateTimeWidget(options=dateTimeOptions),
+            'end_time': DateTimeWidget(options=dateTimeOptions),
         }
 
 

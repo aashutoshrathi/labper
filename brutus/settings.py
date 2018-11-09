@@ -33,10 +33,12 @@ INSTALLED_APPS = [
     'landing.apps.LandingConfig',
     'social_django',
     'django_extensions',
+    'datetimewidget'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -118,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -189,4 +191,3 @@ EMAIL_PORT = config('EMAIL_PORT')
 LOGIN_URL = 'land'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
-TIME_ZONE =  'Asia/Kolkata'
