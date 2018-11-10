@@ -4,7 +4,7 @@
 <h4 align="center">Lab performance evaluator</h4>
 
 <p align="center">
-<a href="https://travis-ci.com/aashutoshrathi/labper"><img src="https://img.shields.io/travis/aashutoshrathi/labper/master.svg?style=for-the-badge" align="center"></a>
+<a href="https://travis-ci.com/aashutoshrathi/labper"><img src="https://img.shields.io/travis/com/aashutoshrathi/labper/master.svg?style=for-the-badge" align="center"></a>
 <a href="https://heroku.com/deploy?template=http://github.com/aashutoshrathi/labper"><img src="https://www.herokucdn.com/deploy/button.svg" align="center"></a>
 <img src="https://img.shields.io/pypi/pyversions/Django.svg?style=for-the-badge" align="center">
 </p>
