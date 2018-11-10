@@ -13,9 +13,16 @@ env:
   -DB_HOST=127.0.0.1
   -DB_PORT=5432
   -ALLOWED_HOSTS=*
-  -SKEY=iiitv223frk^&RT&*#GRIHt98H*(G*#(FH*#HFO#T*OIQBDOQIHR)(#QHT(*labper
+  -G_KEY=testkey374
+  -G_SKEY=testkey768
+  -SKEY=iiitv@$^#labper
+  -EMAIL_USE_TLS=True
+  -EMAIL_HOST=smtp.gmail.com
+  -EMAIL_HOST_USER=gmail@labper.com
+  -EMAIL_HOST_PASSWORD=kyuBatau
+  -EMAIL_PORT=7894
 install:
-  - pipenv install
+  - pip install -r requirements.txt
 before_script:
   - psql -c "CREATE USER labper WITH CREATEUSER PASSWORD 'labper';" -U postgres
   - psql -c "ALTER USER labper CREATEDB;" -U postgres
