@@ -1,6 +1,14 @@
-# Labper
+<p align='center'> <img src="static/icons/lab.png" align="center" width="150"></p>
 
-Lab Management system
+<h1 align="center">Labper</h1>
+<h4 align="center">Lab performance evaluator</h4>
+
+<p align="center">
+<a href="https://travis-ci.com/aashutoshrathi/labper"><img src="https://img.shields.io/travis/aashutoshrathi/labper/master.svg?style=for-the-badge" align="center"></a>
+<a href="https://heroku.com/deploy?template=http://github.com/aashutoshrathi/labper"><img src="https://www.herokucdn.com/deploy/button.svg" align="center"></a>
+<img src="https://img.shields.io/pypi/pyversions/Django.svg?style=for-the-badge" align="center">
+</p>
+
 
 ## How to Use
 
@@ -9,7 +17,7 @@ To use this project, follow these steps:
 - Make a `.env` file having same structure as `.env.sample`
 - Get your G_KEY and G_SKEY by creating a project on [Google Dev Console](http://console.developers.google.com/)
 - Add you client key to G_KEY and client secret key to G_SKEY.
-- Fill up the following entries in .env
+- Fill up the following entries in `.env`.
 
 ```bash
 EMAIL_HOST=smtp.gmail.com
@@ -49,3 +57,8 @@ python manage.py runserver
 One click easy deployment.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=http://github.com/aashutoshrathi/labper)
+
+
+## Author ✍️
+
+[Team Labper](https://labper.herokuapp.com/about/)

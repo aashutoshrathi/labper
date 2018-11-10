@@ -1,0 +1,26 @@
+language: python
+python:
+  - 3.6
+services:
+  - postgresql
+env:
+  -DJANGO=2.0.8
+  -DB=postgresql
+  -DEBUG=True
+  -DB_NAME=labper_db
+  -DB_USER=labper
+  -DB_PASSWORD=labper
+  -DB_HOST=127.0.0.1
+  -DB_PORT=5432
+  -ALLOWED_HOSTS=*
+  -SKEY=iiitv223frk^&RT&*#GRIHt98H*(G*#(FH*#HFO#T*OIQBDOQIHR)(#QHT(*labper
+install:
+  - pipenv install
+before_script:
+  - psql -c "CREATE USER labper WITH CREATEUSER PASSWORD 'labper';" -U postgres
+  - psql -c "ALTER USER labper CREATEDB;" -U postgres
+  - psql -c "CREATE DATABASE labper_db;" -U postgres
+  - psql -c "GRANT ALL ON DATABASE labper_db TO labper;" -U postgres
+script:
+  - python manage.py makemigrations
+  - python manage.py migrate
