@@ -1,0 +1,75 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block title %}
+    Your Submissions
+{% endblock %}
+
+{% block body %}
+    <div class="uk-grid">
+        <div class="uk-light uk-card uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+            <p class="uk-text-center uk-text-lead uk-card-title">My Submissions</p>
+            <hr>
+            {% if subs %}
+                <table class="uk-table uk-table-striped">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-center">Problem</th>
+                            <th class="uk-text-center">Timestamp</th>
+                            <th class="uk-text-center">Status</th>
+                            <th class="uk-text-center">Detailed Analysis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sub in subs %}
+                        <tr uk-tooltip="title: Click to view/download your submission; pos:right;" onclick="document.location=`{{MEDIA_URL}}{{sub.code_file}}`" style="cursor:pointer">
+                            <td class="uk-text-center uk-text-middle">{{ sub.problem }}</td>
+                            <td class="uk-text-center uk-text-middle">{{ sub.timestamp }}</td>
+                            <td class="uk-text-center">
+                                <a href="#" class="uk-icon-link uk-text-warning uk-margin-small-right" uk-icon="icon: clock; ratio:1.5"></a>
+                            </td>
+                            <td class="uk-text-center uk-text-warning uk-text-middle">Coming Soon</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Sadly, you have no submissions as of now.</p>
+            {% endif %}
+                 
+        </div>
+
+        <div class="uk-light uk-card uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-4@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+            <p class="uk-text-center uk-text-lead uk-card-title">Help Tools</p>
+            <table class="uk-table uk-table-striped">
+                <tbody>
+                    <tr>
+                        <td class="uk-text-center uk-text-success uk-text-middle">Accepted</td>
+                        <td class="uk-text-center">
+                            <a href="#" class="uk-icon-button uk-icon-link uk-text-success uk-margin-small-right" uk-icon="icon: check; ratio:1.5"></a>
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td class="uk-text-center uk-text-warning uk-text-middle">Evaluating</td>
+                        <td class="uk-text-center">
+                            <a href="#" class="uk-icon-button uk-icon-link uk-text-warning uk-margin-small-right" uk-icon="icon: clock; ratio:1.5"></a>
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td class="uk-text-center uk-text-danger uk-text-middle">Wrong Answer</td>
+                        <td class="uk-text-center">
+                            <a href="#" class="uk-icon-button uk-icon-link uk-text-danger uk-margin-small-right" uk-icon="icon: close; ratio:1.5"></a>
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td class="uk-text-center uk-text-danger uk-text-middle">Plaigarised</td>
+                        <td class="uk-text-center">
+                            <a href="#" class="uk-icon-button uk-icon-link uk-text-danger uk-margin-small-right" uk-icon="icon: ban; ratio:1.5"></a>
+                        </td>                      
+                    </tr>
+                </tbody>
+            </table>    
+        </div>
+    </div>
+{% endblock %}
+    
