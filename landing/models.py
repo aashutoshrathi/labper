@@ -1,4 +1,3 @@
-
 import datetime
 import uuid
 from django.contrib.auth.models import User
@@ -185,7 +184,7 @@ class Problem(models.Model):
 
 
 def submission_dir(instance, filename):
-    return 'submissions/{0}/{1}/{2}/{3}-{4}'.format(instance.student.roll_no, instance.problem.lab.id, instance.problem.id, filename, instance.timestamp)
+    return 'submissions/{0}/Lab-{1}/P{2}/{3}'.format(instance.student.roll_no, instance.problem.lab.id, instance.problem.id, filename)
 
 
 class Submission(models.Model):
