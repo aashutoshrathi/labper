@@ -53,6 +53,9 @@
                             </li>
                             {% if user.is_authenticated %}
                                 <li class="uk-active">
+                                    <a href="{% url 'submissions' %}">My Submissions</a>
+                                </li>
+                                <li class="uk-active">
                                     <a>{{ user.username }}</a>
                                 </li>
                                 <li class="uk-active">

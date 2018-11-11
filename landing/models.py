@@ -203,4 +203,4 @@ class Submission(models.Model):
         upload_to=submission_dir, help_text="Add File with proper format, so that it can be compiled", blank=True)
 
     def __str__(self):
-        return self.lab.id + self.student.user.first_name
+        return "Lab{0}-{1}-{2}".format(self.problem.lab.id, self.problem.title, self.student.roll_no)

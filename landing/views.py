@@ -18,7 +18,7 @@ from urllib3 import request
 from brutus import settings
 from landing.forms import AddAssistantForm, AddProblemForm, AddStudentForm, \
     EditCourseForm, SubmissionForm
-from landing.models import Assistant, Problem, Session
+from landing.models import Assistant, Problem, Session, Submission
 
 
 @login_required
@@ -377,7 +377,7 @@ def solve(request, problem):
                     profile=request.user.profile).profile
             tform.problem = problem
             tform.save()
-            return redirect('home')
+            return redirect('submissions')
     else:
         form = SubmissionForm()
     context = {
@@ -387,6 +387,16 @@ def solve(request, problem):
         "button": "Upload",
     }
     return render(request, 'landing/solve.html', context=context)
+
+
+@login_required
+def submissions(request):
+    c_user = request.user
+    submissions = Submission.objects.filter(student=c_user.profile).order_by('-timestamp')
+    context = {
+        'subs': submissions
+    }
+    return render(request, 'landing/submissions.html', context=context)
 
 
 def land(request):
