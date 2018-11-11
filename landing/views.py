@@ -8,7 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect, \
+    JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -326,7 +327,7 @@ def remove_student(request, course, student, session):
 def remove_assistant(request, course, assistant, session):
     assistant = Assistant.objects.get(id=assistant)
     course = Course.objects.get(code=course, session__id=session)
-    if request.user.teacher_profile or request.user.is_admin:
+    if request.user.profile.teacher_profile or request.user.is_admin:
         assistant.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -337,7 +338,7 @@ def lab_detail(request, course, session, lab):
         course = Course.objects.get(code=course, session__id=session)
         teachers = Teacher.objects.filter(course=course)
         assistants = Assistant.objects.filter(course=course)
-        lab = Lab.objects.get(id=lab)
+        lab = Lab.objects.get(id=lab, course=course)
         problems = Problem.objects.filter(lab=lab)
         is_teacher = False
         is_ta = False
@@ -392,11 +393,28 @@ def solve(request, problem):
 @login_required
 def submissions(request):
     c_user = request.user
-    submissions = Submission.objects.filter(student=c_user.profile).order_by('-timestamp')
+    submissions = Submission.objects.filter(
+        student=c_user.profile).order_by('-timestamp')
     context = {
-        'subs': submissions
+        'subs': submissions,
+        'sub_type': "My Submissions",
     }
     return render(request, 'landing/submissions.html', context=context)
+
+
+@login_required
+def lab_subs(request, lab, course, session):
+    if Teacher.objects.filter(profile=request.user.profile).exists():
+        course = Course.objects.get(code=course, session__id=session)
+        lab = Lab.objects.get(id=lab, course=course)
+        submissions = Submission.objects.filter(problem__lab=lab).order_by('student')
+        context = {
+            'subs': submissions,
+            'sub_type': "Lab-{0} Submissions".format(lab.id),
+        }
+        return render(request, 'landing/submissions.html', context=context)
+    else:
+        return render(request, '404.html')
 
 
 def land(request):
