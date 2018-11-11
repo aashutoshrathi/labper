@@ -10,11 +10,14 @@
     {% comment %} <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p> {% endcomment %}
     <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
     <h4 class="uk-card-title">Lab {{lab.id}}</h3>
-    <p class="uk-text-danger uk-margin-remove">Deadline: {{lab.end_time}}</p>
-    <p>
-        <span class="uk-text-center uk-text-bold">Instructor:</span>
-        {{ teachers.all | join:", " }}
-    </p>
+        <p class="uk-text-danger uk-margin-remove">Deadline: {{lab.end_time}}</p>
+        <p>
+            <span class="uk-text-center uk-text-bold">Instructor:</span>
+            {{ teachers.all | join:", " }}
+        </p>
+    {% if is_ta or is_teacher %}
+        <a href="{% url 'lab_subs' course=course.code lab=lab.id session=course.session.id %}" class="uk-button uk-button-primary uk-border-pill">All Submissions</a>
+    {% endif %}
 </div>
 <div class="uk-card-hover uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@m uk-margin-top uk-align-center ">
     <ul class="uk-tab-bottom" uk-tab uk-switcher>

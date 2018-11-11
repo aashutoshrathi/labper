@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^$', views.land, name='land'),
     url(r'^tcgen/$', tviews.create_tc, name="tcgen"),
     url(r'^subs/$', views.submissions, name="submissions"),
+    url(r'^lab_subs/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/(?P<lab>[\w\-]+)/$',
+        views.lab_subs, name="lab_subs"),
     url(r'^home/$', views.home, name='home'),
     url(r'^404/$', views.test_404, name='test_404'),
     url(r'^ide/$', views.ide, name='ide'),

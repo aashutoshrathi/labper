@@ -74,7 +74,7 @@ class Course(models.Model):
         unique_together = ("code", "session")
 
     name = models.CharField(max_length=50)
-    code = models.CharField(max_length=10, help_text="Unique Course Code")
+    code = models.CharField(max_length=5)
     session = models.ForeignKey(Session, on_delete=models.CASCADE,
                                 help_text="Session when this course is to be taught")
     target_batch = models.IntegerField(help_text="Year when target batch will graduate", default=2020, validators=[

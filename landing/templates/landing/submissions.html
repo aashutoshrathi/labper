@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block title %}
-    Your Submissions
+    {{ sub_type }}
 {% endblock %}
 
 {% block body %}
     <div class="uk-grid">
         <div class="uk-light uk-card uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
-            <p class="uk-text-center uk-text-lead uk-card-title">My Submissions</p>
+            <p class="uk-text-center uk-text-lead uk-card-title">{{ sub_type }}</p>
             <hr>
             {% if subs %}
                 <table class="uk-table uk-table-striped">
@@ -17,7 +17,7 @@
                             <th class="uk-text-center">Problem</th>
                             <th class="uk-text-center">Timestamp</th>
                             <th class="uk-text-center">Status</th>
-                            <th class="uk-text-center">Detailed Analysis</th>
+                            <th class="uk-text-center">Submitted By</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,13 +28,13 @@
                             <td class="uk-text-center">
                                 <a href="#" class="uk-icon-link uk-text-warning uk-margin-small-right" uk-icon="icon: clock; ratio:1.5"></a>
                             </td>
-                            <td class="uk-text-center uk-text-warning uk-text-middle">Coming Soon</td>
+                            <td class="uk-text-center uk-text-warning uk-text-middle">{{ sub.student.roll_no }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             {% else %}
-                <p>Sadly, you have no submissions as of now.</p>
+                <p class="uk-text-center">Sadly, you have no submissions as of now.</p>
             {% endif %}
                  
         </div>
