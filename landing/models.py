@@ -6,6 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 
 class Profile(models.Model):
@@ -183,6 +184,10 @@ class Problem(models.Model):
         return "Lab " + str(self.lab.id) + "-" + self.title
 
 
+def submission_dir(instance, filename):
+    return 'submissions/{0}/{1}/{2}/{3}-{4}'.format(instance.student.roll_no, instance.problem.lab.id, instance.problem.id, filename, instance.timestamp)
+
+
 class Submission(models.Model):
     class Meta:
         ordering = ('student',)
@@ -194,6 +199,9 @@ class Submission(models.Model):
         Problem, related_name='problem', on_delete=models.CASCADE)
     student = models.ForeignKey(
         Profile, related_name='student', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+    code_file = models.FileField(
+        upload_to=submission_dir, help_text="Add File with proper format, so that it can be compiled", blank=True)
 
     def __str__(self):
         return self.lab.id + self.student.user.first_name

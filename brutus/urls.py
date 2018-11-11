@@ -1,8 +1,11 @@
+from django.conf import settings
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.urls import path
+from tcgen import views as tviews
 
 from landing import views
 
@@ -11,6 +14,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', views.land, name='land'),
+    url(r'^tcgen/$', tviews.create_tc, name="tcgen"),
     url(r'^home/$', views.home, name='home'),
     url(r'^404/$', views.test_404, name='test_404'),
     url(r'^ide/$', views.ide, name='ide'),
@@ -43,3 +47,7 @@ urlpatterns = [
     url(r'^solve/(?P<problem>[\w\-]+)/$',
         views.solve, name='solve'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
