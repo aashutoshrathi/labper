@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'landing.apps.LandingConfig',
     'social_django',
     'django_extensions',
-    'datetimewidget'
+    'datetimewidget',
+    'tcgen',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'django.template.context_processors.media',
             ],
             'debug': DEBUG,
         },
@@ -191,3 +193,6 @@ EMAIL_PORT = config('EMAIL_PORT')
 LOGIN_URL = 'land'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

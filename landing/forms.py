@@ -6,7 +6,7 @@ from django import forms
 from datetimewidget.widgets import DateTimeWidget
 from django.forms.widgets import SelectDateWidget, TimeInput
 
-from landing.models import Problem, Student
+from landing.models import Problem, Student, Submission
 
 
 class DateInput(forms.DateInput):
@@ -143,7 +143,7 @@ class AddLabForm(forms.ModelForm):
 class AddProblemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddProblemForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['title', 'content','similar', 'correctcode']
+        fields_keyOrder = ['title', 'content', 'similar', 'correctcode']
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
@@ -177,3 +177,18 @@ class AddProblemForm(forms.ModelForm):
     class Meta:
         model = Problem
         fields = {'title', 'content', 'similar', 'correctcode'}
+
+
+class SubmissionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SubmissionForm, self).__init__(*args, **kwargs)
+        self.fields['code_file'].label = 'Code File'
+
+        self.fields['code_file'].widget.attrs.update({
+            'class': 'uk-input uk-width-auto',
+            'type': 'file'
+        })
+
+    class Meta:
+        model = Submission
+        fields = {'code_file', }

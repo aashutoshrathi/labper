@@ -1,7 +1,6 @@
 import datetime
 from builtins import object
 from os.path import exists
-from django.utils import timezone
 
 from .forms import AddCourseForm, AddLabForm
 from .models import Course, Lab, Profile, Student, Teacher
@@ -12,12 +11,13 @@ from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.views import View
 from urllib3 import request
 
 from brutus import settings
 from landing.forms import AddAssistantForm, AddProblemForm, AddStudentForm, \
-    EditCourseForm
+    EditCourseForm, SubmissionForm
 from landing.models import Assistant, Problem, Session
 
 
@@ -317,7 +317,7 @@ def course_detail(request, course, session):
 def remove_student(request, course, student, session):
     student = Student.objects.get(id=student)
     course = Course.objects.get(code=course, session__id=session)
-    if request.user.teacher_profile or reques.user.is_admin or request.user.assistant_profile:
+    if request.user.teacher_profile or request.user.is_admin or request.user.assistant_profile:
         student.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -326,7 +326,7 @@ def remove_student(request, course, student, session):
 def remove_assistant(request, course, assistant, session):
     assistant = Assistant.objects.get(id=assistant)
     course = Course.objects.get(code=course, session__id=session)
-    if request.user.teacher_profile or reques.user.is_admin:
+    if request.user.teacher_profile or request.user.is_admin:
         assistant.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -365,10 +365,26 @@ def lab_detail(request, course, session, lab):
     return redirect('home')
 
 
+@login_required
 def solve(request, problem):
     problem = Problem.objects.get(id=problem)
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            tform = form.save(commit=False)
+            if Student.objects.filter(profile=request.user.profile):
+                tform.student = Student.objects.get(
+                    profile=request.user.profile).profile
+            tform.problem = problem
+            tform.save()
+            return redirect('home')
+    else:
+        form = SubmissionForm()
     context = {
         'problem': problem,
+        'form': form,
+        'form_title': "Submit Code",
+        "button": "Upload",
     }
     return render(request, 'landing/solve.html', context=context)
 
