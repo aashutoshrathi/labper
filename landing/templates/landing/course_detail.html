@@ -7,22 +7,21 @@
 
 {% block body %}
 <div class="uk-card-hover uk-button uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@l uk-margin-top uk-align-center ">
-    {% comment %} <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p> {% endcomment %}
-    
-    {% if is_teacher or is_ta %}
-        <a href="{% url 'add_lab' course=course.code session=course.session.id %}" class="uk-text-center uk-float-left uk-border-pill uk-width-auto uk-button uk-button-primary">Add Lab</a>   
-    {% endif %}
-    {% if is_teacher %}
-    <a uk-tooltip="title: Edit Course details; pos: right" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-margin-left uk-icon-button uk-float-left uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
-    <a class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-assistant-form" uk-toggle>Add Assistant</a>   
-    {% endif %}
+    <p class="uk-badge uk-padding-small">Batch: {{course.target_batch}}</p>
     <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
-    {% if is_teacher or is_ta %}    
-        <a class="uk-text-center uk-margin-small uk-margin-remove-bottom uk-button uk-float-right uk-border-pill uk-margin-top-small uk-width-auto uk-button uk-button-primary" href="#add-student-form" uk-toggle>Add Students</a>           
-    {% endif %}
     <p>
         <span class="uk-text-center uk-text-bold">Instructor:</span>
         {{ teachers.all | join:", " }}
+    </p>
+    <p>
+        {% if is_teacher or is_ta %}
+            <a uk-tooltip="title: Edit Course details; pos: top" href="{% url 'edit_course' course=course.code session=course.session.id %}" class="uk-icon-button uk-button-primary uk-text-center uk-margin-small-right" uk-icon="pencil"></a>
+            <a href="{% url 'add_lab' course=course.code session=course.session.id %}" class="uk-text-center uk-margin-top uk-margin-small-right uk-margin uk-border-pill uk-width-auto uk-button uk-button-primary">Add Lab</a>    
+            <a class="uk-text-center uk-margin uk-margin-small-right uk-button uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-student-form" uk-toggle>Add Students</a>           
+        {% endif %}
+        {% if is_teacher %}
+            <a class="uk-text-center uk-margin uk-border-pill uk-width-auto uk-button uk-button-primary" href="#add-assistant-form" uk-toggle>Add Assistant</a>   
+        {% endif %}
     </p>
 </div>
 <div class="uk-card-hover uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@m uk-margin-top uk-align-center ">
@@ -36,7 +35,13 @@
             <p class="uk-text-meta">Course events will be added here</p>
             {% for lab in labs %}
                 <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
-                    <a href="{% url 'lab_detail' course=course.code session=course.session.id lab=lab.id%}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Submit</a>   
+                    <a href="{% url 'lab_detail' course=course.code session=course.session.id lab=lab.id%}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">
+                        {% if is_ta or is_teacher %}
+                            Check
+                        {% else %}
+                            Submit
+                        {% endif %}
+                    </a>   
                     <h3 class="uk-card-title">Lab {{ lab.number }}</h3>
                     {% if is_teacher or is_ta %}
                         <a uk-tooltip="title: Add problems to this lab; pos: right" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="plus"></a>           

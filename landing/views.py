@@ -401,6 +401,8 @@ def solve(request, problem):
         form = SubmissionForm()
     context = {
         'problem': problem,
+        'lab': problem.lab,
+        'course': problem.lab.course,
         'form': form,
         'form_title': "Submit Code",
         "button": "Upload",
