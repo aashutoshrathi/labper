@@ -98,19 +98,19 @@ class AddAssistantForm(forms.Form):
 class AddLabForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddLabForm, self).__init__(*args, **kwargs)
-        fields_keyOrder = ['id', 'start_time', 'end_time', 'description']
+        fields_keyOrder = ['number', 'start_time', 'end_time', 'description']
         if 'keyOrder' in self.fields:
             self.fields.keyOrder = fields_keyOrder
         else:
             self.fields = OrderedDict(
                 (k, self.fields[k]) for k in fields_keyOrder)
 
-        self.fields['id'].label = 'Lab ID'
+        self.fields['number'].label = 'Lab Number'
         self.fields['start_time'].label = "Start Time"
         self.fields['end_time'].label = "End Time"
         self.fields['description'].label = "Description"
 
-        self.fields['id'].widget.attrs.update({
+        self.fields['number'].widget.attrs.update({
             'class': 'uk-input uk-width-auto',
             'placeholder': 'Eg: 2',
         })
@@ -127,7 +127,7 @@ class AddLabForm(forms.ModelForm):
 
     class Meta:
         model = Lab
-        fields = {'id', 'start_time', 'end_time', 'description'}
+        fields = {'number', 'start_time', 'end_time', 'description'}
         dateTimeOptions = {
             'autoclose': True,
             'startDate': str(datetime.datetime.today().date()),

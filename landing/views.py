@@ -371,7 +371,7 @@ def lab_detail(request, course, session, lab):
         context = {
             'course': course,
             'lab': lab,
-            'page_title': "Lab " + str(lab.id),
+            'page_title': "Lab " + str(lab.number),
             'teachers': teachers,
             'assistants': assistants,
             'is_teacher': is_teacher,
@@ -429,7 +429,7 @@ def lab_subs(request, lab, course, session):
             problem__lab=lab).order_by('student')
         context = {
             'subs': submissions,
-            'sub_type': "Lab-{0} Submissions".format(lab.id),
+            'sub_type': "Lab-{0} Submissions".format(lab.number),
         }
         return render(request, 'landing/submissions.html', context=context)
     else:

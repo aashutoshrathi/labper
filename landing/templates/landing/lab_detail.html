@@ -9,7 +9,7 @@
 <div class="uk-card-hover uk-button uk-card-secondary uk-light uk-border-rounded uk-card-default uk-card-body uk-width-2-3@l uk-margin-top uk-align-center ">
     {% comment %} <p class="uk-badge uk-float-left uk-padding-small">Batch: {{course.target_batch}}</p> {% endcomment %}
     <h3 class="uk-card-title">{{ course.name }} ({{course.code}})</h3>
-    <h4 class="uk-card-title">Lab {{lab.id}}</h3>
+    <h4 class="uk-card-title">Lab {{lab.number}}</h3>
         <p class="uk-text-danger uk-margin-remove">Deadline: {{lab.end_time}}</p>
         <p>
             <span class="uk-text-center uk-text-bold">Instructor:</span>
@@ -26,7 +26,7 @@
     </ul>
     <ul class="uk-switcher uk-margin">
         <li>
-            <p class="uk-text-meta">Problems from Lab {{ lab.id }}</p>
+            <p class="uk-text-meta">Problems from Lab {{ lab.number }}</p>
             {% for problem in problems %}
                 <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
                     {% if not is_dead %}
@@ -69,7 +69,7 @@
                                 {% if ta.profile.avatar_small %}
                                     <img src="{{ ta.profile.avatar_small }}" class="uk-border-circle uk-margin-left" width="40">
                                 {% else %}
-                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="40"> 
+                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle uk-margin-left" width="40"> 
                                 {% endif %}
                             </a>
                         </td>
