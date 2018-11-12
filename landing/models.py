@@ -1,5 +1,7 @@
 import datetime
+import os
 import uuid
+
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -151,7 +153,7 @@ class Lab(models.Model):
         verbose_name = 'Lab'
         verbose_name_plural = 'Labs'
 
-    number = models.IntegerField(default=1 ,validators=[
+    number = models.IntegerField(default=1, validators=[
         MinValueValidator(1),
         MaxValueValidator(1000)])
     id = models.UUIDField(unique=True, default=uuid.uuid4,
@@ -204,7 +206,10 @@ class Submission(models.Model):
         Profile, related_name='student', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now)
     code_file = models.FileField(
-        upload_to=submission_dir, help_text="Add File with proper format, so that it can be compiled", blank=True)
+        upload_to=submission_dir, help_text="Add File with proper format, so that it can be compiled")
 
     def __str__(self):
         return "Lab{0}-{1}-{2}".format(self.problem.lab.number, self.problem.title, self.student.roll_no)
+
+    def filename(self):
+        return os.path.basename(self.code_file.name)

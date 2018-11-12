@@ -15,6 +15,7 @@
                     <thead>
                         <tr>
                             <th class="uk-text-center">Problem</th>
+                            <th class="uk-text-center">Filename</th>
                             <th class="uk-text-center">Timestamp</th>
                             <th class="uk-text-center">Status</th>
                             <th class="uk-text-center">Submitted By</th>
@@ -24,6 +25,7 @@
                         {% for sub in subs %}
                         <tr uk-tooltip="title: Click to view/download your submission; pos:right;" onclick="document.location=`{{MEDIA_URL}}{{sub.code_file}}`" style="cursor:pointer">
                             <td class="uk-text-center uk-text-middle">{{ sub.problem }}</td>
+                            <td class="uk-text-center uk-text-middle">{{ sub.filename }}</td>
                             <td class="uk-text-center uk-text-middle">{{ sub.timestamp }}</td>
                             <td class="uk-text-center">
                                 <a href="#" class="uk-icon-link uk-text-warning uk-margin-small-right" uk-icon="icon: clock; ratio:1.5"></a>
