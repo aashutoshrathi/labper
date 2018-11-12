@@ -52,6 +52,16 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+## Deployment to Pythonanywhere
+
+- Clone the repository using ` git clone https://github.com/aashutoshrathi/labper.git brutus `
+- cd `brutus`
+- `pip3 install --user -r requirements.txt`
+- `python3 manage.py makemigrations landing`
+- `python3 manage.py migrate`
+- `pytohn3 manage.py collectstatic`
+- `python3 manage.py createsuperuser` (Optional)
+
 ## Deployment to Heroku
 
 One click easy deployment.
