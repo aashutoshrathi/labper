@@ -11,7 +11,6 @@
             <div>
                 <div class="uk-card uk-border-rounded uk-card-default uk-card-body">
                     <h3 class="uk-card-title">Summary</h3>
-                    <hr>
                 </div>
             </div>
             <div>
@@ -59,15 +58,21 @@
             <div>
                 <div class="uk-card uk-border-rounded uk-card-default uk-card-body">
                     <h3 class="uk-card-title">Summary</h3>
+                    <p class="uk-text-meta">Recent Lab</p>
+                    <hr>
+                    <div class="closer">
+                        <p>Batch of <span class="uk-text-bold">{{ student.batch }}</span></p>
+                        <p class="uk-text-bold">{{ student.get_branch_display }}</p>                    
+                    </div>
                     <hr>
                 </div>
             </div>
             <div>
                 <div class="uk-card uk-border-rounded uk-card-default uk-card-body">
-                    <h3 class="uk-card-title">My Courses</h3>
+                    <h3 class="uk-card-title">My Courses (As TA)</h3>
                     <p class="uk-text-meta">Courses you are teaching</p>
                     <hr>
-                    {% if courses %}
+                    {% if tcourses %}
                     <table class="uk-table uk-table-striped">
                         <thead>
                             <tr>
@@ -78,7 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for course in courses %}
+                            {% for course in tcourses %}
                             <tr uk-tooltip="title: Click to access this course; pos:right" onclick="document.location=`{% url 'course_detail' course=course.code session=course.session.id %}`" style="cursor:pointer">
                                 <td>{{ course.code }}</td>
                                 <td>{{ course.target_batch }}</td>
@@ -93,7 +98,39 @@
                     {% endif %}           
                 </div>
             </div>
+            
+            <div class="uk-card uk-border-rounded uk-card-default uk-card-body">
+                <h3 class="uk-card-title">My Courses (As student)</h3>
+            <p class="uk-text-meta">Courses you have taken</p>
+            <hr>
+            {% if tcourses %}
+            <table class="uk-table uk-table-striped">
+                <thead>
+                    <tr>
+                        <th class="uk-text-center">Code</th>
+                        <th class="uk-text-center">Batch</th>
+                        <th class="uk-text-center hidden-on-small-display">Session</th>
+                        <th class="uk-text-center">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr uk-tooltip="title: Click to access this course; pos:right" onclick="document.location=`{% url 'course_detail' course=course.code session=course.session.id %}`" style="cursor:pointer">
+                        <td>{{ course.code }}</td>
+                        <td>{{ course.target_batch }}</td>
+                        <td class="hidden-on-small-display">{{ course.session }}</td>
+                        <td>{{ course.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+            {% else %}
+            <p class="uk-text-center"> You have no courses :( </p>
+            {% endif %}           
+        </div>
+    </div>
+</div>
 
     {% else %}
     <div class="uk-text-center" uk-grid>

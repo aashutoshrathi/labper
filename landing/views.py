@@ -42,6 +42,24 @@ def home(request):
             'courses': courses,
             'session': session,
         }
+    if Assistant.objects.filter(profile=target):
+        assistant = Assistant.objects.get(profile=target)
+        batch = int(target.roll_no[:4]) + 4
+        branch = target.roll_no[4:6]
+        student, create = Student.objects.get_or_create(
+            profile=target, batch=batch, branch=branch)
+        xcourses = Course.objects.filter(target_batch=batch)
+        for c in xcourses:
+            student.course.add(c)
+        courses = student.course.all()
+        tcourses = assistant.course.all()
+        context = {
+            'student': student,
+            'courses': courses,
+            'tcourses': tcourses,
+            'upgd': False,
+            'session': session,
+        }
     else:
         batch = int(target.roll_no[:4]) + 4
         branch = target.roll_no[4:6]
@@ -318,7 +336,7 @@ def course_detail(request, course, session):
 def remove_student(request, course, student, session):
     student = Student.objects.get(id=student)
     course = Course.objects.get(code=course, session__id=session)
-    if request.user.teacher_profile or request.user.is_admin or request.user.assistant_profile:
+    if Teacher.objects.filter(profile=request.user.profile).exists() or Assistant.objects.filter(profile=request.user.profile).exists():
         student.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -407,7 +425,8 @@ def lab_subs(request, lab, course, session):
     if Teacher.objects.filter(profile=request.user.profile).exists():
         course = Course.objects.get(code=course, session__id=session)
         lab = Lab.objects.get(id=lab, course=course)
-        submissions = Submission.objects.filter(problem__lab=lab).order_by('student')
+        submissions = Submission.objects.filter(
+            problem__lab=lab).order_by('student')
         context = {
             'subs': submissions,
             'sub_type': "Lab-{0} Submissions".format(lab.id),
