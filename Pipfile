@@ -19,6 +19,8 @@ graphviz = "*"
 "autopep8" = "*"
 django-datetime-widget = "*"
 django = "==2.0.8"
+django-storages = "*"
+"boto3" = "*"
 
 [dev-packages]
 pylint = '*'

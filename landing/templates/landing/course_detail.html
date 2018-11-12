@@ -37,7 +37,7 @@
             {% for lab in labs %}
                 <div class="uk-card-hover uk-card-secondary uk-border-rounded uk-card-default uk-card-body uk-width-1-1@m uk-margin-top uk-align-center ">
                     <a href="{% url 'lab_detail' course=course.code session=course.session.id lab=lab.id%}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Submit</a>   
-                    <h3 class="uk-card-title">Lab {{ lab.id }}</h3>
+                    <h3 class="uk-card-title">Lab {{ lab.number }}</h3>
                     {% if is_teacher or is_ta %}
                         <a uk-tooltip="title: Add problems to this lab; pos: right" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="plus"></a>           
                     {% endif %}

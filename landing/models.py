@@ -147,11 +147,15 @@ class Assistant(models.Model):
 
 class Lab(models.Model):
     class Meta:
-        ordering = ('id',)
+        ordering = ('number',)
         verbose_name = 'Lab'
         verbose_name_plural = 'Labs'
 
-    id = models.IntegerField(unique=True, primary_key=True)
+    number = models.IntegerField(default=1 ,validators=[
+        MinValueValidator(1),
+        MaxValueValidator(1000)])
+    id = models.UUIDField(unique=True, default=uuid.uuid4,
+                          primary_key=True)
     course = models.ForeignKey(
         Course, related_name='course', on_delete=models.CASCADE)
     start_time = models.DateTimeField(blank=True)
@@ -180,11 +184,11 @@ class Problem(models.Model):
         default='print("Hello World!")', blank=False)
 
     def __str__(self):
-        return "Lab " + str(self.lab.id) + "-" + self.title
+        return "Lab " + str(self.lab.number) + "-" + self.title
 
 
 def submission_dir(instance, filename):
-    return 'submissions/{0}/Lab-{1}/P{2}/{3}'.format(instance.student.roll_no, instance.problem.lab.id, instance.problem.id, filename)
+    return 'submissions/{0}/Lab-{1}/P{2}/{3}'.format(instance.student.roll_no, instance.problem.lab.number, instance.problem.id, filename)
 
 
 class Submission(models.Model):
@@ -203,4 +207,4 @@ class Submission(models.Model):
         upload_to=submission_dir, help_text="Add File with proper format, so that it can be compiled", blank=True)
 
     def __str__(self):
-        return "Lab{0}-{1}-{2}".format(self.problem.lab.id, self.problem.title, self.student.roll_no)
+        return "Lab{0}-{1}-{2}".format(self.problem.lab.number, self.problem.title, self.student.roll_no)
