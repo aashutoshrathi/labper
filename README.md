@@ -54,13 +54,33 @@ python manage.py runserver
 
 ## Deployment to Pythonanywhere
 
-- Clone the repository using ` git clone https://github.com/aashutoshrathi/labper.git brutus `
-- cd `brutus`
-- `pip3 install --user -r requirements.txt`
-- `python3 manage.py makemigrations landing`
-- `python3 manage.py migrate`
-- `pytohn3 manage.py collectstatic`
-- `python3 manage.py createsuperuser` (Optional)
+- Take Python 3.7 app with Django 2.0.8.
+- Clone the repository using:
+
+  ```sh
+    git clone https://github.com/aashutoshrathi/labper.git brutus 
+  ```
+
+- Go into project directory using:
+
+  ```sh
+  cd brutus
+  ```
+
+- Install requirements:
+
+  ```sh
+    pip3 install --user -r requirements.txt
+  ```
+
+- Makemigrations and collectstatic using:
+
+  ```sh
+    python3 manage.py makemigrations landing
+    python3 manage.py migrate
+    pytohn3 manage.py collectstatic
+    python3 manage.py createsuperuser
+  ```
 
 ## Deployment to Heroku
 
