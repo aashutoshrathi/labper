@@ -6,3 +6,4 @@ staticfiles
 .vscode
 .idea
 migrations
+media
