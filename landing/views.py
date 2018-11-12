@@ -42,7 +42,7 @@ def home(request):
             'courses': courses,
             'session': session,
         }
-    if Assistant.objects.filter(profile=target):
+    elif Assistant.objects.filter(profile=target).exists():
         assistant = Assistant.objects.get(profile=target)
         batch = int(target.roll_no[:4]) + 4
         branch = target.roll_no[4:6]
@@ -422,7 +422,7 @@ def submissions(request):
 
 @login_required
 def lab_subs(request, lab, course, session):
-    if Teacher.objects.filter(profile=request.user.profile).exists():
+    if Teacher.objects.filter(profile=request.user.profile).exists() or Assistant.objects.filter(profile=request.user.profile).exists():
         course = Course.objects.get(code=course, session__id=session)
         lab = Lab.objects.get(id=lab, course=course)
         submissions = Submission.objects.filter(

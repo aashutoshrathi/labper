@@ -58,7 +58,7 @@
                                     </li>
                                 {% endif %}
                                 <li class="uk-active">
-                                    <a>{{ user.username }}</a>
+                                    <a href="{% url 'home' %}">{{ user.username }}</a>
                                 </li>
                                 <li class="uk-active">
                                     <a href="{% url 'logout' %}">Logout</a>
