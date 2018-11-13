@@ -59,7 +59,7 @@ body {
 #spinner::before {
     animation: 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite spinner;
     border: solid 3px #eee;
-    border-bottom-color: #ef4662;
+    border-bottom-color: #46bd2e;
     border-radius: 50%;
     content: "";
     height: 40px;

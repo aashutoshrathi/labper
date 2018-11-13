@@ -7,7 +7,7 @@
 
 {% block body %}
     <div class="uk-grid">
-        <div class="uk-light uk-card uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+        <div class="uk-light uk-card uk-align-center uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-2@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
             <p class="uk-text-center uk-text-lead uk-card-title">{{ sub_type }}</p>
             <hr>
             {% if subs %}
@@ -15,22 +15,22 @@
                     <thead>
                         <tr>
                             <th class="uk-text-center">Problem</th>
-                            <th class="uk-text-center">Filename</th>
+                            <th class="uk-text-center hidden-on-small-display">Filename</th>
                             <th class="uk-text-center">Timestamp</th>
                             <th class="uk-text-center">Status</th>
-                            <th class="uk-text-center">Submitted By</th>
+                            <th class="uk-text-center hidden-on-small-display">Submitted By</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for sub in subs %}
                         <tr uk-tooltip="title: Click to view/download your submission; pos:right;" onclick="document.location=`{{MEDIA_URL}}{{sub.code_file}}`" style="cursor:pointer">
                             <td class="uk-text-center uk-text-middle">{{ sub.problem }}</td>
-                            <td class="uk-text-center uk-text-middle">{{ sub.filename }}</td>
+                            <td class="uk-text-center uk-text-middle hidden-on-small-display">{{ sub.filename }}</td>
                             <td class="uk-text-center uk-text-middle">{{ sub.timestamp }}</td>
                             <td class="uk-text-center">
                                 <a href="#" class="uk-icon-link uk-text-warning uk-margin-small-right" uk-icon="icon: clock; ratio:1.5"></a>
                             </td>
-                            <td class="uk-text-center uk-text-warning uk-text-middle">{{ sub.student.roll_no }}</td>
+                            <td class="uk-text-center uk-text-warning uk-text-middle hidden-on-small-display">{{ sub.student.roll_no }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -38,10 +38,9 @@
             {% else %}
                 <p class="uk-text-center">Sadly, you have no submissions as of now.</p>
             {% endif %}
-                 
         </div>
 
-        <div class="uk-light uk-card uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-4@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
+        <div class="uk-light uk-align-center uk-card uk-card-secondary uk-border-rounded uk-box-shadow-large uk-card-body uk-width-1-4@m uk-align-center uk-margin-medium-top uk-margin-auto-bottom">
             <p class="uk-text-center uk-text-lead uk-card-title">Help Tools</p>
             <table class="uk-table uk-table-striped">
                 <tbody>
