@@ -90,7 +90,7 @@
                             {% if user.profile.avatar %}
                                 <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{{ user.profile.avatar_small }}">
                             {% else %}
-                                <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{% static 'images/default.png' %}">
+                                <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{% static 'images/default.ico' %}">
                             {% endif %}
                             <span class="uk-text-middle">{{ user.first_name }}</span>
                             <hr>
