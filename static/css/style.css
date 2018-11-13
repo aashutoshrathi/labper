@@ -34,6 +34,9 @@ body {
     color: #256363;
 }
 
+.hidden-on-large-display {
+    display: none !important;
+}
 
 @media only screen and (max-width: 960px) {
     .hidden-on-large-display {
@@ -41,7 +44,7 @@ body {
     }
 
     nav {
-        height: 60px;
+        height: 70px;
     }
 
     .hidden-on-small-display {

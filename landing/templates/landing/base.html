@@ -39,11 +39,12 @@
                 <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium uk-light" uk-navbar style="position: relative;">
                     <div class="uk-navbar-left">
                         <a class="uk-text-middle uk-navbar-item uk-logo" href="{% url 'land' %}">
-                            <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-left: 5px;">
-                            <b class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">Labper
+                            <img src="{% static 'icons/lab.png' %}" width="50px" style="margin-right: 10px;">
+                            <b class="uk-padding-small uk-text-middle uk-padding-remove-bottom uk-padding-remove-top">Labper
                         </a>
                     </div>
-                    <div class="uk-navbar-right uk-text-large">
+
+                    <div class="uk-navbar-right hidden-on-small-display uk-text-large">
                         <ul class="uk-navbar-nav">
                             <li class="uk-active">
                                 <a id="clock">{% now "jS F Y" %}</a>
@@ -75,9 +76,37 @@
                             {% endif %}
                         </ul>
                     </div>
+                    <button class="hidden-on-large-display uk-active uk-icon-button uk-button-default uk-margin-small-top uk-margin-right" style="margin-left: auto;" type="button" uk-toggle="target: #hamburger" uk-icon="menu"></button>
                 </nav>
             </div>
         </header>
+
+        <div class="uk-offcanvas-content uk-padding-remove">
+                <div id="hamburger" uk-offcanvas="mode: push; overlay: false; flip: false; esc-close: true;">
+                    <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+                        <ul class="uk-nav uk-nav-primary uk-nav-center uk-text-left uk-margin-auto-vertical">
+                        {% if user.is_authenticated %}
+                            {% if user.profile.avatar %}
+                                <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{{ user.profile.avatar_small }}">
+                            {% else %}
+                                <img class="uk-border-circle uk-margin-small-right" width="50" height="50" src="{% static 'images/default.png' %}">
+                            {% endif %}
+                            <span class="uk-text-middle">{{ user.first_name }}</span>
+                            <hr>
+                        {% endif %}
+                            <li><a href="{% url 'home' %}"><span class="uk-margin-small-right" uk-icon="icon: home;"></span> Home</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'ide' %}"><span class="uk-margin-small-right" uk-icon="icon: code;"></span> IDE</a></li>                            
+                                <li><a href="{% url 'submissions' %}"><span class="uk-margin-small-right" uk-icon="icon: album;"></span> My Submissions</a></li>                            
+                                <li><a href="{% url 'logout' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-out;"></span> Logout</a></li>
+                            {% else %}
+                                <li class="uk-active"><a href="{% url 'home' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-in;"></span> Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
 
         <div class="site-content">
                 {% if messages %}
