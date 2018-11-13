@@ -143,19 +143,20 @@ class AddCourseView(View):
 
 class EditCourseView(View):
     def get(self, request, course, session):
-        try:
-            if request.user.profile.teacher_profile or request.user.is_superuser:
-                xcourse = Course.objects.get(
-                    code=course, session__id=session)
-                form = EditCourseForm(instance=xcourse)
-                title = "Edit Course"
-                button = "Update Course"
-                return render(request, 'landing/forms_default.html', {'form': form,
-                                                                      'button': button,
-                                                                      'form_title': title})
-        except:
-            messages.error(request, 'Permission Denied!')
-            return render(request, 'landing/home.html')
+        target = request.user.profile
+        is_teacher = Teacher.objects.filter(profile=target)
+        is_ta = Assistant.objects.filter(profile=target)
+        if is_teacher or is_ta:
+            xcourse = Course.objects.get(
+                code=course, session__id=session)
+            form = EditCourseForm(instance=xcourse)
+            title = "Edit Course"
+            button = "Update Course"
+            return render(request, 'landing/forms_default.html', {'form': form,
+                                                                    'button': button,
+                                                                    'form_title': title})
+        else:
+            return render(request, '404.html')
 
     def post(self, request, course, session):
         xcourse = Course.objects.get(code=course, session__id=session)
