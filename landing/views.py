@@ -176,13 +176,18 @@ class EditCourseView(View):
 
 class AddLabView(View):
     def get(self, request, course, session):
-        if request.user.profile.teacher_profile or request.user.is_superuser or request.user.profile.assistant_profile:
+        target = request.user.profile
+        is_teacher = Teacher.objects.filter(profile=target)
+        is_ta = Assistant.objects.filter(profile=target)
+        if is_teacher or is_ta:
             form = AddLabForm(request.POST)
             title = "Add Lab"
             button = "Submit Lab"
             return render(request, 'landing/forms_default.html', {'form': form,
                                                                   'button': button,
                                                                   'form_title': title})
+        else:
+            return render(request, '404.html')
 
     def post(self, request, course, session):
         form = AddLabForm(request.POST, request.user)
