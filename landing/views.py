@@ -355,16 +355,18 @@ def remove_student(request, course, student, session):
 
 class ExtendDeadlineView(View):
     def get(self, request, lab):
-        try:
-            if request.user.profile.teacher_profile or request.user.profile.assistant_profile or request.user.is_superuser:
-                lab = Lab.objects.get(id=lab)        
-                form = ExtendDeadlineForm(instance=lab)
-                title = "Extend Deadline"
-                button = "Update Deadline"
-                return render(request, 'landing/forms_default.html', {'form': form,
-                                                                      'button': button,
-                                                                      'form_title': title})
-        except:
+        target = request.user.profile
+        is_teacher = Teacher.objects.filter(profile=target)
+        is_ta = Assistant.objects.filter(profile=target)
+        if is_teacher or is_ta:
+            lab = Lab.objects.get(id=lab)        
+            form = ExtendDeadlineForm(instance=lab)
+            title = "Extend Deadline"
+            button = "Update Deadline"
+            return render(request, 'landing/forms_default.html', {'form': form,
+                                                                    'button': button,
+                                                                    'form_title': title})
+        else:
             return render(request, '404.html')
 
     def post(self, request, lab):
