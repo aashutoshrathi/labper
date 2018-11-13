@@ -34,6 +34,7 @@
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <body style="overflow-y: scroll; overflow-x: hidden;">
+        <div id="spinner"></div>
         <header>
             <div uk-sticky="show-on-up: true; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar; animation: uk-animation-slide-top;">
                 <nav id="bg-teal" class="uk-navbar-container uk-box-shadow-medium uk-light" uk-navbar style="position: relative;">
@@ -76,13 +77,13 @@
                             {% endif %}
                         </ul>
                     </div>
-                    <button class="hidden-on-large-display uk-active uk-icon-button uk-button-default uk-margin-small-top uk-margin-right" style="margin-left: auto;" type="button" uk-toggle="target: #hamburger" uk-icon="menu"></button>
+                    <button class="hidden-on-large-display uk-active uk-icon-button uk-button-default uk-margin-top uk-margin-right" style="margin-left: auto;" type="button" uk-toggle="target: #hamburger" uk-icon="menu"></button>
                 </nav>
             </div>
         </header>
 
         <div class="uk-offcanvas-content uk-padding-remove">
-                <div id="hamburger" uk-offcanvas="mode: push; overlay: false; flip: false; esc-close: true;">
+                <div id="hamburger" uk-offcanvas="mode: push; overlay: true; flip: false; esc-close: true;">
                     <div class="uk-offcanvas-bar uk-flex uk-flex-column">
                         <ul class="uk-nav uk-nav-primary uk-nav-center uk-text-left uk-margin-auto-vertical">
                         {% if user.is_authenticated %}
@@ -97,7 +98,17 @@
                             <li><a href="{% url 'home' %}"><span class="uk-margin-small-right" uk-icon="icon: home;"></span> Home</a></li>
                             {% if user.is_authenticated %}
                                 <li><a href="{% url 'ide' %}"><span class="uk-margin-small-right" uk-icon="icon: code;"></span> IDE</a></li>                            
-                                <li><a href="{% url 'submissions' %}"><span class="uk-margin-small-right" uk-icon="icon: album;"></span> My Submissions</a></li>                            
+                                {% if messages %}
+                                {% for message in messages %}
+                                    <h5 {% if message.tags %}
+                                        {% if message.tags == "error" %}
+                                            class="uk-text-danger uk-text-center"
+                                        {% else %}
+                                            class="uk-text-{{ message.tags }} uk-text-center"
+                                        {% endif %}
+                                    {% endif %}>{{ message }}</h5>
+                                {% endfor %}
+                            {% endif %}     <li><a href="{% url 'submissions' %}"><span class="uk-margin-small-right" uk-icon="icon: album;"></span> My Submissions</a></li>                            
                                 <li><a href="{% url 'logout' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-out;"></span> Logout</a></li>
                             {% else %}
                                 <li class="uk-active"><a href="{% url 'home' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-in;"></span> Login</a></li>
@@ -109,32 +120,48 @@
 
 
         <div class="site-content">
-                {% if messages %}
-                    {% for message in messages %}
-                        <h5 {% if message.tags %}
-                            {% if message.tags == "error" %}
-                                class="uk-text-danger uk-text-center"
-                            {% else %}
-                                class="uk-text-{{ message.tags }} uk-text-center"
-                            {% endif %}
-                        {% endif %}>{{ message }}</h5>
-                    {% endfor %}
-                {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 {% if message.tags %}
+                        {% if message.tags == "error" %}
+                            class="uk-text-danger uk-text-center"
+                        {% else %}
+                            class="uk-text-{{ message.tags }} uk-text-center"
+                        {% endif %}
+                    {% endif %}>{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
             {% block body %}
 
             {% endblock %}
         </div>
-
-        <footer>
-            <div align="center" class="uk-box-shadow-small uk-sticky">
-                <div class="uk-margin-small-left uk-margin-small-right uk-padding-small uk-padding-remove-left uk-padding-remove-right">
-                    <span class="uk-text-small">
-                        <hr>
-                        <span uk-icon="icon: code;"></span> by Team Labper |
-                        <a href="{% url 'about' %}" class="uk-icon-link uk-margin-small uk-text-emphasis" uk-icon="users">About</a>
-                    </span>
-                </div>
+    </div>
+    <footer>
+        <div align="center" class="footer-wrapper uk-box-shadow-small">
+            <div class="uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-padding-small uk-padding-remove-left uk-padding-remove-right">
+                <span class="uk-text-small">
+                    <hr>
+                    <span uk-icon="icon: code;"></span> by Team Labper |
+                    <a href="{% url 'about' %}" class="uk-icon-link uk-margin-small uk-text-emphasis" uk-icon="users">About</a>
+                </span>
             </div>
-        </footer>
+        </div>
+    </footer>
     </body>
+    <script>
+        var spinner = document.getElementById("spinner");
+        var footer = document.getElementsByTagName("footer")[0];
+        var site_content = document.getElementsByClassName("site-content")[0];
+        footer.style.display = "none";
+        site_content.style.display = "none";
+
+        document.onreadystatechange = () => {
+            if (document.readyState === 'complete') {
+            // document ready
+            spinner.style.display = "none";
+            footer.style.display = "block";
+            site_content.style.display = "block";
+            }
+        };
+    </script>
 </html>

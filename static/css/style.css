@@ -4,9 +4,8 @@
 
 body {
     display: flex;
-    min-height: 100%;
+    min-height: 100vh;
     flex-direction: column;
-    height: 100%;
 }
 
 .site-content {
@@ -22,13 +21,6 @@ body {
     background-color: #005555;
 }
 
-.margin-foot{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:80px; 
-}
-
 .big {
     font-size: 20rem;
     color: #256363;
@@ -36,6 +28,49 @@ body {
 
 .hidden-on-large-display {
     display: none !important;
+}
+
+.uk-offcanvas-bar {
+    box-shadow: 0 0 15px gray;
+}
+
+
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+         transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+
+#spinner {
+    height: 100vh;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: opacity linear 0.02s;
+}
+
+#spinner::before {
+    animation: 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite spinner;
+    border: solid 3px #eee;
+    border-bottom-color: #ef4662;
+    border-radius: 50%;
+    content: "";
+    height: 40px;
+    left: 50%;
+    opacity: inherit;
+    position: absolute;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    transform-origin: center;
+    width: 40px;
+    will-change: transform;
 }
 
 @media only screen and (max-width: 960px) {
