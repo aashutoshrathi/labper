@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block body %}
-<div class="uk-card-hover uk-border-rounded uk-card-default uk-card-body uk-width-1-2@m uk-margin-top uk-align-center ">
+<div>
+    <div class="uk-card-hover uk-border-rounded uk-card-default uk-card-body uk-width-1-2@m uk-margin-top uk-align-center">
     <h3 class="uk-card-title">Courses</h3>
     <hr>
     <table class="uk-table uk-table-striped">
@@ -14,7 +15,7 @@
                 <th class="uk-text-center">Course Code</th>
                 <th class="uk-text-center">Batch</th>
                 <th class="uk-text-center">Name</th>
-                <th class="uk-text-center">Session</th>
+                <th class="uk-text-center hidden-on-small-display">Session</th>
                 <th class="uk-text-center">Action</th>
             </tr>
         </thead>
@@ -24,11 +25,14 @@
                 <td class="uk-text-center">{{ course.code }}</td>
                 <td class="uk-text-center">{{ course.target_batch }}</td>
                 <td class="uk-text-center">{{ course.name }}</td>
-                <td class="uk-text-center">{{ course.session }}</td>
-                <td>
-                    <a href="{% url 'leave' teacher=user.profile.teacher_profile.id course=course.code session=course.session.id %}" class="uk-width-1-1 uk-button text-white uk-button-danger uk-width-auto uk-align-center uk-border-pill">
+                <td class="uk-text-center hidden-on-small-display">{{ course.session }}</td>
+                <td class="hidden-on-small-display">
+                    <a href="{% url 'leave' teacher=user.profile.teacher_profile.id course=course.code session=course.session.id %}" class="uk-width-1-1 uk-button  text-white uk-button-danger uk-width-auto uk-align-center uk-border-pill">
                         Leave
                     </a>
+                </td>
+                <td class="hidden-on-large-display">
+                    <a uk-tooltip="title: Leave; pos:bottom;" href="{% url 'leave' teacher=user.profile.teacher_profile.id course=course.code session=course.session.id %}" class="uk-icon-button uk-button-danger uk-margin-small-right uk-text-center" uk-icon="sign-out"></a>
                 </td>
             </tr>
             {% endfor %}
@@ -38,17 +42,21 @@
                 <td class="uk-text-center">{{ c.code }}</td>
                 <td class="uk-text-center">{{ c.target_batch }}</td>
                 <td class="uk-text-center">{{ c.name }}</td>
-                <td class="uk-text-center">{{ c.session }}</td>
-                <td>  
+                <td class="uk-text-center hidden-on-small-display">{{ c.session }}</td>
+                <td class="hidden-on-small-display">  
                     <a href="{% url 'teach' teacher=user.profile.teacher_profile.id course=c.code session=c.session.id %}" class="uk-width-1-1 uk-button text-white uk-button-primary uk-width-auto uk-align-center uk-border-pill">
                         Teach
                     </a>
+                </td>
+                <td class="hidden-on-large-display">
+                    <a uk-tooltip="title: Teach; pos:bottom;" href="{% url 'teach' teacher=user.profile.teacher_profile.id course=c.code session=c.session.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right uk-text-center" uk-icon="sign-in"></a>
                 </td>
             </tr>
             {% endfor %}
 
         </tbody>
     </table>     
+    </div>
 </div>
 
 {% endblock %}
