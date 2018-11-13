@@ -18,7 +18,7 @@ from urllib3 import request
 
 from brutus import settings
 from landing.forms import AddAssistantForm, AddProblemForm, AddStudentForm, \
-    EditCourseForm, SubmissionForm
+    EditCourseForm, ExtendDeadlineForm, SubmissionForm
 from landing.models import Assistant, Problem, Session, Submission
 
 
@@ -341,6 +341,35 @@ def remove_student(request, course, student, session):
     if Teacher.objects.filter(profile=request.user.profile).exists() or Assistant.objects.filter(profile=request.user.profile).exists():
         student.course.remove(course)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    
+
+class ExtendDeadlineView(View):
+    def get(self, request, lab):
+        try:
+            if request.user.profile.teacher_profile or request.user.profile.assistant_profile or request.user.is_superuser:
+                lab = Lab.objects.get(id=lab)        
+                form = ExtendDeadlineForm(instance=lab)
+                title = "Extend Deadline"
+                button = "Update Deadline"
+                return render(request, 'landing/forms_default.html', {'form': form,
+                                                                      'button': button,
+                                                                      'form_title': title})
+        except:
+            return render(request, '404.html')
+
+    def post(self, request, lab):
+        lab = Lab.objects.get(id=lab)        
+        form = ExtendDeadlineForm(request.POST, instance=lab)
+        title = "Extend Deadline"
+        button = "Update Deadline"
+        if form.is_valid():
+            form.save()
+            return redirect('course_detail', course=lab.course.code, session=lab.course.session.id)
+        else:
+            messages.error(request, 'Course Code already in use.')
+        return render(request, 'landing/forms_default.html', {'form': form,
+                                                              'button': button,
+                                                              'form_title': title})
 
 
 @login_required

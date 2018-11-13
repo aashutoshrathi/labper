@@ -45,7 +45,7 @@
                     <h3 class="uk-card-title">Lab {{ lab.number }}</h3>
                     {% if is_teacher or is_ta %}
                         <a uk-tooltip="title: Add problems to this lab; pos: bottom" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="plus"></a>         
-                        {% comment %} <a uk-tooltip="title: Extend Deadline; pos: bottom" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="future"></a>          {% endcomment %}
+                        <a uk-tooltip="title: Extend Deadline; pos: bottom" href="{% url 'extend_dl' lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="future"></a>         
                         {% comment %} <a uk-tooltip="title: Edit Lab; pos: bottom" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>          {% endcomment %}
                     {% endif %}
                     <hr>

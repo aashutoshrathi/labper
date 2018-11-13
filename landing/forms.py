@@ -196,7 +196,7 @@ class SubmissionForm(forms.ModelForm):
 
 class ExtendDeadlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(EditCourseForm, self).__init__(*args, **kwargs)
+        super(ExtendDeadlineForm, self).__init__(*args, **kwargs)
         self.fields['end_time'].label = 'Deadline'
         self.fields['end_time'].widget.attrs.update({
             'class': 'uk-input uk-width-auto',

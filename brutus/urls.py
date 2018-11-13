@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^$', views.land, name='land'),
     url(r'^tcgen/$', tviews.create_tc, name="tcgen"),
     url(r'^subs/$', views.submissions, name="submissions"),
+    url(r'^extend_dl/(?P<lab>[\w\-]+)/$$', views.ExtendDeadlineView.as_view(), name="extend_dl"),
     url(r'^lab_subs/(?P<course>[\w\-]+)/(?P<session>[\w\-]+)/(?P<lab>[\w\-]+)/$',
         views.lab_subs, name="lab_subs"),
     url(r'^home/$', views.home, name='home'),
