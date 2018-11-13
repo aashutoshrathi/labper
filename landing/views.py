@@ -209,13 +209,18 @@ class AddLabView(View):
 
 class AddProblemView(View):
     def get(self, request, course, session, lab):
-        if request.user.profile.teacher_profile or request.user.is_superuser:
+        target = request.user.profile
+        is_teacher = Teacher.objects.filter(profile=target)
+        is_ta = Assistant.objects.filter(profile=target)
+        if is_teacher or is_ta:
             form = AddProblemForm(request.POST)
             title = "Add Problem"
             button = "Submit Problem"
             return render(request, 'landing/forms_default.html', {'form': form,
                                                                   'button': button,
                                                                   'form_title': title})
+        else:
+            return render(request, '404.html')
 
     def post(self, request, course, session, lab):
         form = AddProblemForm(request.POST, request.user)
