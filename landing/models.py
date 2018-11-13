@@ -152,6 +152,7 @@ class Lab(models.Model):
         ordering = ('number',)
         verbose_name = 'Lab'
         verbose_name_plural = 'Labs'
+        unique_together = ("number", "course")
 
     number = models.IntegerField(default=1, validators=[
         MinValueValidator(1),
@@ -166,7 +167,7 @@ class Lab(models.Model):
         max_length=256, help_text='Add brief Lab description', blank=True)
 
     def __str__(self):
-        return self.course.name
+        return self.lab.number + self.course.name
 
 
 class Problem(models.Model):
@@ -198,6 +199,7 @@ class Submission(models.Model):
         ordering = ('student',)
         verbose_name = 'Submission'
         verbose_name_plural = 'Submissions'
+        unique_together = ("code_file", "problem")
 
     id = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True)
     problem = models.ForeignKey(

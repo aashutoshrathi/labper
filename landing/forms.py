@@ -192,3 +192,25 @@ class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
         fields = {'code_file', }
+
+
+class ExtendDeadlineForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EditCourseForm, self).__init__(*args, **kwargs)
+        self.fields['end_time'].label = 'Deadline'
+        self.fields['end_time'].widget.attrs.update({
+            'class': 'uk-input uk-width-auto',
+        })
+
+    class Meta:
+        model = Lab
+        fields = {'end_time'}
+        dateTimeOptions = {
+            'autoclose': True,
+            'startDate': str(datetime.datetime.today().date()),
+            'endDate': str(datetime.datetime.today().date() + datetime.timedelta(7)),
+            'format': 'mm/dd/yyyy hh:ii',
+        }
+        widgets = {
+            'end_time': DateTimeWidget(options=dateTimeOptions),
+        }

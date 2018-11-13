@@ -117,7 +117,7 @@ class AddCourseView(View):
             code = tform.code
             subject = 'Invitation to ' + \
                 str(tform.name) + ' by ' + str(request.user.profile)
-            org_email = settings.EMAIL_HOST_USER
+            org_email = "Team Labper <{0}>".format(settings.EMAIL_HOST_USER)
             students = Student.objects.filter(batch=tform.target_batch)
             instructor = request.user.profile
             for student in students:
@@ -125,9 +125,11 @@ class AddCourseView(View):
                     'student': student,
                     'course': tform.name,
                     'domain': current_site,
+                    'code': tform.code,
+                    'session': tform.session,
                     'teacher': instructor
                 })
-                student.profile.user.email_user(subject, message)
+                # student.profile.user.email_user(subject, message)
                 send_mail(subject, message, org_email, [
                           student.profile.user.email], fail_silently=True)
             messages.success(

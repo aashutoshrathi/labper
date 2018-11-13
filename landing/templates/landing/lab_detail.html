@@ -37,8 +37,8 @@
                         <a uk-tooltip="title: You can't submit after deadline; pos:left" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-disabled uk-button-primary">Solve</a> 
                     {% endif %}
                     <h3 class="uk-card-title">{{ problem.title }}</h3>
-                    <a class="uk-text-center uk-text-small">Allowed Similarity: {{ problem.similar }}%</a>
-                    <a class="uk-text-center uk-float-right uk-margin-auto uk-margin-small-top uk-text-small">Points: {{ problem.points }}pts</a> 
+                    {% comment %} <a class="uk-text-center uk-text-small">Allowed Similarity: {{ problem.similar }}%</a> {% endcomment %}
+                    <a class="uk-text-center uk-margin-auto uk-margin-small-top uk-text-small">Points: {{ problem.points }}pts</a> 
                     <hr>
                     <!-- <p class="uk-float-right">Deadline: {{lab.end_time}}, {{lab.date}}</p> -->
                     <p> {{ problem.content | truncatechars:100 }} </p>

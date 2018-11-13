@@ -41,10 +41,12 @@
                         {% else %}
                             Submit
                         {% endif %}
-                    </a>   
+                    </a>
                     <h3 class="uk-card-title">Lab {{ lab.number }}</h3>
                     {% if is_teacher or is_ta %}
-                        <a uk-tooltip="title: Add problems to this lab; pos: right" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="plus"></a>           
+                        <a uk-tooltip="title: Add problems to this lab; pos: bottom" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="plus"></a>         
+                        {% comment %} <a uk-tooltip="title: Extend Deadline; pos: bottom" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="future"></a>          {% endcomment %}
+                        {% comment %} <a uk-tooltip="title: Edit Lab; pos: bottom" href="{% url 'add_problem' course=course.code session=course.session.id lab=lab.id %}" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>          {% endcomment %}
                     {% endif %}
                     <hr>
                     <p class="uk-float-right">Deadline: {{lab.end_time}}, {{lab.date}}</p>
@@ -90,13 +92,16 @@
                                 {% if teacher.profile.avatar_small %}
                                     <img src="{{ teacher.profile.avatar_small }}" class="uk-border-circle uk-margin-left" width="40">
                                 {% else %}
-                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle" width="40"> 
+                                    <img src="{% static 'images/default.ico' %}" class="uk-border-circle uk-margin-left" width="40"> 
                                 {% endif %}
                             </a>
                         </td>
                         <td class="uk-text-middle">{{ teacher.profile }}</td>
                         <td class="uk-text-middle">Course Instructor</td>
                         <td class="uk-text-middle">{{ teacher.profile.user.email }}</td>
+                        <td class="uk-text-middle">
+                            <a uk-tooltip="title: Course Lead" class="uk-icon-button uk-text-warning uk-margin-small-left" uk-icon="star"></a>
+                        </td>
                     </tr>
                     {% endfor %}
                     {% for ta in assistants %}
