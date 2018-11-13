@@ -126,7 +126,7 @@ class AddCourseView(View):
                     'course': tform.name,
                     'domain': current_site,
                     'code': tform.code,
-                    'session': tform.session,
+                    'session': tform.session.id,
                     'teacher': instructor
                 })
                 # student.profile.user.email_user(subject, message)
