@@ -34,7 +34,7 @@
                     {% if not is_dead %}
                         <a href="{% url 'solve' problem=problem.id %}" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Solve</a> 
                     {% else %}
-                        <a uk-tooltip="title: You can't submit after deadline; pos:left" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-disabled uk-button-primary">Solve</a> 
+                        <a uk-tooltip="title: You can't submit after deadline; pos:left" class="uk-text-center uk-float-right uk-border-pill uk-width-auto uk-button uk-button-primary">Solve</a> 
                     {% endif %}
                     <h3 class="uk-card-title">{{ problem.title }}</h3>
                     {% comment %} <a class="uk-text-center uk-text-small">Allowed Similarity: {{ problem.similar }}%</a> {% endcomment %}
