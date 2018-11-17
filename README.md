@@ -91,4 +91,4 @@ One click easy deployment.
 
 ## Author ✍️
 
-[Team Labper](https://labper.herokuapp.com/about/)
+[Team Labper](https://labper.pythonanywhere.com/about/)
