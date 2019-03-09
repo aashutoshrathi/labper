@@ -1,4 +1,4 @@
-django==2.0.10
+django==2.0.11
 django-heroku
 gunicorn
 django-progressive-web-app
