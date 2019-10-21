@@ -18,7 +18,7 @@ django-extensions = "*"
 graphviz = "*"
 "autopep8" = "*"
 django-datetime-widget = "*"
-django = "==2.1.7"
+django = "==2.1.11"
 django-storages = "*"
 "boto3" = "*"
 
