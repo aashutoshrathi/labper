@@ -18,9 +18,11 @@ django-extensions = "*"
 graphviz = "*"
 "autopep8" = "*"
 django-datetime-widget = "*"
-django = "==2.2.10"
 django-storages = "*"
 "boto3" = "*"
+pylint = "*"
+pylint-django = "*"
+Django = "==2.1.15"
 
 [dev-packages]
 pylint = '*'
