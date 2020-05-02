@@ -1,33 +1,18 @@
 language: python
 python:
   - 3.6
-services:
-  - postgresql
-env:
-  -DJANGO=2.0.8
-  -DB=postgresql
-  -DEBUG=True
-  -DB_NAME=labper_db
-  -DB_USER=labper
-  -DB_PASSWORD=labper
-  -DB_HOST=127.0.0.1
-  -DB_PORT=5432
-  -ALLOWED_HOSTS=*
-  -G_KEY=testkey374
-  -G_SKEY=testkey768
-  -SKEY=iiitv@$^#labper
-  -EMAIL_USE_TLS=True
-  -EMAIL_HOST=smtp.gmail.com
-  -EMAIL_HOST_USER=gmail@labper.com
-  -EMAIL_HOST_PASSWORD=kyuBatau
-  -EMAIL_PORT=7894
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
 install:
   - pip install -r requirements.txt
 before_script:
-  - psql -c "CREATE USER labper WITH CREATEUSER PASSWORD 'labper';" -U postgres
-  - psql -c "ALTER USER labper CREATEDB;" -U postgres
-  - psql -c "CREATE DATABASE labper_db;" -U postgres
-  - psql -c "GRANT ALL ON DATABASE labper_db TO labper;" -U postgres
+  - psql -c "CREATE DATABASE ${DB_NAME};" -U postgres
+  - psql -c "CREATE USER ${DB_USER} WITH PASSWORD '${DB_PASSWORD}';" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_NAME} to ${DB_USER};" -U postgres
 script:
   - python manage.py makemigrations
   - python manage.py migrate
