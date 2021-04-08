@@ -21,7 +21,7 @@ django-storages = "*"
 "boto3" = "*"
 pylint = "*"
 pylint-django = "*"
-Django = "==2.2.18"
+Django = "==2.2.20"
 dj-database-url = '*'
 
 [dev-packages]
